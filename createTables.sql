@@ -44,7 +44,7 @@ CREATE TABLE in_group (
 
 CREATE TABLE restaurant (
     rid VARCHAR(30) NOT NULL PRIMARY KEY,
-    name VARCHAR(30) NOT NULL,
+    name VARCHAR(100) NOT NULL,
     stars FLOAT(2),
     address VARCHAR(100) NOT NULL,
     lat FLOAT(6) NOT NULL,
