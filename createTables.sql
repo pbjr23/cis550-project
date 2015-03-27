@@ -45,14 +45,14 @@ CREATE TABLE in_group (
 CREATE TABLE restaurant (
     rid VARCHAR(30) NOT NULL PRIMARY KEY,
     name VARCHAR(30) NOT NULL,
-    stars INTEGER,
+    stars FLOAT(2),
     address VARCHAR(100) NOT NULL,
     lat FLOAT(6) NOT NULL,
     lon FLOAT(6) NOT NULL,
     city VARCHAR(20),
     state CHAR(2),
-    review_count INTEGER,
-)
+    review_count INTEGER
+);
 
 CREATE TABLE hours (
    sunday_open CHAR(5),
@@ -70,10 +70,9 @@ CREATE TABLE hours (
    saturday_open CHAR(5),
    saturday_close CHAR(5),
    rid VARCHAR(30) NOT NULL PRIMARY KEY,
-   FOREIGN KEY rid REFERENCES restaurant ON DELETE CASCADE
-)
+   FOREIGN KEY (rid) REFERENCES restaurant ON DELETE CASCADE
+);
 
-# restaurant categories, many to many
 CREATE TABLE category (
     category_name VARCHAR(20) NOT NULL,
     rid VARCHAR(30) NOT NULL,
@@ -96,3 +95,9 @@ CREATE TABLE user_fav (
     FOREIGN KEY (username) REFERENCES users,
     FOREIGN KEY (rid) REFERENCES restaurant
 );
+
+drop table user_fav;
+drop table group_fav;
+drop table category;
+drop table hours;
+drop table restaurant;
