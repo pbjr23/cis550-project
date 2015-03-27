@@ -74,9 +74,9 @@ CREATE TABLE hours (
 );
 
 CREATE TABLE category (
-    category_name VARCHAR(20) NOT NULL,
+    category_name VARCHAR(40) NOT NULL,
     rid VARCHAR(30) NOT NULL,
-    PRIMARY KEY (rid, category_name),
+    PRIMARY KEY (category_name, rid),
     FOREIGN KEY (rid) REFERENCES restaurant
 );
 
