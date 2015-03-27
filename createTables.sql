@@ -49,7 +49,7 @@ CREATE TABLE restaurant (
     address VARCHAR(100) NOT NULL,
     lat FLOAT(6) NOT NULL,
     lon FLOAT(6) NOT NULL,
-    city VARCHAR(20),
+    city VARCHAR(50),
     state CHAR(2),
     review_count INTEGER
 );
