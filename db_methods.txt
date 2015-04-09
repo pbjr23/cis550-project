@@ -1,0 +1,70 @@
+
+---- Users ----
+getFbId(String username)
+
+getAllUserInfo(String username)
+
+checkPassword(String username)
+
+addFriend(String username, String friendUsername)
+
+removeFriend(String username, String friendUsername)
+
+createUser(String username, String password, 
+   String address, number lat, number long)
+
+
+
+---- UserAddresses ----
+getUserAddress(String username)
+
+getUserLatLong(String username)
+
+
+
+---- Friends ----
+getFriends(String username)
+
+
+---- Groups ----
+getGroupName(int groupID)
+
+getGroups(String username)
+
+getGroupMembers(int groupID)
+
+removeUserFromGroup(int groupID, String username)
+- if empty then remove group
+
+addUserToGroup(int groupID, String username)
+
+createGroup(String username, String groupName)
+- finds next available groupID
+- adds user to group automatically
+
+deleteGroup(int groupID)
+
+editGroupName(int groupID, String newName)
+
+
+
+
+---- Restaurant ----
+getRestInfo(int businessID)
+
+getRestName(int businessID)
+
+getRestAddress(int businessID)
+
+searchRestsByName(String name)
+
+getRestLatLong(int businessID)
+
+getRestStars(int businessID)
+
+getRests(int minLat, int minLong, int maxLat, int maxLong)
+
+
+
+
+
