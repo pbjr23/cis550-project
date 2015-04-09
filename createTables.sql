@@ -22,7 +22,7 @@ CREATE TABLE password (
 CREATE TABLE address (
 	address_label VARCHAR(10) NOT NULL,
 	username VARCHAR(20) NOT NULL,
-	address VARCHAR(100) NOT NULL,
+	address VARCHAR(150) NOT NULL,
 	lat FLOAT(6) NOT NULL,
 	lon FLOAT(6) NOT NULL,
 	PRIMARY KEY (username, address_label),
@@ -44,13 +44,13 @@ CREATE TABLE in_group (
 
 CREATE TABLE restaurant (
     rid VARCHAR(30) NOT NULL PRIMARY KEY,
-    name VARCHAR(30) NOT NULL,
-    stars FLOAT(2),
-    address VARCHAR(100) NOT NULL,
-    lat FLOAT(6) NOT NULL,
-    lon FLOAT(6) NOT NULL,
-    city VARCHAR(20),
-    state CHAR(2),
+    name VARCHAR(70) NOT NULL,
+    stars FLOAT(4),
+    address VARCHAR(115) NOT NULL,
+    lat FLOAT(15) NOT NULL,
+    lon FLOAT(15) NOT NULL,
+    city VARCHAR(50),
+    state CHAR(4),
     review_count INTEGER
 );
 
@@ -74,7 +74,7 @@ CREATE TABLE hours (
 );
 
 CREATE TABLE category (
-    category_name VARCHAR(40) NOT NULL,
+    category_name VARCHAR(35) NOT NULL,
     rid VARCHAR(30) NOT NULL,
     PRIMARY KEY (category_name, rid),
     FOREIGN KEY (rid) REFERENCES restaurant
