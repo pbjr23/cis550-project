@@ -11,6 +11,7 @@ var express = require('express')
   , routes = require('./routes')
   , actor = require('./routes/actor')
   , director = require('./routes/directors')
+  , rest = require('./routes/rest')
   , http = require('http')
   , path = require('path')
   , stylus =  require("stylus")
@@ -27,6 +28,7 @@ app.get('/', routes.do_work);
 // when we get a request for {app/actor} we should call routes/actor.js
 app.get('/actor', actor.do_work);
 app.get('/director', director.do_work);
+app.get('/rest', rest.do_work);
 
 // Listen on the port we specify
 http.createServer(app).listen(app.get('port'), function(){
