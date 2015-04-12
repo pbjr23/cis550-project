@@ -1,60 +1,73 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+/**
+ * Simple Homework 3 application for CIS 550
+ * 
+ * zives
+ */
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
+/**
+ * Module dependencies.
+ */
+var express = require('express')
+  , routes = require('./routes')
+  , actor = require('./routes/actor')
+  , director = require('./routes/directors')
+  , http = require('http')
+  , path = require('path')
+  , stylus =  require("stylus")
+  , nib =     require("nib")
+;
 
+// Initialize express
 var app = express();
+// .. and our app
+init_app(app);
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+// When we get a request for {app}/ we should call routes/index.js
+app.get('/', routes.do_work);
+// when we get a request for {app/actor} we should call routes/actor.js
+app.get('/actor', actor.do_work);
+app.get('/director', director.do_work);
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(__dirname + '/public/favicon.ico'));
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-
-app.use('/', routes);
-app.use('/users', users);
-
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-    var err = new Error('Not Found');
-    err.status = 404;
-    next(err);
+// Listen on the port we specify
+http.createServer(app).listen(app.get('port'), function(){
+  console.log('Express server listening on port ' + app.get('port'));
 });
 
-// error handlers
-
-// development error handler
-// will print stacktrace
-if (app.get('env') === 'development') {
-    app.use(function(err, req, res, next) {
-        res.status(err.status || 500);
-        res.render('error', {
-            message: err.message,
-            error: err
-        });
-    });
+///////////////////
+// This function compiles the stylus CSS files, etc.
+function compile(str, path) {
+  return stylus(str)
+    .set('filename', path)
+    .use(nib());
 }
 
-// production error handler
-// no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-        message: err.message,
-        error: {}
-    });
-});
+//////
+// This is app initialization code
+function init_app() {
+	// all environments
+	app.set('port', process.env.PORT || 8080);
+	
+	// Use Jade to do views
+	app.set('views', __dirname + '/views');
+	app.set('view engine', 'jade');
 
+	app.use(express.favicon());
+	// Set the express logger: log to the console in dev mode
+	app.use(express.logger('dev'));
+	app.use(express.bodyParser());
+	app.use(express.methodOverride());
+	app.use(app.router);
+	// Use Stylus, which compiles .styl --> CSS
+	app.use(stylus.middleware(
+	  { src: __dirname + '/public'
+	  , compile: compile
+	  }
+	));
+	app.use(express.static(path.join(__dirname, 'public')));
 
-module.exports = app;
+	// development only
+	if ('development' == app.get('env')) {
+	  app.use(express.errorHandler());
+	}
+
+}
