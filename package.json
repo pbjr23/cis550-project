@@ -20,7 +20,7 @@
     "express": "3.2.6",
     "jade": "*",
     "nib": "*",
-    "oracle": "^0.3.8",
+    "oracle": "*",
     "stylus": "*"
   }
 }
