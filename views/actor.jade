@@ -1,0 +1,18 @@
+// Jade file to specify output of an actors list
+// Inherits from layout
+extend layout
+block content
+  p
+    | #{title}:
+  // Create a table with one row per result
+  table
+    - for (var inx = 0; inx < results.length; inx++)
+        tr
+          td=results[inx].FIRST_NAME+" "
+          td &nbsp;
+          td=results[inx].LAST_NAME
+          td &nbsp;
+          td=results[inx].GENDER
+  // Put a click button that lets us return to the index page 
+  form(method='get', action='/')
+      input(type='submit', value='Return')
