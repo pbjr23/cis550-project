@@ -38,13 +38,118 @@ function getRestInfo(bussID, callback) {
 		if (err) {
 			console.log(err);
 		} else {
-			connection.execute("asdasd"), [], function(err, results) {
+			connection.execute("SELECT * FROM restaurant WHERE rid = " + bussID, 
+			       [], function(err, results) {
 				if (err) {
 					console.log(err);
 				} else {
 					callback(results);
 				}
-			}
+			});
+		}
+	});
+}
+
+function getRestName(bussID, callback) {
+	oracle.connect(connectData, function(err, connection) {
+		if (err) {
+			console.log(err);
+		} else {
+			connection.execute("SELECT name FROM restaurant WHERE rid = " + bussID, 
+			       [], function(err, results) {
+				if (err) {
+					console.log(err);
+				} else {
+					callback(results);
+				}
+			});
+		}
+	});
+}
+
+function getRestAddress(bussID, callback) {
+	oracle.connect(connectData, function(err, connection) {
+		if (err) {
+			console.log(err);
+		} else {
+			connection.execute("SELECT address FROM restaurant WHERE rid = " + bussID, 
+			       [], function(err, results) {
+				if (err) {
+					console.log(err);
+				} else {
+					callback(results);
+				}
+			});
+		}
+	});
+}
+
+function searchRestsByName(name, callback) {
+	oracle.connect(connectData, function(err, connection) {
+		if (err) {
+			console.log(err);
+		} else {
+			connection.execute("SELECT * FROM restaurant WHERE name = '" + name + "'", 
+			       [], function(err, results) {
+				if (err) {
+					console.log(err);
+				} else {
+					callback(results);
+				}
+			});
+		}
+	});
+}
+
+function getRestLatLong(bussID, callback) {
+	oracle.connect(connectData, function(err, connection) {
+		if (err) {
+			console.log(err);
+		} else {
+			connection.execute("SELECT lat, long FROM restaurant WHERE rid = " + bussID, 
+			       [], function(err, results) {
+				if (err) {
+					console.log(err);
+				} else {
+					callback(results);
+				}
+			});
+		}
+	});
+}
+
+function getRestStars(bussID, callback) {
+	oracle.connect(connectData, function(err, connection) {
+		if (err) {
+			console.log(err);
+		} else {
+			connection.execute("SELECT stars FROM restaurant WHERE rid = " + bussID, 
+			       [], function(err, results) {
+				if (err) {
+					console.log(err);
+				} else {
+					callback(results);
+				}
+			});
+		}
+	});
+}
+
+function getRests(minLat, minLong, maxLat, maxLong, callback) {
+	oracle.connect(connectData, function(err, connection) {
+		if (err) {
+			console.log(err);
+		} else {
+			connection.execute("SELECT * FROM restaurant WHERE lat >= " + minLat + 
+				     " AND long >= " + minLong + " AND lat <= " + maxLat + 
+				     " AND long <= " + maxLong, 
+			       [], function(err, results) {
+				if (err) {
+					console.log(err);
+				} else {
+					callback(results);
+				}
+			});
 		}
 	});
 }
