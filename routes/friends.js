@@ -11,7 +11,7 @@ var oracle =  require("oracle");
 //
 // res = HTTP result object sent back to the client
 // name = Name to query for
-function query_db(friend) {
+function query_db(res) {
   oracle.connect(connectData, function(err, connection) {
     if ( err ) {
     	console.log(err);
