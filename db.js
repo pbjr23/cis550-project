@@ -153,6 +153,57 @@
 		});
 	}
 
+	db.prototype.getUserAddress = function(username, callback) {
+		oracle.connect(connectData, function(err, connection) {
+			if (err) {
+				console.log(err);
+			} else {
+				connection.execute("SELECT address FROM address WHERE username = '" + username + "'", 
+				       [], function(err, results) {
+					if (err) {
+						console.log(err);
+					} else {
+						callback(results);
+					}
+				});
+			}
+		});
+	}
+
+	db.prototype.getUserLatLon = function(username, callback) {
+		oracle.connect(connectData, function(err, connection) {
+			if (err) {
+				console.log(err);
+			} else {
+				connection.execute("SELECT lat, lon FROM address WHERE username = '" + username + "'", 
+				       [], function(err, results) {
+					if (err) {
+						console.log(err);
+					} else {
+						callback(results);
+					}
+				});
+			}
+		});
+	}
+
+	db.prototype.getFriends = function(username, callback) {
+		oracle.connect(connectData, function(err, connection) {
+			if (err) {
+				console.log(err);
+			} else {
+				connection.execute("SELECT user2 FROM friends WHERE user1 = '" + username "'", 
+				       [], function(err, results) {
+					if (err) {
+						console.log(err);
+					} else {
+						callback(results);
+					}
+				});
+			}
+		});
+	}
+
 	module.exports = db;
 
 }());
