@@ -14,8 +14,10 @@
 
 	};
 
+	/* restaurant table methods */
+
 	db.prototype.getRestInfo = function(bussID, callback) {
-		console.log("getRestInfo: " + bussID);
+		console.log('getRestInfo: ' + bussID);
 		oracle.connect(connectData, function(err, connection) {
 			if (err) {
 				console.log(err);
@@ -33,6 +35,7 @@
 	}
 
 	db.prototype.getRestName = function(bussID, callback) {
+		console.log('getRestName: ' + bussID);
 		oracle.connect(connectData, function(err, connection) {
 			if (err) {
 				console.log(err);
@@ -50,6 +53,7 @@
 	}
 
 	db.prototype.getRestAddress = function(bussID, callback) {
+		console.log('getRestAddress: ' + bussID);
 		oracle.connect(connectData, function(err, connection) {
 			if (err) {
 				console.log(err);
@@ -67,6 +71,7 @@
 	}
 
 	db.prototype.searchRestsByName = function(name, callback) {
+		console.log('searching restaurants by full name: ' + name);
 		oracle.connect(connectData, function(err, connection) {
 			if (err) {
 				console.log(err);
@@ -84,6 +89,7 @@
 	}
 
 	db.prototype.searchRestsByNameSubstring = function(name, callback) {
+		console.log('searching restaurants whose name contains: ' + name);
 		oracle.connect(connectData, function(err, connection) {
 			if (err) {
 				console.log(err);
@@ -101,6 +107,7 @@
 	}
 
 	db.prototype.getRestLatLong = function(bussID, callback) {
+		console.log('getRestLatLong: ' + bussID);
 		oracle.connect(connectData, function(err, connection) {
 			if (err) {
 				console.log(err);
@@ -118,6 +125,7 @@
 	}
 
 	db.prototype.getRestStars = function(bussID, callback) {
+		console.log('getRestStars: ' + bussID);
 		oracle.connect(connectData, function(err, connection) {
 			if (err) {
 				console.log(err);
@@ -135,6 +143,9 @@
 	}
 
 	db.prototype.getRestsSquareCoords = function(minLat, minLon, maxLat, maxLon, callback) {
+		console.log('getting restaurants within: lat(min: ' + minLat 
+			+ ',max: ' + maxLat + ')  lon(min: ' + minLon + ',max: ' 
+			+ maxLon + ')');
 		oracle.connect(connectData, function(err, connection) {
 			if (err) {
 				console.log(err);
@@ -152,8 +163,13 @@
 			}
 		});
 	}
+	
+
+
+	/* address table methods */
 
 	db.prototype.getUserAddress = function(username, callback) {
+		console.log('getUserAddress: ' + username);
 		oracle.connect(connectData, function(err, connection) {
 			if (err) {
 				console.log(err);
@@ -171,6 +187,7 @@
 	}
 
 	db.prototype.getUserLatLon = function(username, callback) {
+		console.log('getUserLatLon: ' + username);
 		oracle.connect(connectData, function(err, connection) {
 			if (err) {
 				console.log(err);
@@ -187,7 +204,11 @@
 		});
 	}
 
+
+	/* friends table methods */
+
 	db.prototype.getFriends = function(username, callback) {
+		console.log('getting friends of: ' + username);
 		oracle.connect(connectData, function(err, connection) {
 			if (err) {
 				console.log(err);
