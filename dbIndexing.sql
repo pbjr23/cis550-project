@@ -11,6 +11,12 @@ ON restaurant (lat);
 CREATE INDEX rest_long_index
 ON restaurant (lon);
 
+CREATE INDEX rest_rid_lat_index
+ON restaurant (rid, lat);
+
+CREATE INDEX rest_rid_lon_index
+ON restaurant (rid, lon);
+
 # indexing for users table
 CREATE UNIQUE INDEX users_username_index
 ON users (username);
