@@ -32,7 +32,7 @@ function query_db(res) {
   }); // end oracle.connect
 }
 
-function getFbId(String username, callback) {
+function getFbId(username, callback) {
 	oracle.connect(connectData, function(err, connection) {
 		if (err) {
 			console.log(err);
@@ -49,7 +49,7 @@ function getFbId(String username, callback) {
 	});
 }
 
-function getAllUserInfo(String username, callback) {
+function getAllUserInfo(username, callback) {
 	oracle.connect(connectData, function(err, connection) {
 		if (err) {
 			console.log(err);
@@ -66,7 +66,7 @@ function getAllUserInfo(String username, callback) {
 	});
 }
 
-function checkPassword(String username, callback) {
+function checkPassword(username, callback) {
 	oracle.connect(connectData, function(err, connection) {
 		if (err) {
 			console.log(err);
@@ -83,7 +83,7 @@ function checkPassword(String username, callback) {
 	});
 }
 // STILL NEED TO IMPLEMENT
-function addFriend(String username, String friendUsername, callback) {
+function addFriend(username, friendUsername, callback) {
 	oracle.connect(connectData, function(err, connection) {
 		if (err) {
 			console.log(err);
@@ -100,7 +100,7 @@ function addFriend(String username, String friendUsername, callback) {
 	});
 }
 // STILL NEED TO IMPLEMENT
-function removeFriend(String username, String friendUsername, callback) {
+function removeFriend(username, friendUsername, callback) {
 	oracle.connect(connectData, function(err, connection) {
 		if (err) {
 			console.log(err);
@@ -117,7 +117,7 @@ function removeFriend(String username, String friendUsername, callback) {
 	});
 }
 // STILL NEED TO IMPLEMENT
-function createUser(String username, String password, String address, number lat, number long, callback) {
+function createUser(username, password, address, lat, long, callback) {
 	oracle.connect(connectData, function(err, connection) {
 		if (err) {
 			console.log(err);

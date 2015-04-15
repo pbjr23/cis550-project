@@ -84,7 +84,7 @@ function getRestAddress(bussID, callback) {
 	});
 }
 
-function searchRestsByName(name, callback) {
+exports.searchRestsByName = function(name, callback) {
 	oracle.connect(connectData, function(err, connection) {
 		if (err) {
 			console.log(err);
@@ -101,7 +101,7 @@ function searchRestsByName(name, callback) {
 	});
 }
 
-function getRestLatLong(bussID, callback) {
+exports.getRestLatLong = function(bussID, callback) {
 	oracle.connect(connectData, function(err, connection) {
 		if (err) {
 			console.log(err);
@@ -118,7 +118,7 @@ function getRestLatLong(bussID, callback) {
 	});
 }
 
-function getRestStars(bussID, callback) {
+exports.getRestStars = function(bussID, callback) {
 	oracle.connect(connectData, function(err, connection) {
 		if (err) {
 			console.log(err);
@@ -135,7 +135,7 @@ function getRestStars(bussID, callback) {
 	});
 }
 
-function getRests(minLat, minLong, maxLat, maxLong, callback) {
+exports.getRests = function(minLat, minLong, maxLat, maxLong, callback) {
 	oracle.connect(connectData, function(err, connection) {
 		if (err) {
 			console.log(err);
@@ -152,7 +152,7 @@ function getRests(minLat, minLong, maxLat, maxLong, callback) {
 			});
 		}
 	});
-}
+};
 
 /////
 // This is what's called by the main app 

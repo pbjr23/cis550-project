@@ -1,10 +1,23 @@
+var db;
+var async = require('async');
 
-/*
- * GET home page, which is specified in Jade.
- */
+exports.init = function(dbObj) {
+	db = dbObj;
+}
 
-exports.do_work = function(req, res){
-  res.render('test.jade', { 
-	  title: 'testing' 
-  });
-};
+exports.testFunction = function(req, res) {
+	db.getRestsSquareCoords(40.4, -80, 40.47, -79.9, function(result) {
+		console.log(result);
+	});
+}
+
+exports.testFunction2 = function(req, res) {
+    db.searchRestsByNameSubstring('Hawaiian Barbecue', function(results) {
+    	async.each(results, function(resultItem, call) {
+				console.log(resultItem.NAME);
+			//called when results are iterated through
+			}, function() {
+				console.log('done');
+			});
+    });
+}

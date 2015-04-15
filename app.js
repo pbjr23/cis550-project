@@ -16,13 +16,19 @@ var express = require('express')
   , path = require('path')
   , stylus =  require("stylus")
   , nib =     require("nib")
-  , testPage = require("./routes/testRoute")
+  , testRoute = require("./routes/testRoute")
 ;
 
 // Initialize express
 var app = express();
+var db = require('./db.js');
+var dbObj = new db();
+
+testRoute.init(dbObj);
+app.get('/test', testRoute.testFunction);
 // .. and our app
 init_app(app);
+
 
 // When we get a request for {app}/ we should call routes/index.js
 app.get('/', routes.do_work);
@@ -30,7 +36,6 @@ app.get('/', routes.do_work);
 app.get('/actor', actor.do_work);
 app.get('/director', director.do_work);
 app.get('/rest', rest.do_work);
-app.get('/test', testPage.do_work);
 
 // Listen on the port we specify
 http.createServer(app).listen(app.get('port'), function(){

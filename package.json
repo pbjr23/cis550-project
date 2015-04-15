@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/pbjr23/cis550-project",
   "dependencies": {
+    "async": "^0.9.0",
     "express": "3.2.6",
     "jade": "*",
     "nib": "*",
