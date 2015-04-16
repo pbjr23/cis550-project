@@ -39,8 +39,11 @@ MaxLong:<br>
   		  
         $.post("/group_search", info,function(data, status) {
             // go to home page 
-            console.log(data[0]); 
-            console.log("done");              
+            for (i = 0; i < data.length; i++) { 
+              $("#data").append(data[i].NAME);
+              $("#data").append('<br>');
+            } 
+            console.log(data.length);              
         }); 
 
 
@@ -56,6 +59,7 @@ MaxLong:<br>
 </script>
 
   <button id="submit">Search</button>
+  <br>
   <span id="data"></span>
   <br>
   <span id="error"></span> 
