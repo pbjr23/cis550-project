@@ -284,14 +284,14 @@
 	}
 
 	/* users table methods */
-
+	//TODO: fb_id returning null
 	db.prototype.getFbId = function(username, callback) {
 		console.log('getting FBid of: ' + username);
 		oracle.connect(connectData, function(err, connection) {
 			if (err) {
 				console.log(err);
 			} else {
-				connection.execute("SELECT fb_id FROM users WHERE username = '" + username + "'", 
+				connection.execute("SELECT fb_id FROM users WHERE username ='" + username + "'", 
 				       [], function(err, results) {
 					if (err) {
 						console.log(err);
@@ -302,7 +302,7 @@
 			}
 		});
 	}
-
+	//TODO: need to get address and other info
 	db.prototype.getAllUserInfo = function(username, callback) {
 		console.log('getting all user info of: ' + username);
 		oracle.connect(connectData, function(err, connection) {
@@ -354,8 +354,8 @@
 												console.log(err);
 											} else {
 												connection.execute(
-					"INSERT INTO address (addressLabel,username,address,lat,lon) "
-					+ "VALUES ('" + addressLabel + "','" + username + "'," + address + "'," + lat + "," + lon + ")",
+					"INSERT INTO address (address_label,username,address,lat,lon) "
+					+ "VALUES ('" + addressLabel + "','" + username + "','" + address + "'," + lat + "," + lon + ")",
 												       [], function(err, results) {
 													if (err) {
 														console.log("5"); 
@@ -398,7 +398,176 @@
 		});
 	}
 
+	/* groups table methods */
+	db.prototype.getGroupName = function(groupID, callback) {
+		console.log('getting group name for: ' + groupID);
+		oracle.connect(connectData, function(err, connection) {
+			if (err) {
+				console.log(err);
+			} else {
+				connection.execute("SELECT group_name FROM groups WHERE group_id = " + groupID, 
+				       [], function(err, results) {
+					if (err) {
+						console.log(err);
+					} else {
+						callback(results);
+					}
+				});
+			}
+		});
+	}
+
+	db.prototype.getGroups = function(username, callback) {
+		console.log('getting groups where use is in: ' + username);
+		oracle.connect(connectData, function(err, connection) {
+			if (err) {
+				console.log(err);
+			} else {
+				connection.execute("SELECT group_id FROM in_group WHERE username = '" + username + "'", 
+				       [], function(err, results) {
+					if (err) {
+						console.log(err);
+					} else {
+						callback(results);
+					}
+				});
+			}
+		});
+	}
+
+	db.prototype.getGroupMembers = function(groupID, callback) {
+		console.log('getting group members of groupID: ' + groupID);
+		oracle.connect(connectData, function(err, connection) {
+			if (err) {
+				console.log(err);
+			} else {
+				connection.execute("SELECT username FROM in_group WHERE group_id =" + groupID, 
+				       [], function(err, results) {
+					if (err) {
+						console.log(err);
+					} else {
+						callback(results);
+					}
+				});
+			}
+		});
+	}
 	
+	db.prototype.removeUserFromGroup = function (groupID, username, callback) {
+		console.log('removing user: ' + username + ', from group: ' + groupID);
+		oracle.connect(connectData, function(err, connection) {
+			if (err) {
+				console.log(err);
+			} else {
+				connection.execute("DELETE FROM in_group WHERE username='" 
+					+ username + "' AND group_id=" + groupID,
+				       [], function(err, results) {
+					if (err) {
+						console.log(err);
+					} else {
+						callback(results);
+					}
+				});
+			}
+		});
+	}
+	
+	db.prototype.addUserToGroup = function(groupID, username, callback) {
+		console.log('adding user: ' + username + ', to group: ' + groupID);
+		oracle.connect(connectData, function(err, connection) {
+			if (err) {
+				console.log(err);
+			} else {
+				connection.execute("INSERT INTO in_group (group_id, username) "
+					+ "VALUES (" + groupID + ",'" + username + "')",
+				       [], function(err, results) {
+					if (err) {
+						console.log(err);
+					} else {
+						callback(results);
+					}
+				});
+			}
+		});
+	}
+	
+	function getNextAvailalbleGroupId(callback) {
+		console.log('getting max group_id');
+		oracle.connect(connectData, function(err, connection) {
+			if (err) {
+				console.log(err);
+			} else {
+				connection.execute("SELECT MAX(group_id) FROM groups",
+				       [], function(err, results) {
+					if (err) {
+						console.log(err);
+					} else {
+						callback(results);
+					}
+				});
+			}
+		});
+	}
+
+	db.prototype.createGroup = function(groupName, callback) {
+		getNextAvailalbleGroupId(function(maxID){
+			var groupID = maxID + 1;
+			console.log("new groupID: " + groupID);
+			console.log('creating group: ' +  groupName 
+				+ 'with groupID: ' + groupID);
+			oracle.connect(connectData, function(err, connection) {
+				if (err) {
+					console.log(err);
+				} else {
+					connection.execute("",
+					       [], function(err, results) {
+						if (err) {
+							console.log(err);
+						} else {
+							callback(results);
+						}
+					});
+				}
+			});
+		});
+	};
+		
+	
+	db.prototype.deleteGroup = function(groupID, callback) {
+		oracle.connect(connectData, function(err, connection) {
+			if (err) {
+				console.log(err);
+			} else {
+				connection.execute("DELETE FROM in_group WHERE group_id=" 
+					+ groupID + "; DELETE FROM groups WHERE group_id=" + groupID,
+				       [], function(err, results) {
+					if (err) {
+						console.log(err);
+					} else {
+						callback(results);
+					}
+				});
+			}
+		});
+	}
+
+	db.prototype.editGroupName = function(groupID, newName, callback) {
+		oracle.connect(connectData, function(err, connection) {
+			if (err) {
+				console.log(err);
+			} else {
+				connection.execute("UPDATE groups SET group_name ='" + newName
+					+ "' WHERE group_id=" + groupID,
+				       [], function(err, results) {
+					if (err) {
+						console.log(err);
+					} else {
+						callback(results);
+					}
+				});
+			}
+		});
+	}	
 
 
 	module.exports = db;
