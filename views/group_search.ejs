@@ -1,0 +1,61 @@
+<!-- Embed the layout.ejs file -->
+<% layout( 'layout' ) -%>
+
+
+<head></head> 
+
+MinLat:<br>
+<input type="text" id="minlat"> 
+<br>
+MaxLat:<br>
+<input type="text" id="maxlat"> 
+<br>
+MinLong:<br>
+<input type="text" id="minlong"> 
+<br> 
+MaxLong:<br>
+<input type="text" id="maxlong"> 
+<br> 
+
+<script>
+	
+  $(document).ready(function() {
+  	
+  	// Upon click of the AJAX request...
+  	$("#submit").click(function() {
+  		// Fetch some data from the server via an AJAX
+  		// call.  
+  		
+  		var minlat = $("#minlat").val(); 
+  		var maxlat = $("#maxlat").val();
+  		var minlong = $("#minlong").val();  
+      var maxlong = $("#maxlong").val(); 
+  		minlat = minlat.trim(); 
+  		maxlat = maxlat.trim();
+  		minlong = minlong.trim(); 
+      maxlong = maxlong.trim(); 
+  		if (minlat.length != 0 && maxlat.length != 0 && minlong.length != 0 && maxlong.length != 0) { 
+        var info = {"minlat": minlat, "maxlat": maxlat, "minlong": minlong, "maxlong": maxlong}; 
+  		  
+        $.post("/group_search", info,function(data, status) {
+            // go to home page 
+            console.log(data);             
+        }); 
+
+
+  		}
+  		else { 
+  			$("#error").text("All Fields Must be filled.");
+  			$("#error").css('color', 'red');
+  		}
+  	});
+  	
+  });
+  
+</script>
+
+  <button id="submit">Search</button>
+  <span id="data"></span>
+  <br>
+  <span id="error"></span> 
+    </div>
