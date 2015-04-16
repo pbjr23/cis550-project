@@ -39,7 +39,8 @@ MaxLong:<br>
   		  
         $.post("/group_search", info,function(data, status) {
             // go to home page 
-            console.log(data);             
+            console.log(data[0]); 
+            console.log("done");              
         }); 
 
 

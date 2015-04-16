@@ -150,9 +150,15 @@
 			if (err) {
 				console.log(err);
 			} else {
-				connection.execute("SELECT * FROM restaurant WHERE lat >= " + minLat + 
-					     " AND lon >= " + minLon + " AND lat <= " + maxLat + 
-					     " AND lon <= " + maxLon, 
+				//gives top 10 results according to stars
+				var q = "SELECT *"
+						+ " FROM (select * from restaurant"
+						+ " WHERE lat >= " + minLat
+						+ " AND lon >= " + minLon
+						+ " AND lat <= " + maxLat
+						+ " AND lon <= " + maxLon
+						+ "	ORDER BY stars DESC) WHERE ROWNUM <= 10";
+				connection.execute(q, 
 				       [], function(err, results) {
 					if (err) {
 						console.log(err);
@@ -353,6 +359,10 @@
 												console.log("4"); 
 												console.log(err);
 											} else {
+												console.log(lat);
+												console.log(lon);
+												console.log("INSERT INTO address (address_label,username,address,lat,lon) "
+					+ "VALUES ('" + addressLabel + "','" + username + "','" + address + "'," + lat + "," + lon + ")");
 												connection.execute(
 					"INSERT INTO address (address_label,username,address,lat,lon) "
 					+ "VALUES ('" + addressLabel + "','" + username + "','" + address + "'," + lat + "," + lon + ")",
