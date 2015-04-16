@@ -37,7 +37,8 @@ init_app(app);
 
 
 // When we get a request for {app}/ we should call routes/index.js
-app.get('/', routes.home); 
+app.get('/', routes.signup); 
+app.get('/home', routes.home);  
 app.get('/signup', routes.signup);
 app.post('/create_user', routes.create_user);  
 app.post('/group_search', routes.group_search);

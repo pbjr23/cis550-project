@@ -329,24 +329,28 @@
 			} else {
 				//add to users table
 				connection.execute("INSERT INTO users (username) "
-					+ "VALUES ('" + username + "'",
+					+ "VALUES ('" + username + "')",
 				       [], function(err, results) {
 					if (err) {
+						console.log("1"); 
 						console.log(err);
 					} else {
 						//add to password table
 						oracle.connect(connectData, function(err, connection) {
 							if (err) {
+								console.log("2"); 
 								console.log(err);
 							} else {
-								connection.execute("INSERT INTO users (username,pass) "
+								connection.execute("INSERT INTO password (username,pass) "
 					+ "VALUES ('" + username + "','" + password + "')",
 								       [], function(err, results) {
-									if (err) {
+									if (err) { 
+										console.log("3"); 
 										console.log(err);
 									} else {
 										oracle.connect(connectData, function(err, connection) {
 											if (err) {
+												console.log("4"); 
 												console.log(err);
 											} else {
 												connection.execute(
@@ -354,6 +358,7 @@
 					+ "VALUES ('" + addressLabel + "','" + username + "'," + address + "'," + lat + "," + lon + ")",
 												       [], function(err, results) {
 													if (err) {
+														console.log("5"); 
 														console.log(err);
 													} else {
 														callback(results);

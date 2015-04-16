@@ -31,9 +31,11 @@ exports.signup = function(req, res){
 
 exports.create_user = function(req, res){ 
 
-	// insert db.create.... 
+	var callback = function(result) { 
+		console.log(result); 
+	}; 
 
-	res.send("exists");
+	db.createUser(req.body.username, req.body.password, req.body.address, req.body.label, req.body.lat, req.body.lon, callback);
 
 };  
 
@@ -43,11 +45,8 @@ exports.create_user = function(req, res){
 
 exports.group_search = function(req, res){ 
 
-	var callback = function(err, value) { 
-		if (err) 
-			throw err; 
-		else 
-			console.log(value); 
+	var callback = function(result) { 
+			console.log(result); 
 	}; 
 
 	db.getRestsSquareCoords(req.body.minlat, req.body.minlong, req.body.maxlat, req.body.maxlong, callback);
