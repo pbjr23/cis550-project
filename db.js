@@ -225,6 +225,177 @@
 		});
 	}
 
+	db.prototype.addFriend = function(username, friendUsername, callback) {
+		console.log('adding friend for user: ' + username 
+			+ ', friend: ' + friendUsername);
+		oracle.connect(connectData, function(err, connection) {
+			if (err) {
+				console.log(err);
+			} else {
+				connection.execute('INSERT INTO friends (user1, user2) '
+					+ "VALUES ('" + username + "','" + friendUsername + "')",
+				       [], function(err, results) {
+					if (err) {
+						console.log(err);
+					} else {
+						callback(results);
+					}
+				});
+			}
+		});
+	}
+
+	db.prototype.removeSingleFriend = function(username, friendUsername, callback) {
+		console.log('removing friend for user: ' + username 
+			+ ', friend: ' + friendUsername);
+		oracle.connect(connectData, function(err, connection) {
+			if (err) {
+				console.log(err);
+			} else {
+				connection.execute("DELETE FROM friends WHERE user1='" + 
+					username + "' AND user2='" + friendUsername + "'",
+				       [], function(err, results) {
+					if (err) {
+						console.log(err);
+					} else {
+						callback(results);
+					}
+				});
+			}
+		});
+	}
+
+	db.prototype.removeAllFriends = function(username, callback) {
+		oracle.connect(connectData, function(err, connection) {
+			if (err) {
+				console.log(err);
+			} else {
+				connection.execute("DELETE FROM friends WHERE user1='" + 
+					username + "'",
+				       [], function(err, results) {
+					if (err) {
+						console.log(err);
+					} else {
+						callback(results);
+					}
+				});
+			}
+		});
+	}
+
+	/* users table methods */
+
+	db.prototype.getFbId = function(username, callback) {
+		console.log('getting FBid of: ' + username);
+		oracle.connect(connectData, function(err, connection) {
+			if (err) {
+				console.log(err);
+			} else {
+				connection.execute("SELECT fb_id FROM users WHERE username = '" + username + "'", 
+				       [], function(err, results) {
+					if (err) {
+						console.log(err);
+					} else {
+						callback(results);
+					}
+				});
+			}
+		});
+	}
+
+	db.prototype.getAllUserInfo = function(username, callback) {
+		console.log('getting all user info of: ' + username);
+		oracle.connect(connectData, function(err, connection) {
+			if (err) {
+				console.log(err);
+			} else {
+				connection.execute("SELECT * FROM users WHERE username = '" + username + "'", 
+				       [], function(err, results) {
+					if (err) {
+						console.log(err);
+					} else {
+						callback(results);
+					}
+				});
+			}
+		});
+	}
+
+	db.prototype.createUser = function(username, password, address, addressLabel, lat, lon, callback) {
+		console.log('adding user: ' + username);
+		oracle.connect(connectData, function(err, connection) {
+			if (err) {
+				console.log(err);
+			} else {
+				//add to users table
+				connection.execute("INSERT INTO users (username) "
+					+ "VALUES ('" + username + "'",
+				       [], function(err, results) {
+					if (err) {
+						console.log(err);
+					} else {
+						//add to password table
+						oracle.connect(connectData, function(err, connection) {
+							if (err) {
+								console.log(err);
+							} else {
+								connection.execute("INSERT INTO users (username,pass) "
+					+ "VALUES ('" + username + "','" + password + "')",
+								       [], function(err, results) {
+									if (err) {
+										console.log(err);
+									} else {
+										oracle.connect(connectData, function(err, connection) {
+											if (err) {
+												console.log(err);
+											} else {
+												connection.execute(
+					"INSERT INTO address (addressLabel,username,address,lat,lon) "
+					+ "VALUES ('" + addressLabel + "','" + username + "'," + address + "'," + lat + "," + lon + ")",
+												       [], function(err, results) {
+													if (err) {
+														console.log(err);
+													} else {
+														callback(results);
+													}
+												});
+											}
+										});
+										callback(results);
+									}
+								});
+							}
+						});
+						callback(results);
+					}
+				});
+			}
+		});
+	}
+
+
+	/* password table methods */
+	db.prototype.getPassword = function(username, callback) {
+		console.log('getting password for: ' + username);
+		oracle.connect(connectData, function(err, connection) {
+			if (err) {
+				console.log(err);
+			} else {
+				connection.execute("SELECT pass FROM password WHERE username = '" + username + "'",
+				       [], function(err, results) {
+					if (err) {
+						console.log(err);
+					} else {
+						callback(results);
+					}
+				});
+			}
+		});
+	}
+
+	
+
+
 	module.exports = db;
 
 }());
