@@ -46,6 +46,7 @@ app.get('/results', routes.results);
 app.post('/check_pass', routes.check_pass);
 app.get('/home', routes.home);  
 app.get('/signup', routes.signup);
+app.get('/groups', routes.groups);
 app.post('/create_user', routes.create_user);  
 app.post('/group_search', routes.group_search);
 

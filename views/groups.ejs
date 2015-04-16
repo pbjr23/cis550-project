@@ -1,0 +1,79 @@
+<!-- Embed the layout.ejs file -->
+<% layout( 'layout' ) -%>
+
+
+<head></head> 
+
+
+<ul>
+<% for(var i=0; i<groups.length; i++) {%>
+   <li><%= groups[i] %></li>
+<% } %>
+</ul>
+
+
+New Username:<br>
+<input type="text" id="username"> 
+<br>
+New Password:<br>
+<input type="password" id="password"> 
+<br>
+Address:<br>
+<input type="text" id="address"> 
+<br>  
+Address Label:<br> 
+<input type="text" id="label"> 
+<br> 
+Latitude:<br>
+<input type="text" id="latitude"> 
+<br> 
+Longitude:<br>
+<input type="text" id="longitude"> 
+<br>
+
+<script>
+  
+  $(document).ready(function() {
+    
+    // Upon click of the AJAX request...
+    $("#submit").click(function() {
+      // Fetch some data from the server via an AJAX
+      // call.  
+      
+      var username = $("#username").val(); 
+      var password = $("#password").val();
+      var address = $("#address").val();  
+      var latitude = $("#latitude").val(); 
+      var longitude = $("#longitude").val(); 
+      var label = $("#label").val(); 
+      username = username.trim(); 
+      password = password.trim();
+      address = address.trim(); 
+      latitude = latitude.trim(); 
+      longitude = longitude.trim(); 
+      label = label.trim(); 
+      if (username.length != 0 && password.length != 0 && address.length != 0 && latitude.length != 0 && longitude.length != 0 && label.length != 0) { 
+        var info = {"username": username, "password": password, "address": address, "lat": latitude, "lon": longitude, "label": label}; 
+        
+        $.post("/create_user", info,function(data, status) {
+            // go to home page 
+            location.href = "/home";            
+        }); 
+
+
+      }
+      else { 
+        $("#error").text("All Fields Must be filled.");
+        $("#error").css('color', 'red');
+      }
+    });
+    
+  });
+  
+</script>
+
+  <button id="submit">Create new user</button>
+  <span id="data"></span>
+  <br>
+  <span id="error"></span> 
+    </div>

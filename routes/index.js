@@ -37,6 +37,25 @@ exports.login = function(req, res){
   });
 };
 
+
+exports.groups = function(req, res){
+  var groups = [];
+  var callback = function(results) { 
+  	groups = results;
+  };
+  db.getGroups("test6", callback);
+  res.render('groups.ejs', { 
+	  title: 'Groups',
+	  groups: groups 
+  });
+};
+
+// app.post('/game.html', function(req, res){
+//     var user = req.param('name');
+//     console.log(user);
+//     res.render( 'game.html', { user:user } );
+// });
+
 /*
  * Create new user 
  */
