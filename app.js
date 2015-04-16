@@ -9,8 +9,6 @@
  */
 var express = require('express')
   , routes = require('./routes')
-  , actor = require('./routes/actor')
-  , director = require('./routes/directors')
   , rest = require('./routes/rest')
   , http = require('http')
   , path = require('path')
