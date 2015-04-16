@@ -35,6 +35,9 @@ routes.init(dbObj);
 // .. and our app
 init_app(app);
 
+testRoute.init(dbObj);
+app.get('/test', testRoute.testFunction);
+
 
 // When we get a request for {app}/ we should call routes/index.js
 app.get('/', routes.signup); 
