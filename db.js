@@ -213,7 +213,7 @@
 			if (err) {
 				console.log(err);
 			} else {
-				connection.execute("SELECT user2 FROM friends WHERE user1 = '" + username "'", 
+				connection.execute("SELECT user2 FROM friends WHERE user1 = '" + username + "'", 
 				       [], function(err, results) {
 					if (err) {
 						console.log(err);
