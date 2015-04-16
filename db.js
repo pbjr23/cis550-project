@@ -284,14 +284,14 @@
 	}
 
 	/* users table methods */
-
+	//TODO: fb_id returning null
 	db.prototype.getFbId = function(username, callback) {
 		console.log('getting FBid of: ' + username);
 		oracle.connect(connectData, function(err, connection) {
 			if (err) {
 				console.log(err);
 			} else {
-				connection.execute("SELECT fb_id FROM users WHERE username = '" + username + "'", 
+				connection.execute("SELECT fb_id FROM users WHERE username ='" + username + "'", 
 				       [], function(err, results) {
 					if (err) {
 						console.log(err);
@@ -302,7 +302,7 @@
 			}
 		});
 	}
-
+	//TODO: need to get address and other info
 	db.prototype.getAllUserInfo = function(username, callback) {
 		console.log('getting all user info of: ' + username);
 		oracle.connect(connectData, function(err, connection) {
@@ -329,7 +329,7 @@
 			} else {
 				//add to users table
 				connection.execute("INSERT INTO users (username) "
-					+ "VALUES ('" + username + "'",
+					+ "VALUES ('" + username + "')",
 				       [], function(err, results) {
 					if (err) {
 						console.log(err);
@@ -339,7 +339,7 @@
 							if (err) {
 								console.log(err);
 							} else {
-								connection.execute("INSERT INTO users (username,pass) "
+								connection.execute("INSERT INTO password (username,pass) "
 					+ "VALUES ('" + username + "','" + password + "')",
 								       [], function(err, results) {
 									if (err) {
@@ -350,7 +350,7 @@
 												console.log(err);
 											} else {
 												connection.execute(
-					"INSERT INTO address (addressLabel,username,address,lat,lon) "
+					"INSERT INTO address (address_label,username,address,lat,lon) "
 					+ "VALUES ('" + addressLabel + "','" + username + "','" + address + "'," + lat + "," + lon + ")",
 												       [], function(err, results) {
 													if (err) {
