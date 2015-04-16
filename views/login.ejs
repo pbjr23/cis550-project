@@ -1,0 +1,56 @@
+<!-- Embed the layout.ejs file -->
+<% layout( 'layout' ) -%>
+
+
+<head></head> 
+
+Username:<br>
+<input type="text" id="username"> 
+<br>
+Password:<br>
+<input type="password" id="password"> 
+<br>
+
+<script>
+	
+  $(document).ready(function() {
+  	
+  	// Upon click of the AJAX request...
+  	$("#submit").click(function() {
+  		// Fetch some data from the server via an AJAX
+  		// call.  
+  		
+  		var username = $("#username").val(); 
+  		var password = $("#password").val();
+  		username = username.trim(); 
+  		password = password.trim();
+  		if (username.length != 0 && password.length != 0) { 
+        var info = {"username": username, "password": password}; 
+  		  
+        $.post("/check_pass", info,function(data, status) {
+            // go to home page 
+            if (data == "success") 
+              location.href = "/home";  
+            else if (data == "failure") {
+              $("#error").text("Incorrect Password");
+              $("#error").css('color', 'red');  
+            }         
+        }); 
+
+
+  		}
+  		else { 
+  			$("#error").text("All Fields Must be filled.");
+  			$("#error").css('color', 'red');
+  		}
+  	});
+  	
+  });
+  
+</script>
+
+  <button id="submit">Login</button>
+  <span id="data"></span>
+  <br>
+  <span id="error"></span> 
+    </div>

@@ -353,9 +353,13 @@
 												console.log("4"); 
 												console.log(err);
 											} else {
+												console.log(lat);
+												console.log(lon);
+												console.log("INSERT INTO address (address_label,username,address,lat,lon) "
+					+ "VALUES ('" + addressLabel + "','" + username + "','" + address + "'," + lat + "," + lon + ")");
 												connection.execute(
-					"INSERT INTO address (addressLabel,username,address,lat,lon) "
-					+ "VALUES ('" + addressLabel + "','" + username + "'," + address + "'," + lat + "," + lon + ")",
+					"INSERT INTO address (address_label,username,address,lat,lon) "
+					+ "VALUES ('" + addressLabel + "','" + username + "','" + address + "'," + lat + "," + lon + ")",
 												       [], function(err, results) {
 													if (err) {
 														console.log("5"); 
