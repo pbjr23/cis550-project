@@ -43,6 +43,7 @@ app.get('/test', testRoute.testFunction);
 app.get('/', routes.signup); 
 app.get('/home', routes.home);  
 app.get('/signup', routes.signup);
+app.get('/groups', routes.groups);
 app.post('/create_user', routes.create_user);  
 app.post('/group_search', routes.group_search);
 
