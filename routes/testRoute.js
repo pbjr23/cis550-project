@@ -4,9 +4,14 @@ var async = require('async');
 exports.init = function(dbObj) {
 	db = dbObj;
 }
-
 exports.testFunction = function(req, res) {
-	db.getRestsSquareCoords(40.4, -80, 40.47, -79.9, function(result) {
+	db.deleteGroup(1, function(results) {
+		console.log(results);
+	});
+}
+
+exports.addUser = function(req, res) {
+	db.createUser('testUser4', 'testPassword', 'testAddress', 'home', 40, -70, function(result) {
 		console.log(result);
 	});
 }

@@ -412,8 +412,9 @@
 		});
 	}
 
+	//TODO: query is fine in terminal, but not all results are returned here
 	db.prototype.getGroups = function(username, callback) {
-		console.log('getting groups where use is in: ' + username);
+		console.log('getting groups where user is in: ' + username);
 		oracle.connect(connectData, function(err, connection) {
 			if (err) {
 				console.log(err);
@@ -467,6 +468,8 @@
 		});
 	}
 	
+	// TODO: ORA-00001: unique constraint (EQUIDIST.IN_GROUP_GROUP_ID) violated
+	// somehow duplicate group ID's is not allowed
 	db.prototype.addUserToGroup = function(groupID, username, callback) {
 		console.log('adding user: ' + username + ', to group: ' + groupID);
 		oracle.connect(connectData, function(err, connection) {
@@ -492,12 +495,16 @@
 			if (err) {
 				console.log(err);
 			} else {
-				connection.execute("SELECT MAX(group_id) FROM groups",
+				connection.execute("SELECT MAX(group_id) AS maxID FROM groups",
 				       [], function(err, results) {
 					if (err) {
 						console.log(err);
 					} else {
-						callback(results);
+						//TODO: maxID always returning null despite it being ok
+						// when query is run in terminal
+						console.log(results[0].MAXID);
+						//callback(results[0]);
+						callback(10);
 					}
 				});
 			}
@@ -509,12 +516,14 @@
 			var groupID = maxID + 1;
 			console.log("new groupID: " + groupID);
 			console.log('creating group: ' +  groupName 
-				+ 'with groupID: ' + groupID);
+				+ ' with groupID: ' + groupID);
 			oracle.connect(connectData, function(err, connection) {
 				if (err) {
 					console.log(err);
 				} else {
-					connection.execute("",
+					connection.execute("INSERT INTO groups " 
+						+ "(group_id, group_name) VALUES (" + groupID + ",'"
+					    + groupName + "')",
 					       [], function(err, results) {
 						if (err) {
 							console.log(err);
@@ -527,18 +536,34 @@
 		});
 	};
 		
-	
+	//TODO: deletions do not occur, but query works in terminal
 	db.prototype.deleteGroup = function(groupID, callback) {
 		oracle.connect(connectData, function(err, connection) {
 			if (err) {
 				console.log(err);
 			} else {
+				//delete users from in_group
 				connection.execute("DELETE FROM in_group WHERE group_id=" 
-					+ groupID + "; DELETE FROM groups WHERE group_id=" + groupID,
+					+ groupID,
 				       [], function(err, results) {
 					if (err) {
 						console.log(err);
 					} else {
+						//delete group from groups
+						oracle.connect(connectData, function(err, connection) {
+							if (err) {
+								console.log(err);
+							} else {
+								connection.execute(" DELETE FROM groups WHERE group_id=" + groupID,
+								       [], function(err, results) {
+									if (err) {
+										console.log(err);
+									} else {
+										callback(results);
+									}
+								});
+							}
+						});
 						callback(results);
 					}
 				});
@@ -546,6 +571,7 @@
 		});
 	}
 
+	//TODO: not tested
 	db.prototype.editGroupName = function(groupID, newName, callback) {
 		oracle.connect(connectData, function(err, connection) {
 			if (err) {
