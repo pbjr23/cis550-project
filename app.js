@@ -12,24 +12,33 @@ var express = require('express')
   , http = require('http')
   , path = require('path')
   , stylus =  require("stylus")
-  , nib =     require("nib")
+  , nib =     require("nib") 
+  , engine = require('ejs-locals')
+  , bodyParser = require('body-parser')
   , testRoute = require("./routes/testRoute")
 ;
 
 // Initialize express
 var app = express();
+
+// set the view engine to ejs
+app.engine('ejs', engine);
+app.set('view engine', 'ejs');
+
+app.use(bodyParser.urlencoded({extended: true }));
+app.use(bodyParser.json());
+
 var db = require('./db.js');
 var dbObj = new db();
 
-testRoute.init(dbObj);
-app.get('/test', testRoute.testFunction);
+routes.init(dbObj);
 // .. and our app
 init_app(app);
 
 
 // When we get a request for {app}/ we should call routes/index.js
 app.get('/', routes.do_work);
-// when we get a request for {app/actor} we should call routes/actor.js
+app.post('/create_user', routes.create_user); 
 
 // Listen on the port we specify
 http.createServer(app).listen(app.get('port'), function(){
@@ -50,9 +59,8 @@ function init_app() {
 	// all environments
 	app.set('port', process.env.PORT || 8080);
 	
-	// Use Jade to do views
 	app.set('views', __dirname + '/views');
-	app.set('view engine', 'jade');
+
 
 	app.use(express.favicon());
 	// Set the express logger: log to the console in dev mode

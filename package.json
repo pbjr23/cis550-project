@@ -19,7 +19,9 @@
   "dependencies": {
     "async": "^0.9.0",
     "express": "3.2.6",
-    "jade": "*",
+    "ejs": "^1.0.0",
+    "ejs-locals": "*",
+    "body-parser": "*",
     "nib": "*",
     "oracle": "*",
     "stylus": "*"
