@@ -40,7 +40,7 @@ app.get('/test', testRoute.testFunction);
 
 
 // When we get a request for {app}/ we should call routes/index.js
-app.get('/', routes.signup); 
+app.get('/', routes.login); 
 app.get('/login', routes.login); 
 app.get('/results', routes.results); 
 app.post('/check_pass', routes.check_pass);
