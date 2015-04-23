@@ -518,8 +518,8 @@
 						//TODO: maxID always returning null despite it being ok
 						// when query is run in terminal
 						console.log(results[0].MAXID);
-						//callback(results[0]);
-						callback(10);
+						callback(results[0].MAXID);
+						//callback(10);
 					}
 				});
 			}
