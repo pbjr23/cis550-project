@@ -14,9 +14,13 @@ exports.init = function(dbObj) {
  */
 
 exports.home = function(req, res){
-  res.render('group_search.ejs', { 
-	  title: 'Group Search' 
+  var callback = function(results) { 
+  	res.render('home.ejs', { 
+	  title: 'Homepage',
+	  groups: results
   });
+  };
+  db.getGroups(process.env.username, callback);
 };  
 
 exports.results = function(req, res){
@@ -50,12 +54,6 @@ exports.groups = function(req, res){
   });
 };
 
-// app.post('/game.html', function(req, res){
-//     var user = req.param('name');
-//     console.log(user);
-//     res.render( 'game.html', { user:user } );
-// });
-
 /*
  * Create new user 
  */
@@ -63,6 +61,7 @@ exports.groups = function(req, res){
 exports.create_user = function(req, res){ 
 
 	var callback = function(result) { 
+		process.env.username = req.body.username;
 		res.send("");  
 	}; 
 
@@ -75,8 +74,10 @@ exports.check_pass = function(req, res){
 	var callback = function(result) { 
 		var json = result[0]; 
 		var password = json.PASS; 
-		if (req.body.password === password) 
+		if (req.body.password === password) {
+			process.env.username = req.body.username;
 			res.send("success"); 
+		}
 		else 
 			res.send("failure");   
 	}; 

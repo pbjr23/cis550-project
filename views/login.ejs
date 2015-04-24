@@ -30,7 +30,7 @@ Password:<br>
         $.post("/check_pass", info,function(data, status) {
             // go to home page 
             if (data == "success") 
-              location.href = "/home";  
+              location.href = "/home";
             else if (data == "failure") {
               $("#error").text("Incorrect Password");
               $("#error").css('color', 'red');  
@@ -46,7 +46,6 @@ Password:<br>
   	});
   	
   });
-  //console.log("Hello");
 </script>
 
   <button id="submit">Login</button>

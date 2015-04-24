@@ -1,0 +1,12 @@
+<!-- Embed the layout.ejs file -->
+<% layout( 'layout' ) -%>
+
+
+<head></head> 
+
+Groups:<br>
+<ul>
+<% for(var i=0; i<groups.length; i++) {%>
+   <li><a href="/group?id=<%= groups[i] %>") ><%= groups[i] %></a></li>
+<% } %>
+</ul>
