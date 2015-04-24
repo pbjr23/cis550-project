@@ -41,6 +41,11 @@ exports.login = function(req, res){
   });
 };
 
+exports.user_profile = function(req, res){
+  res.render('user_profile.ejs', { 
+	  title: 'User Profile' 
+  });
+};
 
 exports.groups = function(req, res){
   var groups = [];
