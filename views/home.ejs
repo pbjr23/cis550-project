@@ -6,18 +6,23 @@
 
 Groups:<br>
 <ul>
-<% for(var i=0; i<groups.length; i++) {%>
+<% if (groups != null) for(var i=0; i<groups.length; i++) {%>
    <li><a href="/group?id=<%= groups[i] %>") ><%= groups[i] %></a></li>
 <% } %>
-</ul>
+</ul><br>
 
 <script>
 	$(document).ready(function() {
   	
   	// Upon click of the AJAX request...
-  	$("#submit").click(function() {
+  	$("#create_group").click(function() {
   	
   		
+  	});
+
+  	// Upon click of the AJAX request...
+  	$("#user_profile").click(function() {
+  		location.href = "/user_profile";
   	});
   	
   });
@@ -25,7 +30,6 @@ Groups:<br>
 </script>
 
 
-<button id="submit">Create new group</button>
-<br>
-<a href="/user_profile">Edit Profile</a>
-
+<button id="create_group">Create New Group</button>
+<br><br>
+<button id="user_profile">Edit Profile</button>
