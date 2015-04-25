@@ -32,7 +32,7 @@ New Address:<br>
         $.post("/edit_address", info,function(data, status) {
             if (data == "success")
             // go to home page 
-            location.href = "/home";
+            location.href = "/user_profile";
             else if (data == "failure") {
               $("#error").text("Invalid address.");
               $("#error").css('color', 'red');
