@@ -761,7 +761,7 @@
 			}
 		});
 	}
-
+	//returns new group ID
 	db.prototype.createGroup = function(groupName, callback) {
 		getNextAvailalbleGroupId(function(maxID){
 			var groupID = maxID + 1;
@@ -781,7 +781,7 @@
 							console.log(err);
 							callback(err, null);
 						} else {
-							callback(null, results);
+							callback(null, groupID);
 						}
 					});
 				}
