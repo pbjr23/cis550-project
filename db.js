@@ -261,6 +261,31 @@
 		});
 	}
 
+	db.prototype.changeUserAddressLatLon = 
+		function(username, newAddress, newLabel, newLat, newLon, callback) {
+		oracle.connect(connectData, function(err, connection) {
+			if (err) {
+				console.log(err); 
+				callback(err, null);
+			} else {
+				connection.execute("UPDATE address "
+					+ "SET address ='" + newAddress
+					+ "', address_label='" + newLabel
+					+ "', lat =" + newLat
+					+ ", lon =" + newLon
+					+ " WHERE username='" + username + "'",
+				       [], function(err, results) {
+					if (err) {
+						console.log(err);
+						callback(err, null);
+					} else {
+						callback(null, results);
+					}
+				});
+			}
+		});
+	}	
+
 	// returns single object with format { FIRST_NAME: 'abc', LAST_NAME: 'def'}
 	db.prototype.getUserName = function(username, callback) {
 		console.log('getting name of user: ' + username);

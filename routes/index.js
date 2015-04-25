@@ -20,11 +20,12 @@ exports.home = function(req, res){
   	};
   	db.getGroups(req.session.username, callback); 
   }
-  // return "not logged in"
+  // render login page 
   else 
-  	res.render('login.ejs', { 
-	  title: 'Login' 
-  });
+  // 	res.render('login.ejs', { 
+	 //  title: 'Login' 
+  // }); 
+	exports.login(req,res);
 };  
 
 exports.results = function(req, res){

@@ -15,6 +15,9 @@ Password:<br>
 	
   $(document).ready(function() {
   	
+    if (location.pathname != '/login') 
+      location.pathname = '/login';
+
   	// Upon click of the AJAX request...
   	$("#submit").click(function() {
   		// Fetch some data from the server via an AJAX
