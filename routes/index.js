@@ -59,18 +59,6 @@ exports.groups = function(req, res){
   });
 };
 
-exports.group = function(req, res) {
-	var groupID = req.query.groupID;
-	db.getGroupMembers(groupID, function(members) {
-		db.getGroupName(groupID, function(groupName) {
-			res.render('group.ejs', {
-				title: groupName,
-				members: members
-			});
-		});
-	});
-};
-
 /*
  * Create new user 
  */
