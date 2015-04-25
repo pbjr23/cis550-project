@@ -234,6 +234,32 @@
 			}
 		});
 	}
+	//returns single object with all columns in address table
+	// sample format: { ADDRESS_LABEL: 'home',
+  	//                  USERNAME: 'userA',
+  	//					ADDRESS: 'testAddress',
+  	//					LAT: 40,
+  	// 					LON: -70 }
+	db.prototype.getUserAddressAll = function(username, callback) {
+		console.log('getting user address info for: ' + username);
+		oracle.connect(connectData, function(err, connection) {
+			if (err) {
+				console.log(err); 
+				callback(err, null);
+			} else {
+				connection.execute("SELECT * FROM address WHERE username = '" 
+					+ username + "'", 
+				       [], function(err, results) {
+					if (err) {
+						console.log(err); 
+						callback(err, null);
+					} else {
+						callback(null, results[0]);
+					}
+				});
+			}
+		});
+	}
 
 	// returns single object with format { FIRST_NAME: 'abc', LAST_NAME: 'def'}
 	db.prototype.getUserName = function(username, callback) {
