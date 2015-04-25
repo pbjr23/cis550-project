@@ -5,7 +5,7 @@ exports.init = function(dbObj) {
 	db = dbObj;
 }
 exports.testFunction = function(req, res) {
-	db.getGroupMembers(1, function(results) {
+	db.addUserToGroup(1, 'userB', function(results) {
 		console.log(results);
 	});
 	//db.getRestsSquareCoords(36.00, -115.4, 36.2, -115.2, function(results) {

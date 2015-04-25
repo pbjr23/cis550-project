@@ -421,7 +421,8 @@
 					if (err) {
 						console.log(err);
 					} else {
-						callback(results);
+						console.log(results);
+						callback(results[0].GROUP_NAME);
 					}
 				});
 			}
