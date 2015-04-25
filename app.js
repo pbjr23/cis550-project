@@ -50,6 +50,7 @@ app.get('/signup', routes.signup);
 app.post('/create_user', routes.create_user);  
 app.post('/group_search', routes.group_search);
 app.get('/user_profile', routes.user_profile);
+app.get('/group', routes.group);
 
 // Listen on the port we specify
 http.createServer(app).listen(app.get('port'), function(){
