@@ -15,7 +15,9 @@ var express = require('express')
   , nib =     require("nib") 
   , engine = require('ejs-locals')
   , bodyParser = require('body-parser')
-  , testRoute = require("./routes/testRoute")
+  , testRoute = require("./routes/testRoute") 
+  , cookieParser = require('cookie-parser') 
+  , session = require('express-session')
 ;
 
 // Initialize express
@@ -27,6 +29,11 @@ app.set('view engine', 'ejs');
 
 app.use(bodyParser.urlencoded({extended: true }));
 app.use(bodyParser.json());
+
+app.use( express.static( path.join( __dirname, 'public' )));
+
+app.use(cookieParser());
+app.use(session({secret: 'yelpTeam'}));
 
 var db = require('./db.js');
 var dbObj = new db();
