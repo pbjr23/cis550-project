@@ -319,49 +319,6 @@
 		});
 	}
 
-	db.prototype.create = function(username, password, address, addressLabel, lat, lon, callback) {
-		console.log('adding user: ' + username);
-		oracle.connect(connectData, function(err, connection) {
-			if (err) {
-				callback(err, null);
-			} else {
-				connection.execute("insert into users (username,password) values ('" + username + "','" + password + "')",
-				       [], function(err, results) {
-					if (err) {
-						console.log(err);
-						callback(err, null);
-					} else {
-						console.log(results);
-						callback(null, results);
-					}
-				});
-			}
-		});
-		//encryptPassword(password, function(encryptedPass) {
-			/*
-			oracle.connect(connectData, function(err, connection) {
-			if (err) {
-				callback(err, null);
-			} else {
-				console.log("here.....");
-				//add to users table
-				connection.execute("INSERT INTO address (address_label,username,address,lat,lon) "
-					+ "VALUES ('" + addressLabel + "','" + username + "','" + address + "'," + lat + "," + lon + ")",
-				       [], function(err, results) {
-					if (err) {
-						console.log(err);
-						callback(err, null);
-					} else {
-						console.log('hereee');
-						console.log(results);
-						
-					}
-				});
-			}
-		//});
-		});*/
-	}
-
 	db.prototype.createUser = function(username, password, address, addressLabel, lat, lon, callback) {
 		console.log('adding user: ' + username);
 		encryptPassword(password, function(encryptedPass) {
@@ -369,10 +326,6 @@
 			if (err) {
 				callback(err, null);
 			} else {
-				console.log("here");
-				//add to users table
-				console.log("INSERT INTO users (username,password) "
-					+ "VALUES ('" + username + "','" + encryptedPass + "')");
 				connection.execute("INSERT INTO users (username,password) "
 					+ "VALUES ('" + username + "','" + encryptedPass + "')",
 				       [], function(err, results) {
@@ -380,7 +333,6 @@
 						console.log(err);
 						callback(err, null);
 					} else {
-						console.log('hereee');
 						console.log(results);
 						oracle.connect(connectData, function(err, connection) {
 					if (err) {
@@ -391,6 +343,7 @@
 					+ "VALUES ('" + addressLabel + "','" + username + "','" + address + "'," + lat + "," + lon + ")",
 					       [], function(err, results2) {
 						if (err) {
+							console.log(err);
 							callback(err, null);
 						} else {
 							callback(null, results2);
@@ -466,8 +419,7 @@
 			}
 		});
 	}
-
-	//TODO: query is fine in terminal, but not all results are returned here
+	// returns array of group ids, which are numbers
 	db.prototype.getGroups = function(username, callback) {
 		console.log('getting groups where user is in: ' + username);
 		oracle.connect(connectData, function(err, connection) {
@@ -477,15 +429,22 @@
 				connection.execute("SELECT group_id FROM in_group WHERE username = '" + username + "'", 
 				       [], function(err, results) {
 					if (err) {
+						console.log(err);
 						callback(err, null);
 					} else {
-						callback(null, results);
+						var ids = [];
+						async.each(results, function(idObj, call) {
+							ids.push(idObj.GROUP_ID);
+							call();
+						}, function() {
+							callback(null, ids);
+						});
 					}
 				});
 			}
 		});
 	}
-
+	// returns array of usernames which are strings
 	db.prototype.getGroupMembers = function(groupID, callback) {
 		console.log('getting group members of groupID: ' + groupID);
 		oracle.connect(connectData, function(err, connection) {
@@ -495,16 +454,16 @@
 				connection.execute("SELECT username FROM in_group WHERE group_id =" + groupID, 
 				       [], function(err, results) {
 					if (err) {
+						console.log(err);
 						callback(err, null);
 					} else {
-						console.log('here');
 						var usernames = [];
 						async.each(results, function(userObj, call) {
 							var name = userObj.USERNAME;
-							usernames.prototype.push(name);
+							usernames.push(name);
 							call();
 						}, function() {
-							callback(usernames);
+							callback(null, usernames);
 						});
 					}
 				});
@@ -522,9 +481,10 @@
 					+ username + "' AND group_id=" + groupID,
 				       [], function(err, results) {
 					if (err) {
+						console.log(err);
 						callback(err, null);
 					} else {
-						callback(results);
+						callback(null, results);
 					}
 				});
 			}
@@ -541,9 +501,10 @@
 					+ "VALUES (" + groupID + ",'" + username + "')",
 				       [], function(err, results) {
 					if (err) {
+						console.log(err);
 						callback(err, null);
 					} else {
-						callback(results);
+						callback(null, results);
 					}
 				});
 			}
@@ -561,11 +522,7 @@
 					if (err) {
 						callback(err, null);
 					} else {
-						//TODO: maxID always returning null despite it being ok
-						// when query is run in terminal
-						console.log(results[0].MAXID);
 						callback(results[0].MAXID);
-						//callback(10);
 					}
 				});
 			}
@@ -580,6 +537,7 @@
 				+ ' with groupID: ' + groupID);
 			oracle.connect(connectData, function(err, connection) {
 				if (err) {
+					console.log(err);
 					callback(err, null);
 				} else {
 					connection.execute("INSERT INTO groups " 
@@ -587,9 +545,10 @@
 					    + groupName + "')",
 					       [], function(err, results) {
 						if (err) {
+							console.log(err);
 							callback(err, null);
 						} else {
-							callback(results);
+							callback(null, results);
 						}
 					});
 				}
@@ -597,10 +556,10 @@
 		});
 	};
 		
-	//TODO: deletions do not occur, but query works in terminal
 	db.prototype.deleteGroup = function(groupID, callback) {
 		oracle.connect(connectData, function(err, connection) {
 			if (err) {
+				console.log(err);
 				callback(err, null);
 			} else {
 				//delete users from in_group
@@ -608,11 +567,13 @@
 					+ groupID,
 				       [], function(err, results) {
 					if (err) {
+						console.log(err);
 						callback(err, null);
 					} else {
 						//delete group from groups
 						oracle.connect(connectData, function(err, connection) {
 							if (err) {
+								console.log(err);
 								callback(err, null);
 							} else {
 								connection.execute(" DELETE FROM groups WHERE group_id=" + groupID,
@@ -620,20 +581,18 @@
 									if (err) {
 										callback(err, null);
 									} else {
-										callback(results);
+										callback(null, results);
 									}
 								});
 							}
 						});
-						callback(results);
 					}
 				});
 			}
 		});
 	}
 
-	//TODO: not tested
-	db.prototype.editGroupName = function(groupID, newName, callback) {
+	db.prototype.renameGroup = function(groupID, newName, callback) {
 		oracle.connect(connectData, function(err, connection) {
 			if (err) {
 				callback(err, null);
@@ -642,15 +601,15 @@
 					+ "' WHERE group_id=" + groupID,
 				       [], function(err, results) {
 					if (err) {
+						console.log(err);
 						callback(err, null);
 					} else {
-						callback(results);
+						callback(null, results);
 					}
 				});
 			}
 		});
 	}	
-
 
 	module.exports = db;
 

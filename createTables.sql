@@ -32,7 +32,7 @@ CREATE TABLE groups (
 CREATE TABLE in_group (
     group_id INTEGER NOT NULL,
     username VARCHAR(20) NOT NULL,
-    PRIMARY KEY (username, group_id),
+    PRIMARY KEY (group_id, username),
     FOREIGN KEY (group_id) REFERENCES groups,
     FOREIGN KEY (username) REFERENCES users
 );

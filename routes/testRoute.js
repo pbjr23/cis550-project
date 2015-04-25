@@ -5,7 +5,7 @@ exports.init = function(dbObj) {
 	db = dbObj;
 }
 exports.testFunction = function(req, res) {
-	db.createUser('userA', 'abcPass', 'testAddress', 'home', 40, -70, function(err, result) {
+	db.renameGroup(2, 'groupC', function(err, result) {
 		console.log(result);
 	});
 	//db.validatePassword('userD', 'abcPass', function(err, results) {
