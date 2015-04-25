@@ -11,13 +11,18 @@
   $(document).ready(function() {
   	
   	// Upon click of the AJAX request...
+  	$("#change_name").click(function() {
+  		// Fetch some data from the server via an AJAX
+  		// call.  
+  		location.href = "/change_name"
+  	});
+
   	$("#change_password").click(function() {
   		// Fetch some data from the server via an AJAX
   		// call.  
   		location.href = "/change_password"
   	});
 
-  	// Upon click of the AJAX request...
   	$("#change_address").click(function() {
   		// Fetch some data from the server via an AJAX
   		// call.  
@@ -25,23 +30,19 @@
   	});
 
   	// Upon click of the AJAX request...
-  	$("#change_name").click(function() {
-  		// Fetch some data from the server via an AJAX
-  		// call.  
-  		location.href = "/change_name"
-  	});
-
-  	// Upon click of the AJAX request...
   	$("#back_to_homepage").click(function() {
   		// Fetch some data from the server via an AJAX
   		// call.  
   		location.href = "/home"
+  		}
+  		else { 
+  			$("#error").text("All Fields Must be filled.");
+  			$("#error").css('color', 'red');
+  		}
   	});
   	
   });
 </script>
-
   <span id="data"></span>
   <br>
   <span id="error"></span> 
-    </div>

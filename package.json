@@ -25,6 +25,8 @@
     "nib": "*",
     "node-geocoder": "^2.20.0",
     "oracle": "*",
-    "stylus": "*"
+    "stylus": "*",
+    "cookie-parser": "*",
+    "express-session": "*"
   }
 }
