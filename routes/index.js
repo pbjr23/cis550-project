@@ -9,10 +9,6 @@ exports.init = function(dbObj) {
 	db = dbObj;
 }
 
-/*
- * GET home page, which is specified in EJS.
- */
-
 exports.home = function(req, res){
   var callback = function(results) { 
   	res.render('home.ejs', { 
@@ -70,24 +66,27 @@ exports.create_user = function(req, res){
 		res.send("");  
 	}; 
 
-	db.createUser(req.body.username, req.body.password, req.body.address, req.body.label, req.body.lat, req.body.lon, callback);
+	db.createUser(req.body.username, req.body.password, req.body.address, 
+		req.body.label, req.body.lat, req.body.lon, callback);
 
 };   
 
 exports.check_pass = function(req, res){ 
 
-	var callback = function(result) { 
-		var json = result[0]; 
-		var password = json.PASS; 
-		if (req.body.password === password) {
-			process.env.username = req.body.username;
-			res.send("success"); 
-		}
-		else 
-			res.send("failure");   
+	var callback = function(err, result) { 
+		if (err) 
+			throw err; 
+		else {
+			if (result) {
+				process.env.username = req.body.username;
+				res.send("success"); 
+			}
+			else 
+				res.send("failure");
+		}   
 	}; 
 
-	db.getPassword(req.body.username, callback);
+	db.validatePassword(req.body.username, req.body.password, callback);
 
 };  
 
@@ -101,7 +100,8 @@ exports.group_search = function(req, res){
 		res.send(result);  
 	}; 
 
-	db.getRestsSquareCoords(req.body.minlat, req.body.minlong, req.body.maxlat, req.body.maxlong, callback);
+	db.getRestsSquareCoords(req.body.minlat, req.body.minlong, 
+		req.body.maxlat, req.body.maxlong, callback);
 
 }; 
 

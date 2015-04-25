@@ -221,7 +221,7 @@
 					} else {
 						var userResults = [];
 						async.each(results, function(user2, call) {
-							userResults.push(user2.USER2);
+							userResults.prototype.push(user2.USER2);
 							call();
 						}, function() {
 							callback(null, userResults);
@@ -344,7 +344,7 @@
 						if (err) {
 							callback(err, null);
 						} else {
-							callback(null, results.push.apply(results, results2));
+							callback(null, results.prototype.push.apply(results, results2));
 						}
 					});
 				}
@@ -453,7 +453,7 @@
 						var usernames = [];
 						async.each(results, function(userObj, call) {
 							var name = userObj.USERNAME;
-							usernames.push(name);
+							usernames.prototype.push(name);
 							call();
 						}, function() {
 							callback(usernames);
