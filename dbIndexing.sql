@@ -21,9 +21,8 @@ ON restaurant (rid, lon);
 CREATE UNIQUE INDEX users_username_index
 ON users (username);
 
-# password table
-CREATE UNIQUE INDEX password_user_pass_index
-ON password (username, pass);
+CREATE UNIQUE INDEX users_user_pass_index
+ON users (username, password);
 
 CREATE INDEX address_latlon_index
 ON address (lat, lon);

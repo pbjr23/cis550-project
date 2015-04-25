@@ -16,7 +16,7 @@
 	};
 
 	/* restaurant table methods */
-
+	// returns a single object with all info for restaurant
 	db.prototype.getRestInfo = function(bussID, callback) {
 		console.log('getRestInfo: ' + bussID);
 		oracle.connect(connectData, function(err, connection) {
@@ -28,13 +28,14 @@
 					if (err) {
 						console.log(err);
 					} else {
-						callback(results);
+						//will only be 1 result for a rid
+						callback(results[0]);
 					}
 				});
 			}
 		});
 	}
-
+	//returns string that is the restaurant name
 	db.prototype.getRestName = function(bussID, callback) {
 		console.log('getRestName: ' + bussID);
 		oracle.connect(connectData, function(err, connection) {
@@ -46,13 +47,13 @@
 					if (err) {
 						console.log(err);
 					} else {
-						callback(results);
+						callback(results[0].NAME);
 					}
 				});
 			}
 		});
 	}
-
+	//returns string of the restaurant's address
 	db.prototype.getRestAddress = function(bussID, callback) {
 		console.log('getRestAddress: ' + bussID);
 		oracle.connect(connectData, function(err, connection) {
@@ -64,31 +65,13 @@
 					if (err) {
 						console.log(err);
 					} else {
-						callback(results);
+						callback(results[0].ADDRESS);
 					}
 				});
 			}
 		});
 	}
-
-	db.prototype.searchRestsByName = function(name, callback) {
-		console.log('searching restaurants by full name: ' + name);
-		oracle.connect(connectData, function(err, connection) {
-			if (err) {
-				console.log(err);
-			} else {
-				connection.execute("SELECT * FROM restaurant WHERE name = '" + name + "'", 
-				       [], function(err, results) {
-					if (err) {
-						console.log(err);
-					} else {
-						callback(results);
-					}
-				});
-			}
-		});
-	}
-
+	//returns array of objects with all info for each restaurant
 	db.prototype.searchRestsByNameSubstring = function(name, callback) {
 		console.log('searching restaurants whose name contains: ' + name);
 		oracle.connect(connectData, function(err, connection) {
@@ -106,7 +89,7 @@
 			}
 		});
 	}
-
+	// returns single object with 2 fields, e.g. { LAT: 35.00, LON: -115 }
 	db.prototype.getRestLatLong = function(bussID, callback) {
 		console.log('getRestLatLong: ' + bussID);
 		oracle.connect(connectData, function(err, connection) {
@@ -118,13 +101,13 @@
 					if (err) {
 						console.log(err);
 					} else {
-						callback(results);
+						callback(results[0]);
 					}
 				});
 			}
 		});
 	}
-
+	// returns number value
 	db.prototype.getRestStars = function(bussID, callback) {
 		console.log('getRestStars: ' + bussID);
 		oracle.connect(connectData, function(err, connection) {
@@ -136,13 +119,13 @@
 					if (err) {
 						console.log(err);
 					} else {
-						callback(results);
+						callback(results[0].STARS);
 					}
 				});
 			}
 		});
 	}
-
+	// returns array of objects, each with all info for a restaurant
 	db.prototype.getRestsSquareCoords = function(minLat, minLon, maxLat, maxLon, callback) {
 		console.log('getting restaurants within: lat(min: ' + minLat 
 			+ ',max: ' + maxLat + ')  lon(min: ' + minLon + ',max: ' 
@@ -174,7 +157,7 @@
 
 
 	/* address table methods */
-
+	// returns single string of the user's address
 	db.prototype.getUserAddress = function(username, callback) {
 		console.log('getUserAddress: ' + username);
 		oracle.connect(connectData, function(err, connection) {
@@ -186,13 +169,13 @@
 					if (err) {
 						console.log(err);
 					} else {
-						callback(results);
+						callback(results[0].ADDRESS);
 					}
 				});
 			}
 		});
 	}
-
+	// returns single object with 2 fields, e.g. { LAT: 35.00, LON: -115 }
 	db.prototype.getUserLatLon = function(username, callback) {
 		console.log('getUserLatLon: ' + username);
 		oracle.connect(connectData, function(err, connection) {
@@ -204,7 +187,7 @@
 					if (err) {
 						console.log(err);
 					} else {
-						callback(results);
+						callback(results[0]);
 					}
 				});
 			}
@@ -213,7 +196,7 @@
 
 
 	/* friends table methods */
-
+	// returns array of usernames
 	db.prototype.getFriends = function(username, callback) {
 		console.log('getting friends of: ' + username);
 		oracle.connect(connectData, function(err, connection) {
@@ -225,7 +208,13 @@
 					if (err) {
 						console.log(err);
 					} else {
-						callback(results);
+						var userResults = [];
+						async.each(results, function(user2, call) {
+							userResults.push(user2.USER2);
+							call();
+						}, function() {
+							callback(userResults);
+						});
 					}
 				});
 			}
@@ -327,7 +316,7 @@
 			}
 		});
 	}
-
+	//TODO: needs testing
 	db.prototype.createUser = function(username, password, address, addressLabel, lat, lon, callback) {
 		console.log('adding user: ' + username);
 		oracle.connect(connectData, function(err, connection) {
@@ -335,34 +324,24 @@
 				console.log(err);
 			} else {
 				//add to users table
-				connection.execute("INSERT INTO users (username) "
-					+ "VALUES ('" + username + "')",
+				connection.execute("INSERT INTO users (username,password) "
+					+ "VALUES ('" + username + "','" + password + "')",
 				       [], function(err, results) {
 					if (err) {
-						console.log("1"); 
 						console.log(err);
 					} else {
 						//add to password table
 						oracle.connect(connectData, function(err, connection) {
 							if (err) {
-								console.log("2"); 
 								console.log(err);
 							} else {
-								connection.execute("INSERT INTO password (username,pass) "
-					+ "VALUES ('" + username + "','" + password + "')",
-								       [], function(err, results) {
-									if (err) { 
-										console.log("3"); 
-										console.log(err);
-									} else {
-										oracle.connect(connectData, function(err, connection) {
-											if (err) {
-												console.log("4"); 
-												console.log(err);
-											} else {
-												console.log(lat);
-												console.log(lon);
-												console.log("INSERT INTO address (address_label,username,address,lat,lon) "
+								oracle.connect(connectData, function(err, connection) {
+					if (err) {
+						console.log(err);
+					} else {
+						console.log(lat);
+						console.log(lon);
+						console.log("INSERT INTO address (address_label,username,address,lat,lon) "
 					+ "VALUES ('" + addressLabel + "','" + username + "','" + address + "'," + lat + "," + lon + ")");
 												connection.execute(
 					"INSERT INTO address (address_label,username,address,lat,lon) "
@@ -377,12 +356,10 @@
 												});
 											}
 										});
-										callback(results);
 									}
 								});
 							}
 						});
-						callback(results);
 					}
 				});
 			}
