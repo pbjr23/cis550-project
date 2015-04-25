@@ -53,6 +53,7 @@ app.post('/group_search', routes.group_search);
 app.get('/user_profile', routes.user_profile);
 app.get('/change_password', routes.change_password);
 app.get('/change_address', routes.change_address);
+app.post('/address_to_lat_and_lon_tester', routes.address_to_lat_and_lon_tester);
 app.get('/group', routes.group);
 
 // Listen on the port we specify

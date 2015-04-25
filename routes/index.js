@@ -86,20 +86,55 @@ exports.create_user = function(req, res){
 		process.env.username = req.body.username;
 		process.env.address = req.body.address;
 		process.env.address_label = req.body.address_label;
-		res.send("");  
+		//res.send("");  
 	}; 
 	var geocoderProvider = 'google';
 	var httpAdapter = 'http';
 	var geocoder = require('node-geocoder')(geocoderProvider, httpAdapter);
 	geocoder.geocode(req.body.address, function(err, results) {
-  	console.log(res);
-  	db.createUser(req.body.username, req.body.password, req.body.address, 
-		req.body.label, results[0], results[1], callback);
+  	if (results.length == 1) {
+  		res.send("success");
+  		console.log(results);
+  		db.createUser(req.body.username, req.body.password, req.body.address, 
+			req.body.label, results[0].latitude, results[1].longitude, callback);
+  	}
+  	else {
+  		res.send("failure");
+  	}
 	});
 	// db.createUser(req.body.username, req.body.password, req.body.address, 
 	// 	req.body.label, req.body.lat, req.body.lon, callback);
 
 };   
+
+exports.address_to_lat_and_lon_tester = function(req, res){ 
+
+	// var callback = function(result) { 
+	// 	process.env.username = req.body.username;
+	// 	process.env.address = req.body.address;
+	// 	process.env.address_label = req.body.address_label;
+	// 	res.send("");  
+	// }; 
+	var geocoderProvider = 'google';
+	var httpAdapter = 'http';
+	var geocoder = require('node-geocoder')(geocoderProvider, httpAdapter);
+	geocoder.geocode(req.body.address, function(err, results) {
+  	if (results.length == 1) console.log("Latitude: " + results[0].latitude + " Longitude: " + results[0].longitude);
+  	else console.log("Insert Valid Address");
+  });
+		//callback;
+	// geocoder.geocode(req.body.address)
+ //    .then(function(res) {
+ //        if (res.length > 0) console.log("Latitude: " + res[0].latitude + " Longitude: " + res[0].longitude);
+ //        else console.log("Insert Valid Address");
+ //    })
+ //    .catch(function(err) {
+ //        console.log(err);
+ //    });
+	// db.createUser(req.body.username, req.body.password, req.body.address, 
+	// 	req.body.label, req.body.lat, req.body.lon, callback);
+
+};  
 
 exports.check_pass = function(req, res){ 
 
@@ -136,8 +171,17 @@ exports.edit_address = function(req, res){
 		if (err) throw err;  
 	}; 
 
-	db.changeAddress(process.env.username, req.body.address_label, 
-		req.body.address, callback);
+  var geocoderProvider = 'google';
+	var httpAdapter = 'http';
+	var geocoder = require('node-geocoder')(geocoderProvider, httpAdapter);
+	geocoder.geocode(req.body.address, function(err, results) {
+  	if (results.length == 1) {
+  		console.log("Latitude: " + results[0].latitude + " Longitude: " + results[0].longitude);
+  		db.changeAddressAndLabel(process.env.username, req.body.address_label, 
+		  req.body.address, results[0].latitude, results[0].longitude, callback);
+  	}
+  	else console.log("Insert Valid Address");
+  });
 
 }; 
 

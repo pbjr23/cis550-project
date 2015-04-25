@@ -30,8 +30,13 @@ New Address:<br>
       if (address_label.length != 0 && address.length != 0) { 
         var info = {"address":address, "address_label":address_label}; 
         $.post("/edit_address", info,function(data, status) {
+            if (data == "success")
             // go to home page 
             location.href = "/home";
+            else if (data == "failure") {
+              $("#error").text("Invalid address.");
+              $("#error").css('color', 'red');
+            } 
         });         
       }
       else { 
@@ -47,6 +52,16 @@ New Address:<br>
       location.href = "/user_profile"
     });
 
+    $("#address_to_lat_and_lon_tester").click(function() {
+        var address = $("#address").val();
+        address = address.trim();
+        var info = {"address":address}; 
+       $.post("/address_to_lat_and_lon_tester", info,function(data, status) {
+            // go to home page 
+            location.href = "/home";            
+        }); 
+    });
+
   });
 </script>
 
@@ -54,6 +69,7 @@ New Address:<br>
   <button id="submit">Submit New Address</button>
   <br><br>
   <button id="back_to_profile">Back to Profile Without Saving Changes</button><br>
+<!--   <button id="address_to_lat_and_lon_tester">Test address to lat and lon</button><br> -->
   <span id="data"></span>
   <br>
   <span id="error"></span> 

@@ -48,8 +48,13 @@ Longitude:<br>
         var info = {"username": username, "password": password, "address": address, "label": label};//"lat": latitude, "lon": longitude
   		  
         $.post("/create_user", info,function(data, status) {
+            if (data == "success")
             // go to home page 
-            location.href = "/home";            
+            location.href = "/home";
+            else if (data == "failure") {
+              $("#error").text("Invalid address.");
+              $("#error").css('color', 'red');
+            }            
         }); 
 
 
