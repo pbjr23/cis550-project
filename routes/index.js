@@ -10,13 +10,21 @@ exports.init = function(dbObj) {
 }
 
 exports.home = function(req, res){
-  var callback = function(results) { 
-  	res.render('home.ejs', { 
-	  title: 'Homepage',
-	  groups: results
+  // if logged in 
+  if (req.session.username != null) {
+  	var callback = function(results) { 
+  		res.render('home.ejs', { 
+	  	title: 'Homepage',
+	  	groups: results
+  	});
+  	};
+  	db.getGroups(req.session.username, callback); 
+  }
+  // return "not logged in"
+  else 
+  	res.render('login.ejs', { 
+	  title: 'Login' 
   });
-  };
-  db.getGroups(process.env.username, callback);
 };  
 
 exports.results = function(req, res){
@@ -47,7 +55,7 @@ exports.user_profile = function(req, res){
 	//   address: results
  //  	});
  //  };
- //  db.getUserAddress(process.env.username, callback);
+ //  db.getUserAddress(req.session.username, callback);
 };
 
 exports.change_password = function(req, res){
@@ -59,8 +67,8 @@ exports.change_password = function(req, res){
 exports.change_address = function(req, res){
   res.render('change_address.ejs', { 
 	  title: 'Change Address',
-	  address: process.env.address,
-	  address_label: process.env.address_label
+	  address: req.session.address,
+	  address_label: req.session.address_label
   });
 };
 
@@ -100,9 +108,9 @@ exports.group = function(req, res) {
 exports.create_user = function(req, res){ 
 
 	var callback = function(result) { 
-		process.env.username = req.body.username;
-		process.env.address = req.body.address;
-		process.env.address_label = req.body.address_label;
+		req.session.username = req.body.username;
+		req.session.address = req.body.address;
+		req.session.address_label = req.body.address_label;
 		//res.send("");  
 	}; 
 	var geocoderProvider = 'google';
@@ -127,9 +135,9 @@ exports.create_user = function(req, res){
 exports.address_to_lat_and_lon_tester = function(req, res){ 
 
 	// var callback = function(result) { 
-	// 	process.env.username = req.body.username;
-	// 	process.env.address = req.body.address;
-	// 	process.env.address_label = req.body.address_label;
+	// 	req.session.username = req.body.username;
+	// 	req.session.address = req.body.address;
+	// 	req.session.address_label = req.body.address_label;
 	// 	res.send("");  
 	// }; 
 	var geocoderProvider = 'google';
@@ -160,7 +168,7 @@ exports.check_pass = function(req, res){
 			throw err; 
 		else {
 			if (result) {
-				process.env.username = req.body.username;
+				req.session.username = req.body.username;
 				res.send("success"); 
 			}
 			else 
@@ -178,7 +186,7 @@ exports.edit_pass = function(req, res){
 		if (err) throw err;  
 	}; 
 
-	db.changePassword(process.env.username, req.body.password, callback);
+	db.changePassword(req.session.username, req.body.password, callback);
 
 };  
 
@@ -194,7 +202,7 @@ exports.edit_address = function(req, res){
 	geocoder.geocode(req.body.address, function(err, results) {
   	if (results.length == 1) {
   		console.log("Latitude: " + results[0].latitude + " Longitude: " + results[0].longitude);
-  		db.changeAddressAndLabel(process.env.username, req.body.address_label, 
+  		db.changeAddressAndLabel(req.session.username, req.body.address_label, 
 		  req.body.address, results[0].latitude, results[0].longitude, callback);
   	}
   	else console.log("Insert Valid Address");
