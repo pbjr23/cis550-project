@@ -1,6 +1,7 @@
 # DDL code to initialize schema
 CREATE TABLE users (
     username VARCHAR(20) NOT NULL PRIMARY KEY,
+    password VARCHAR(30) NOT NULL,
     fb_id NUMBER
 );
 
@@ -10,12 +11,6 @@ CREATE TABLE friends (
     PRIMARY KEY (user1, user2),
     FOREIGN KEY (user1) REFERENCES users(username),
     FOREIGN KEY (user2) REFERENCES users(username)
-);
-
-CREATE TABLE password (
-    username VARCHAR(20) NOT NULL PRIMARY KEY,
-    pass VARCHAR(30) NOT NULL, #will be encrypted
-    FOREIGN KEY (username) REFERENCES users
 );
 
 # weak entity, one user can save multiple addresses
