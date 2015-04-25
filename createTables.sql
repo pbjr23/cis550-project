@@ -2,7 +2,9 @@
 CREATE TABLE users (
     username VARCHAR(20) NOT NULL PRIMARY KEY,
     password VARCHAR(30) NOT NULL,
-    fb_id NUMBER
+    fb_id NUMBER,
+    first_name VARCHAR(20),
+    last_name VARCHAR(20)
 );
 
 CREATE TABLE friends (

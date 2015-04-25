@@ -235,6 +235,91 @@
 		});
 	}
 
+	// returns single object with format { FIRST_NAME: 'abc', LAST_NAME: 'def'}
+	db.prototype.getUserName = function(username, callback) {
+		console.log('getting name of user: ' + username);
+		oracle.connect(connectData, function(err, connection) {
+			if (err) {
+				console.log(err); 
+				callback(err, null);
+			} else {
+				connection.execute("SELECT first_name, last_name FROM users WHERE username = '" + username + "'", 
+				       [], function(err, results) {
+					if (err) {
+						console.log(err); 
+						callback(err, null);
+					} else {
+						callback(null, results[0]);
+					}
+				});
+			}
+		});
+	}
+
+	db.prototype.changeUserFirstName = function(username, newFirstName, callback) {
+		console.log('changing first name of user: ' + username);
+		oracle.connect(connectData, function(err, connection) {
+			if (err) {
+				console.log(err); 
+				callback(err, null);
+			} else {
+				connection.execute("UPDATE users SET first_name ='" 
+					+ newFirstName + "' WHERE username='" + username + "'", 
+				       [], function(err, results) {
+					if (err) {
+						console.log(err); 
+						callback(err, null);
+					} else {
+						callback(null, results);
+					}
+				});
+			}
+		});
+	}
+
+	db.prototype.changeUserLastName = function(username, newLastName, callback) {
+		console.log('changing last name of user: ' + username);
+		oracle.connect(connectData, function(err, connection) {
+			if (err) {
+				console.log(err); 
+				callback(err, null);
+			} else {
+				connection.execute("UPDATE users SET last_name ='" 
+					+ newFirstName + "' WHERE username='" + username + "'", 
+				       [], function(err, results) {
+					if (err) {
+						console.log(err); 
+						callback(err, null);
+					} else {
+						callback(null, results);
+					}
+				});
+			}
+		});
+	}
+
+	db.prototype.changeUserFirstLastName = function(username, newFirstName, newLastName, callback) {
+		console.log('changing name of user: ' + username);
+		oracle.connect(connectData, function(err, connection) {
+			if (err) {
+				console.log(err); 
+				callback(err, null);
+			} else {
+				connection.execute("UPDATE users SET first_name ='" 
+					+ newFirstName + "', last_name ='"
+					+ newLastName + "' WHERE username='" + username + "'", 
+				       [], function(err, results) {
+					if (err) {
+						console.log(err); 
+						callback(err, null);
+					} else {
+						callback(null, results);
+					}
+				});
+			}
+		});
+	}
+
 
 	/* friends table methods */
 	// returns array of usernames
@@ -329,7 +414,6 @@
 	}
 
 	/* users table methods */
-	//TODO: fb_id returning null
 	db.prototype.getFbId = function(username, callback) {
 		console.log('getting FBid of: ' + username);
 		oracle.connect(connectData, function(err, connection) {
@@ -355,7 +439,9 @@
 	 * 									ADDRESS_LABEL: 'home',
 	 *									ADDRESS: 'address',
 	 * 									LAT: 40,
-	 * 									LON: -70}
+	 * 									LON: -70,
+	 *									FIRST_NAME: 'abc',
+	 * 									LAST_NAME: 'abc'}
 	*/
 	db.prototype.getAllUserInfo = function(username, callback) {
 		console.log('getting all user info of: ' + username);
