@@ -27,7 +27,7 @@ exports.results = function(req, res){
 
 exports.signup = function(req, res){
   res.render('signup.ejs', { 
-	  title: 'SignUp' 
+	  title: 'Sign Up' 
   });
 }; 
 
@@ -58,7 +58,9 @@ exports.change_password = function(req, res){
 
 exports.change_address = function(req, res){
   res.render('change_address.ejs', { 
-	  title: 'Change Address' 
+	  title: 'Change Address',
+	  address: process.env.address,
+	  address_label: process.env.address_label
   });
 };
 
@@ -82,11 +84,20 @@ exports.create_user = function(req, res){
 
 	var callback = function(result) { 
 		process.env.username = req.body.username;
+		process.env.address = req.body.address;
+		process.env.address_label = req.body.address_label;
 		res.send("");  
 	}; 
-
-	db.createUser(req.body.username, req.body.password, req.body.address, 
-		req.body.label, req.body.lat, req.body.lon, callback);
+	var geocoderProvider = 'google';
+	var httpAdapter = 'http';
+	var geocoder = require('node-geocoder')(geocoderProvider, httpAdapter);
+	geocoder.geocode(req.body.address, function(err, results) {
+  	console.log(res);
+  	db.createUser(req.body.username, req.body.password, req.body.address, 
+		req.body.label, results[0], results[1], callback);
+	});
+	// db.createUser(req.body.username, req.body.password, req.body.address, 
+	// 	req.body.label, req.body.lat, req.body.lon, callback);
 
 };   
 

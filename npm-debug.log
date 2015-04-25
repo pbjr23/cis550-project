@@ -1,502 +1,224 @@
 0 info it worked if it ends with ok
-1 verbose cli [ 'node', '/usr/local/bin/npm', 'install' ]
+1 verbose cli [ '/usr/bin/node',
+1 verbose cli   '/usr/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   '-g',
+1 verbose cli   'node-geocoder' ]
 2 info using npm@1.4.28
-3 info using node@v0.10.33
-4 verbose readDependencies using package.json deps
-5 verbose install where, deps [ '/Users/emmanuelgenene/Documents/CIS450/cis550-project/cis550-project',
-5 verbose install   [ 'async',
-5 verbose install     'express',
-5 verbose install     'ejs',
-5 verbose install     'ejs-locals',
-5 verbose install     'nib',
-5 verbose install     'oracle',
-5 verbose install     'stylus' ] ]
-6 info preinstall cis550-project@1.0.0
-7 verbose readDependencies using package.json deps
-8 verbose already installed skipping express@3.2.6 /Users/emmanuelgenene/Documents/CIS450/cis550-project/cis550-project
-9 verbose already installed skipping ejs@^1.0.0 /Users/emmanuelgenene/Documents/CIS450/cis550-project/cis550-project
-10 verbose cache add [ 'ejs-locals@*', null ]
-11 verbose cache add name=undefined spec="ejs-locals@*" args=["ejs-locals@*",null]
-12 verbose parsed url { protocol: null,
-12 verbose parsed url   slashes: null,
-12 verbose parsed url   auth: null,
-12 verbose parsed url   host: null,
-12 verbose parsed url   port: null,
-12 verbose parsed url   hostname: null,
-12 verbose parsed url   hash: null,
-12 verbose parsed url   search: null,
-12 verbose parsed url   query: null,
-12 verbose parsed url   pathname: 'ejs-locals@*',
-12 verbose parsed url   path: 'ejs-locals@*',
-12 verbose parsed url   href: 'ejs-locals@*' }
-13 verbose already installed skipping nib@* /Users/emmanuelgenene/Documents/CIS450/cis550-project/cis550-project
-14 verbose cache add name="ejs-locals" spec="*" args=["ejs-locals","*"]
-15 verbose parsed url { protocol: null,
-15 verbose parsed url   slashes: null,
-15 verbose parsed url   auth: null,
-15 verbose parsed url   host: null,
-15 verbose parsed url   port: null,
-15 verbose parsed url   hostname: null,
-15 verbose parsed url   hash: null,
-15 verbose parsed url   search: null,
-15 verbose parsed url   query: null,
-15 verbose parsed url   pathname: '*',
-15 verbose parsed url   path: '*',
-15 verbose parsed url   href: '*' }
-16 verbose addNamed [ 'ejs-locals', '*' ]
-17 verbose addNamed [ null, '*' ]
-18 verbose already installed skipping oracle@* /Users/emmanuelgenene/Documents/CIS450/cis550-project/cis550-project
-19 silly lockFile bb3e18ae-ejs-locals ejs-locals@*
-20 verbose lock ejs-locals@* /Users/emmanuelgenene/.npm/bb3e18ae-ejs-locals.lock
-21 verbose already installed skipping stylus@* /Users/emmanuelgenene/Documents/CIS450/cis550-project/cis550-project
-22 silly addNameRange { name: 'ejs-locals', range: '*', hasData: false }
-23 verbose already installed skipping async@^0.9.0 /Users/emmanuelgenene/Documents/CIS450/cis550-project/cis550-project
-24 verbose request where is /ejs-locals
-25 verbose request registry https://registry.npmjs.org/
-26 verbose request id c64fe733d83f83e8
-27 verbose url raw /ejs-locals
-28 verbose url resolving [ 'https://registry.npmjs.org/', './ejs-locals' ]
-29 verbose url resolved https://registry.npmjs.org/ejs-locals
-30 verbose request where is https://registry.npmjs.org/ejs-locals
-31 info trying registry request attempt 1 at 01:52:20
-32 http GET https://registry.npmjs.org/ejs-locals
-33 http 200 https://registry.npmjs.org/ejs-locals
-34 silly registry.get cb [ 200,
-34 silly registry.get   { date: 'Thu, 16 Apr 2015 05:52:20 GMT',
-34 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
-34 silly registry.get     etag: '"2013WSHFJLLCJHLA69LJEV4WP"',
-34 silly registry.get     'content-type': 'application/json',
-34 silly registry.get     'cache-control': 'max-age=60',
-34 silly registry.get     'content-length': '113185',
-34 silly registry.get     'accept-ranges': 'bytes',
-34 silly registry.get     via: '1.1 varnish',
-34 silly registry.get     age: '0',
-34 silly registry.get     'x-served-by': 'cache-atl6224-ATL',
-34 silly registry.get     'x-cache': 'HIT',
-34 silly registry.get     'x-cache-hits': '1',
-34 silly registry.get     'x-timer': 'S1429163540.419675,VS0,VE79',
-34 silly registry.get     vary: 'Accept',
-34 silly registry.get     'keep-alive': 'timeout=10, max=50',
-34 silly registry.get     connection: 'Keep-Alive' } ]
-35 silly addNameRange number 2 { name: 'ejs-locals', range: '*', hasData: true }
-36 silly addNameRange versions [ 'ejs-locals',
-36 silly addNameRange   [ '0.1.0',
-36 silly addNameRange     '0.1.1',
-36 silly addNameRange     '0.1.2',
-36 silly addNameRange     '0.1.3',
-36 silly addNameRange     '0.1.4',
-36 silly addNameRange     '0.1.5',
-36 silly addNameRange     '0.1.6',
-36 silly addNameRange     '0.2.0',
-36 silly addNameRange     '0.2.1',
-36 silly addNameRange     '0.2.2',
-36 silly addNameRange     '0.2.3',
-36 silly addNameRange     '0.2.4',
-36 silly addNameRange     '0.2.5',
-36 silly addNameRange     '0.2.6',
-36 silly addNameRange     '1.0.0',
-36 silly addNameRange     '1.0.1',
-36 silly addNameRange     '1.0.2' ] ]
-37 verbose addNamed [ 'ejs-locals', '1.0.2' ]
-38 verbose addNamed [ '1.0.2', '1.0.2' ]
-39 silly lockFile 993d366b-ejs-locals-1-0-2 ejs-locals@1.0.2
-40 verbose lock ejs-locals@1.0.2 /Users/emmanuelgenene/.npm/993d366b-ejs-locals-1-0-2.lock
-41 silly lockFile 0712422f--ejs-locals-ejs-locals-1-0-2-tgz https://registry.npmjs.org/ejs-locals/-/ejs-locals-1.0.2.tgz
-42 verbose lock https://registry.npmjs.org/ejs-locals/-/ejs-locals-1.0.2.tgz /Users/emmanuelgenene/.npm/0712422f--ejs-locals-ejs-locals-1-0-2-tgz.lock
-43 verbose addRemoteTarball [ 'https://registry.npmjs.org/ejs-locals/-/ejs-locals-1.0.2.tgz',
-43 verbose addRemoteTarball   'b9b320ff6933154105fa0eed683ea64d678088ce' ]
-44 info retry fetch attempt 1 at 01:52:20
-45 verbose fetch to= /var/folders/h_/2yq_k_ns2hz__fxqv_blmsg00000gn/T/npm-10491-OBMXOSWs/registry.npmjs.org/ejs-locals/-/ejs-locals-1.0.2.tgz
-46 http GET https://registry.npmjs.org/ejs-locals/-/ejs-locals-1.0.2.tgz
-47 http 200 https://registry.npmjs.org/ejs-locals/-/ejs-locals-1.0.2.tgz
-48 silly lockFile 0712422f--ejs-locals-ejs-locals-1-0-2-tgz https://registry.npmjs.org/ejs-locals/-/ejs-locals-1.0.2.tgz
-49 silly lockFile 0712422f--ejs-locals-ejs-locals-1-0-2-tgz https://registry.npmjs.org/ejs-locals/-/ejs-locals-1.0.2.tgz
-50 silly lockFile 993d366b-ejs-locals-1-0-2 ejs-locals@1.0.2
-51 silly lockFile 993d366b-ejs-locals-1-0-2 ejs-locals@1.0.2
-52 silly lockFile bb3e18ae-ejs-locals ejs-locals@*
-53 silly lockFile bb3e18ae-ejs-locals ejs-locals@*
-54 silly resolved [ { author: { name: 'Tom Carden', email: 'tom@tom-carden.co.uk' },
-54 silly resolved     contributors: [ [Object] ],
-54 silly resolved     name: 'ejs-locals',
-54 silly resolved     description: 'Express 3.x locals for layout, partial and blocks.',
-54 silly resolved     version: '1.0.2',
-54 silly resolved     repository:
-54 silly resolved      { type: 'git',
-54 silly resolved        url: 'git://github.com/randometc/ejs-locals.git' },
-54 silly resolved     homepage: 'https://github.com/randometc/ejs-locals',
-54 silly resolved     engines: { node: '>=0.6.0' },
-54 silly resolved     dependencies: { ejs: '0.8.x' },
-54 silly resolved     devDependencies: { express: '~3.0.0', mocha: '*', should: '*', methods: '0.0.1' },
-54 silly resolved     scripts: { test: 'mocha -r should -R spec' },
-54 silly resolved     readme: '# ejs-locals\n\nExpress 3.x `layout`, `partial` and `block` template functions for the EJS template engine. \n\nPreviously also offered `include` but you should use EJS 0.8.x\'s own method for that now.\n\n## Installation\n\n    $ npm install ejs-locals --save\n\n(`--save` automatically writes to your `package.json` file, tell your friends)\n\n\n## Usage\n\nRun `node app.js` from `examples` and open `localhost:3000` to see a working example.\n\nGiven a template, `index.ejs`:\n\n    <% layout(\'boilerplate\') -%>\n    <% script(\'foo.js\') -%>\n    <% stylesheet(\'foo.css\') -%>\n    <h1>I am the <%=what%> template</h1>\n    <% block(\'header\', "<p>I\'m in the header.</p>") -%>\n    <% block(\'footer\', "<p>I\'m in the footer.</p>") -%>\n\nAnd a layout, `boilerplate.ejs`:\n\n    <!DOCTYPE html>\n    <html>\n      <head>\n        <title>It\'s <%=who%></title>\n        <%-scripts%>\n        <%-stylesheets%>\n      </head>\n      <body>\n        <header>\n          <%-blocks.header%>\n        </header>\n        <section>\n          <%-body -%>\n        </section>\n        <footer>\n          <%-blocks.footer%>\n        </footer>\n      </body>\n    </html>\n\nWhen rendered by an Express 3.0 app:\n\n    var express = require(\'express\')\n      , engine = require(\'ejs-locals\')\n      , app = express();\n\n    // use ejs-locals for all ejs templates:\n    app.engine(\'ejs\', engine);\n\n    app.set(\'views\',__dirname + \'/views\');\n    app.set(\'view engine\', \'ejs\'); // so you can render(\'index\')\n\n    // render \'index\' into \'boilerplate\':\n    app.get(\'/\',function(req,res,next){\n      res.render(\'index\', { what: \'best\', who: \'me\' });\n    });\n\n    app.listen(3000);\n\nYou get the following result:\n\n    <!DOCTYPE html>\n    <html>\n      <head>\n        <title>It\'s me</title>\n        <script src="foo.js"></script>\n        <link rel="stylesheet" href="foo.css" />\n      </head>\n      <body>\n        <header>\n          <p>I\'m in the header.</p>\n        </header>\n        <section>\n          <h1>I am the best template</h1>\n        </section>\n        <footer>\n          <p>I\'m in the footer.</p>\n        </footer>\n      </body>\n    </html>\n\nNote, if you haven\'t seen it before, this example uses trailing dashes in the EJS includes to slurp trailing whitespace and generate cleaner HTML. It\'s not strictly necessary.\n\n\n## Features\n\n### `layout(view)`\n\nWhen called anywhere inside a template, requests that the output of the current template be passed to the given view as the `body` local. Use this to specify layouts from within your template, which is recommended with Express 3.0, since the app-level layout functionality has been removed.\n\n### `partial(name,optionsOrCollection)`\n\nWhen called anywhere inside a template, adds the given view to that template using the current given `optionsOrCollection`. The usual way to use this is to pass an Array as the collection argument. The given view is then executed for each item in the Array; the item is passed into the view as a local with a name generated from the view\'s filename.\n\nFor example, if you do `<%-partial(\'thing\',things)%>` then each item in the `things` Array is passed to `thing.ejs` with the name `thing`. If you rename the template, the local name of each item will correspond to the template name.\n\n### `block(name,html)`\n\nWhen called anywhere inside a template, adds the given html to the named block. In the layout you can then do `<%-block(\'foo\')%> to render all the html for that block.\n\nSince this relies on javascript strings, and bypasses EJS\'s default escaping, you should be very careful if you use this function with user-submitted data.\n\n### `script(src,type)`\n\nA convenience function for `block(\'scripts\', \'<script src="src.js"></script>\')` with optional type. When called anywhere inside a template, adds a script tag with the given src/type to the scripts block. In the layout you can then do `<%-scripts%> to output the scripts from all the child templates.\n\n### `stylesheet(href,media)`\n\nA convenience function for `block(\'stylesheets\', \'<link rel="stylesheet" href="href.css" />\')` with optional media type. When called anywhere inside a template, adds a link tag for the stylesheet with the given href/media to the stylesheets block. In the layout you can then do `<%-stylesheets%> to output the links from all the child templates.\n\n\n## Template Support\n\n  - `ejs` (actually hard coded right now, but feel free to __fork and help!__)\n\n\n## TODO\n\n - More Tests!\n - More templates.\n - Better, safer (autoescaped) syntax for longer blocks\n\n\n## Running Tests\n\nTo run the test suite first invoke the following command within the repo, installing the development dependencies:\n\n    $ npm install -d\n\nthen run the tests:\n\n    $ npm test\n\n\n## Backwards Compatibility\n\nExpress 2.0 had similar functionality built in, using `{ layout: \'view\' }` as an argument to  `res.render` but this has been removed in Express 3.0. If you want the old behavior you should do:\n\n    app.locals({\n      _layoutFile: true\n    })\n\n\nAnd/or pass `_layoutFile: true` in the options when you call `res.render(...)`.\n\n## Whither Include?\n\nPrevious versions of this library had an `include` function. This is now supported directly by EJS, albeit with a different syntax. For `ejs-locals` 1.0+ simply do:\n\n### `<% include path/view %>`\n\nWhen called anywhere inside a template, this adds the given view to that template using the current options and locals. This is built-in to [EJS](https://github.com/visionmedia/ejs) 0.8+.\n\n## Credits\n\nThis library is a fork from Robert Sk&ouml;ld\'s [express-partials](https://github.com/publicclass/express-partials), and the partial function remains relatively untouched from there (aside from cache support). Robert is still updating his library and it now supports other template engines - check it out!\n\nThe blocks idea and syntax comes from Aseem Kishore\'s [express-blocks](https://github.com/aseemk/express-blocks)\n\n\n## License\n\n(The MIT License)\n\nCopyright (c) 2012 Robert Sk&ouml;ld &lt;robert@publicclass.se&gt;\nCopyright (c) 2012 Tom Carden &lt;tom@tom-carden.co.uk&gt;\n\nPermission is hereby granted, free of charge, to any person obtaining\na copy of this software and associated documentation files (the\n\'Software\'), to deal in the Software without restriction, including\nwithout limitation the rights to use, copy, modify, merge, publish,\ndistribute, sublicense, and/or sell copies of the Software, and to\npermit persons to whom the Software is furnished to do so, subject to\nthe following conditions:\n\nThe above copyright notice and this permission notice shall be\nincluded in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \'AS IS\', WITHOUT WARRANTY OF ANY KIND,\nEXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF\nMERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.\nIN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY\nCLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,\nTORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE\nSOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.\n',
-54 silly resolved     _id: 'ejs-locals@1.0.2',
-54 silly resolved     dist:
-54 silly resolved      { shasum: 'b9b320ff6933154105fa0eed683ea64d678088ce',
-54 silly resolved        tarball: 'http://registry.npmjs.org/ejs-locals/-/ejs-locals-1.0.2.tgz' },
-54 silly resolved     _npmVersion: '1.1.62',
-54 silly resolved     _npmUser: { name: 'randometc', email: 'tom@tom-carden.co.uk' },
-54 silly resolved     maintainers: [ [Object] ],
-54 silly resolved     directories: {},
-54 silly resolved     _shasum: 'b9b320ff6933154105fa0eed683ea64d678088ce',
-54 silly resolved     _from: 'ejs-locals@*',
-54 silly resolved     _resolved: 'https://registry.npmjs.org/ejs-locals/-/ejs-locals-1.0.2.tgz' } ]
-55 info install ejs-locals@1.0.2 into /Users/emmanuelgenene/Documents/CIS450/cis550-project/cis550-project
-56 info installOne ejs-locals@1.0.2
-57 verbose node_modules/ejs-locals unbuild
-58 verbose tar unpack /Users/emmanuelgenene/.npm/ejs-locals/1.0.2/package.tgz
-59 silly lockFile 4c4e9045--project-node-modules-ejs-locals tar:///Users/emmanuelgenene/Documents/CIS450/cis550-project/cis550-project/node_modules/ejs-locals
-60 verbose lock tar:///Users/emmanuelgenene/Documents/CIS450/cis550-project/cis550-project/node_modules/ejs-locals /Users/emmanuelgenene/.npm/4c4e9045--project-node-modules-ejs-locals.lock
-61 silly lockFile 395408d9-npm-ejs-locals-1-0-2-package-tgz tar:///Users/emmanuelgenene/.npm/ejs-locals/1.0.2/package.tgz
-62 verbose lock tar:///Users/emmanuelgenene/.npm/ejs-locals/1.0.2/package.tgz /Users/emmanuelgenene/.npm/395408d9-npm-ejs-locals-1-0-2-package-tgz.lock
-63 silly gunzTarPerm modes [ '755', '644' ]
-64 silly gunzTarPerm extractEntry package.json
-65 silly gunzTarPerm extractEntry .npmignore
-66 silly gunzTarPerm extractEntry README.md
-67 silly gunzTarPerm extractEntry index.js
-68 silly gunzTarPerm extractEntry example/app.js
-69 silly gunzTarPerm extractEntry example/foo.js
-70 silly gunzTarPerm extractEntry example/foo.css
-71 silly gunzTarPerm extractEntry example/views/boilerplate.ejs
-72 silly gunzTarPerm extractEntry example/views/extra.ejs
-73 silly gunzTarPerm extractEntry example/views/index.ejs
-74 silly gunzTarPerm extractEntry example/views/muppet.ejs
-75 silly gunzTarPerm extractEntry test/test.partials.js
-76 silly gunzTarPerm extractEntry test/fixtures/layout.ejs
-77 silly gunzTarPerm extractEntry test/fixtures/_entry.ejs
-78 silly gunzTarPerm extractEntry test/fixtures/blog/home.ejs
-79 silly gunzTarPerm extractEntry test/fixtures/blog/post/comment.ejs
-80 silly gunzTarPerm extractEntry test/fixtures/blog/post/index.ejs
-81 silly gunzTarPerm extractEntry test/fixtures/blog/user.ejs
-82 silly gunzTarPerm extractEntry test/fixtures/collection.ejs
-83 silly gunzTarPerm extractEntry test/fixtures/filters-custom.ejs
-84 silly gunzTarPerm extractEntry test/fixtures/filters.ejs
-85 silly gunzTarPerm extractEntry test/fixtures/include-chain-2.ejs
-86 silly gunzTarPerm extractEntry test/fixtures/include-chain.ejs
-87 silly gunzTarPerm extractEntry test/fixtures/index.ejs
-88 silly gunzTarPerm extractEntry test/fixtures/inherit-child-blocks.ejs
-89 silly gunzTarPerm extractEntry test/fixtures/inherit-child.ejs
-90 silly gunzTarPerm extractEntry test/fixtures/inherit-grandchild-blocks.ejs
-91 silly gunzTarPerm extractEntry test/fixtures/inherit-grandchild.ejs
-92 silly gunzTarPerm extractEntry test/fixtures/inherit-parent-blocks.ejs
-93 silly gunzTarPerm extractEntry test/fixtures/inherit-parent.ejs
-94 silly gunzTarPerm extractEntry test/fixtures/blocks-layout.ejs
-95 silly gunzTarPerm extractEntry test/fixtures/locals.ejs
-96 silly gunzTarPerm extractEntry test/fixtures/mobile.ejs
-97 silly gunzTarPerm extractEntry test/fixtures/non-existent-partial.ejs
-98 silly gunzTarPerm extractEntry test/fixtures/parent-include-chain.ejs
-99 silly gunzTarPerm extractEntry test/fixtures/path/to/thing.ejs
-100 silly gunzTarPerm extractEntry test/fixtures/subfolder/sub-include-chain.ejs
-101 silly gunzTarPerm extractEntry test/fixtures/subfolder/sub-layout.ejs
-102 silly gunzTarPerm extractEntry test/fixtures/subfolder/subitem-with-layout.ejs
-103 silly gunzTarPerm extractEntry test/fixtures/subfolder/subitem.ejs
-104 silly gunzTarPerm extractEntry test/fixtures/subfolder/sublocals.ejs
-105 silly gunzTarPerm extractEntry test/fixtures/thing/index.ejs
-106 silly gunzTarPerm extractEntry test/fixtures/with-absolute-include.ejs
-107 silly gunzTarPerm extractEntry test/fixtures/with-absolute-sub-include.ejs
-108 silly gunzTarPerm extractEntry test/fixtures/with-blocks.ejs
-109 silly gunzTarPerm extractEntry test/fixtures/with-include-chain-subfolder.ejs
-110 silly gunzTarPerm extractEntry test/fixtures/with-include-chain.ejs
-111 silly gunzTarPerm extractEntry test/fixtures/with-include.ejs
-112 silly gunzTarPerm extractEntry test/fixtures/with-layout.ejs
-113 silly gunzTarPerm extractEntry test/fixtures/with-two-includes.ejs
-114 silly gunzTarPerm extractEntry test/support/http.js
-115 silly lockFile 4c4e9045--project-node-modules-ejs-locals tar:///Users/emmanuelgenene/Documents/CIS450/cis550-project/cis550-project/node_modules/ejs-locals
-116 silly lockFile 4c4e9045--project-node-modules-ejs-locals tar:///Users/emmanuelgenene/Documents/CIS450/cis550-project/cis550-project/node_modules/ejs-locals
-117 silly lockFile 395408d9-npm-ejs-locals-1-0-2-package-tgz tar:///Users/emmanuelgenene/.npm/ejs-locals/1.0.2/package.tgz
-118 silly lockFile 395408d9-npm-ejs-locals-1-0-2-package-tgz tar:///Users/emmanuelgenene/.npm/ejs-locals/1.0.2/package.tgz
-119 info preinstall ejs-locals@1.0.2
-120 verbose readDependencies using package.json deps
-121 verbose readDependencies using package.json deps
-122 verbose cache add [ 'ejs@0.8.x', null ]
-123 verbose cache add name=undefined spec="ejs@0.8.x" args=["ejs@0.8.x",null]
-124 verbose parsed url { protocol: null,
-124 verbose parsed url   slashes: null,
-124 verbose parsed url   auth: null,
-124 verbose parsed url   host: null,
-124 verbose parsed url   port: null,
-124 verbose parsed url   hostname: null,
-124 verbose parsed url   hash: null,
-124 verbose parsed url   search: null,
-124 verbose parsed url   query: null,
-124 verbose parsed url   pathname: 'ejs@0.8.x',
-124 verbose parsed url   path: 'ejs@0.8.x',
-124 verbose parsed url   href: 'ejs@0.8.x' }
-125 verbose cache add name="ejs" spec="0.8.x" args=["ejs","0.8.x"]
-126 verbose parsed url { protocol: null,
-126 verbose parsed url   slashes: null,
-126 verbose parsed url   auth: null,
-126 verbose parsed url   host: null,
-126 verbose parsed url   port: null,
-126 verbose parsed url   hostname: null,
-126 verbose parsed url   hash: null,
-126 verbose parsed url   search: null,
-126 verbose parsed url   query: null,
-126 verbose parsed url   pathname: '0.8.x',
-126 verbose parsed url   path: '0.8.x',
-126 verbose parsed url   href: '0.8.x' }
-127 verbose addNamed [ 'ejs', '0.8.x' ]
-128 verbose addNamed [ null, '>=0.8.0-0 <0.9.0-0' ]
-129 silly lockFile 1c200482-ejs-0-8-x ejs@0.8.x
-130 verbose lock ejs@0.8.x /Users/emmanuelgenene/.npm/1c200482-ejs-0-8-x.lock
-131 silly addNameRange { name: 'ejs', range: '>=0.8.0-0 <0.9.0-0', hasData: false }
-132 verbose request where is /ejs
-133 verbose request registry https://registry.npmjs.org/
-134 verbose url raw /ejs
-135 verbose url resolving [ 'https://registry.npmjs.org/', './ejs' ]
-136 verbose url resolved https://registry.npmjs.org/ejs
-137 verbose request where is https://registry.npmjs.org/ejs
-138 info trying registry request attempt 1 at 01:52:20
-139 verbose etag "ERW73DW6HOQG8WBKLTP843EX8"
-140 http GET https://registry.npmjs.org/ejs
-141 http 304 https://registry.npmjs.org/ejs
-142 silly registry.get cb [ 304,
-142 silly registry.get   { date: 'Thu, 16 Apr 2015 05:52:21 GMT',
-142 silly registry.get     server: 'Apache',
-142 silly registry.get     via: '1.1 varnish',
-142 silly registry.get     'last-modified': 'Thu, 16 Apr 2015 05:51:41 GMT',
-142 silly registry.get     'cache-control': 'max-age=60',
-142 silly registry.get     etag: '"ERW73DW6HOQG8WBKLTP843EX8"',
-142 silly registry.get     age: '39',
-142 silly registry.get     'x-served-by': 'cache-atl6222-ATL',
-142 silly registry.get     'x-cache': 'HIT',
-142 silly registry.get     'x-cache-hits': '2',
-142 silly registry.get     'x-timer': 'S1429163541.001869,VS0,VE0',
-142 silly registry.get     vary: 'Accept',
-142 silly registry.get     'content-length': '0',
-142 silly registry.get     'keep-alive': 'timeout=10, max=50',
-142 silly registry.get     connection: 'Keep-Alive' } ]
-143 verbose etag https://registry.npmjs.org/ejs from cache
-144 silly addNameRange number 2 { name: 'ejs', range: '>=0.8.0-0 <0.9.0-0', hasData: true }
-145 silly addNameRange versions [ 'ejs',
-145 silly addNameRange   [ '0.0.1',
-145 silly addNameRange     '0.0.2',
-145 silly addNameRange     '0.0.3',
-145 silly addNameRange     '0.0.4',
-145 silly addNameRange     '0.1.0',
-145 silly addNameRange     '0.2.0',
-145 silly addNameRange     '0.2.1',
-145 silly addNameRange     '0.3.0',
-145 silly addNameRange     '0.3.1',
-145 silly addNameRange     '0.4.0',
-145 silly addNameRange     '0.4.1',
-145 silly addNameRange     '0.4.2',
-145 silly addNameRange     '0.4.3',
-145 silly addNameRange     '0.5.0',
-145 silly addNameRange     '0.6.0',
-145 silly addNameRange     '0.6.1',
-145 silly addNameRange     '0.7.0',
-145 silly addNameRange     '0.7.1',
-145 silly addNameRange     '0.7.2',
-145 silly addNameRange     '0.8.0',
-145 silly addNameRange     '0.8.1',
-145 silly addNameRange     '0.8.2',
-145 silly addNameRange     '0.8.3',
-145 silly addNameRange     '0.8.4',
-145 silly addNameRange     '0.8.5',
-145 silly addNameRange     '0.8.6',
-145 silly addNameRange     '0.8.8',
-145 silly addNameRange     '1.0.0',
-145 silly addNameRange     '2.0.2',
-145 silly addNameRange     '2.0.3',
-145 silly addNameRange     '2.0.4',
-145 silly addNameRange     '2.0.5',
-145 silly addNameRange     '2.0.6',
-145 silly addNameRange     '2.0.7',
-145 silly addNameRange     '2.0.8',
-145 silly addNameRange     '2.1.1',
-145 silly addNameRange     '2.1.2',
-145 silly addNameRange     '2.1.3',
-145 silly addNameRange     '2.1.4',
-145 silly addNameRange     '2.2.1',
-145 silly addNameRange     '2.2.2',
-145 silly addNameRange     '2.2.3',
-145 silly addNameRange     '2.2.4',
-145 silly addNameRange     '2.3.1' ] ]
-146 verbose addNamed [ 'ejs', '0.8.8' ]
-147 verbose addNamed [ '0.8.8', '0.8.8' ]
-148 silly lockFile 37d7c450-ejs-0-8-8 ejs@0.8.8
-149 verbose lock ejs@0.8.8 /Users/emmanuelgenene/.npm/37d7c450-ejs-0-8-8.lock
-150 silly lockFile 7259a2c7-stry-npmjs-org-ejs-ejs-0-8-8-tgz https://registry.npmjs.org/ejs/-/ejs-0.8.8.tgz
-151 verbose lock https://registry.npmjs.org/ejs/-/ejs-0.8.8.tgz /Users/emmanuelgenene/.npm/7259a2c7-stry-npmjs-org-ejs-ejs-0-8-8-tgz.lock
-152 verbose addRemoteTarball [ 'https://registry.npmjs.org/ejs/-/ejs-0.8.8.tgz',
-152 verbose addRemoteTarball   'ffdc56dcc35d02926dd50ad13439bbc54061d598' ]
-153 info retry fetch attempt 1 at 01:52:20
-154 verbose fetch to= /var/folders/h_/2yq_k_ns2hz__fxqv_blmsg00000gn/T/npm-10491-OBMXOSWs/registry.npmjs.org/ejs/-/ejs-0.8.8.tgz
-155 http GET https://registry.npmjs.org/ejs/-/ejs-0.8.8.tgz
-156 http 200 https://registry.npmjs.org/ejs/-/ejs-0.8.8.tgz
-157 silly lockFile 7259a2c7-stry-npmjs-org-ejs-ejs-0-8-8-tgz https://registry.npmjs.org/ejs/-/ejs-0.8.8.tgz
-158 silly lockFile 7259a2c7-stry-npmjs-org-ejs-ejs-0-8-8-tgz https://registry.npmjs.org/ejs/-/ejs-0.8.8.tgz
-159 silly lockFile 37d7c450-ejs-0-8-8 ejs@0.8.8
-160 silly lockFile 37d7c450-ejs-0-8-8 ejs@0.8.8
-161 silly lockFile 1c200482-ejs-0-8-x ejs@0.8.x
-162 silly lockFile 1c200482-ejs-0-8-x ejs@0.8.x
-163 silly resolved [ { name: 'ejs',
-163 silly resolved     description: 'Embedded JavaScript templates',
-163 silly resolved     version: '0.8.8',
-163 silly resolved     author: { name: 'TJ Holowaychuk', email: 'tj@vision-media.ca' },
-163 silly resolved     keywords: [ 'template', 'engine', 'ejs' ],
-163 silly resolved     devDependencies: { mocha: '*', should: '*' },
-163 silly resolved     main: './lib/ejs.js',
-163 silly resolved     repository: { type: 'git', url: 'git://github.com/visionmedia/ejs.git' },
-163 silly resolved     scripts: { test: 'mocha --require should --reporter spec' },
-163 silly resolved     bugs: { url: 'https://github.com/visionmedia/ejs/issues' },
-163 silly resolved     homepage: 'https://github.com/visionmedia/ejs',
-163 silly resolved     _id: 'ejs@0.8.8',
-163 silly resolved     dist:
-163 silly resolved      { shasum: 'ffdc56dcc35d02926dd50ad13439bbc54061d598',
-163 silly resolved        tarball: 'http://registry.npmjs.org/ejs/-/ejs-0.8.8.tgz' },
-163 silly resolved     _from: 'ejs@0.8.x',
-163 silly resolved     _npmVersion: '1.4.6',
-163 silly resolved     _npmUser: { name: 'tjholowaychuk', email: 'tj@vision-media.ca' },
-163 silly resolved     maintainers: [ [Object] ],
-163 silly resolved     directories: {},
-163 silly resolved     _shasum: 'ffdc56dcc35d02926dd50ad13439bbc54061d598',
-163 silly resolved     _resolved: 'https://registry.npmjs.org/ejs/-/ejs-0.8.8.tgz' } ]
-164 info install ejs@0.8.8 into /Users/emmanuelgenene/Documents/CIS450/cis550-project/cis550-project/node_modules/ejs-locals
-165 info installOne ejs@0.8.8
-166 verbose node_modules/ejs-locals/node_modules/ejs unbuild
-167 verbose tar unpack /Users/emmanuelgenene/.npm/ejs/0.8.8/package.tgz
-168 silly lockFile 4dddf002-ules-ejs-locals-node-modules-ejs tar:///Users/emmanuelgenene/Documents/CIS450/cis550-project/cis550-project/node_modules/ejs-locals/node_modules/ejs
-169 verbose lock tar:///Users/emmanuelgenene/Documents/CIS450/cis550-project/cis550-project/node_modules/ejs-locals/node_modules/ejs /Users/emmanuelgenene/.npm/4dddf002-ules-ejs-locals-node-modules-ejs.lock
-170 silly lockFile 6a3cbfef-genene-npm-ejs-0-8-8-package-tgz tar:///Users/emmanuelgenene/.npm/ejs/0.8.8/package.tgz
-171 verbose lock tar:///Users/emmanuelgenene/.npm/ejs/0.8.8/package.tgz /Users/emmanuelgenene/.npm/6a3cbfef-genene-npm-ejs-0-8-8-package-tgz.lock
-172 silly gunzTarPerm modes [ '755', '644' ]
-173 silly gunzTarPerm extractEntry package.json
-174 silly gunzTarPerm extractEntry .npmignore
-175 silly gunzTarPerm extractEntry ejs.js
-176 silly gunzTarPerm extractEntry benchmark.js
-177 silly gunzTarPerm extractEntry ejs.min.js
-178 silly gunzTarPerm extractEntry index.js
-179 silly gunzTarPerm extractEntry .gitmodules
-180 silly gunzTarPerm extractEntry .travis.yml
-181 silly gunzTarPerm extractEntry History.md
-182 silly gunzTarPerm extractEntry examples/functions.js
-183 silly gunzTarPerm extractEntry examples/list.js
-184 silly gunzTarPerm extractEntry examples/client.html
-185 silly gunzTarPerm extractEntry examples/functions.ejs
-186 silly gunzTarPerm extractEntry examples/list.ejs
-187 silly gunzTarPerm extractEntry Makefile
-188 silly gunzTarPerm extractEntry lib/ejs.js
-189 silly gunzTarPerm extractEntry lib/filters.js
-190 silly gunzTarPerm extractEntry lib/utils.js
-191 silly gunzTarPerm extractEntry Readme.md
-192 silly gunzTarPerm extractEntry support/compile.js
-193 silly gunzTarPerm extractEntry test/ejs.js
-194 silly gunzTarPerm extractEntry test/fixtures/menu.ejs
-195 silly gunzTarPerm extractEntry test/fixtures/backslash.ejs
-196 silly gunzTarPerm extractEntry test/fixtures/comments.ejs
-197 silly gunzTarPerm extractEntry test/fixtures/comments.html
-198 silly gunzTarPerm extractEntry test/fixtures/double-quote.ejs
-199 silly gunzTarPerm extractEntry test/fixtures/double-quote.html
-200 silly gunzTarPerm extractEntry test/fixtures/error.ejs
-201 silly gunzTarPerm extractEntry test/fixtures/error.out
-202 silly gunzTarPerm extractEntry test/fixtures/fail.ejs
-203 silly gunzTarPerm extractEntry test/fixtures/include.css.ejs
-204 silly gunzTarPerm extractEntry test/fixtures/include.css.html
-205 silly gunzTarPerm extractEntry test/fixtures/include.ejs
-206 silly gunzTarPerm extractEntry test/fixtures/include.html
-207 silly gunzTarPerm extractEntry test/fixtures/includes/menu/item.ejs
-208 silly gunzTarPerm extractEntry test/fixtures/includes/menu-item.ejs
-209 silly gunzTarPerm extractEntry test/fixtures/backslash.html
-210 silly gunzTarPerm extractEntry test/fixtures/menu.html
-211 silly gunzTarPerm extractEntry test/fixtures/messed.ejs
-212 silly gunzTarPerm extractEntry test/fixtures/messed.html
-213 silly gunzTarPerm extractEntry test/fixtures/newlines.ejs
-214 silly gunzTarPerm extractEntry test/fixtures/newlines.html
-215 silly gunzTarPerm extractEntry test/fixtures/no.newlines.ejs
-216 silly gunzTarPerm extractEntry test/fixtures/no.newlines.html
-217 silly gunzTarPerm extractEntry test/fixtures/para.ejs
-218 silly gunzTarPerm extractEntry test/fixtures/pet.ejs
-219 silly gunzTarPerm extractEntry test/fixtures/single-quote.ejs
-220 silly gunzTarPerm extractEntry test/fixtures/single-quote.html
-221 silly gunzTarPerm extractEntry test/fixtures/style.css
-222 silly gunzTarPerm extractEntry test/fixtures/user.ejs
-223 silly lockFile 4dddf002-ules-ejs-locals-node-modules-ejs tar:///Users/emmanuelgenene/Documents/CIS450/cis550-project/cis550-project/node_modules/ejs-locals/node_modules/ejs
-224 silly lockFile 4dddf002-ules-ejs-locals-node-modules-ejs tar:///Users/emmanuelgenene/Documents/CIS450/cis550-project/cis550-project/node_modules/ejs-locals/node_modules/ejs
-225 silly lockFile 6a3cbfef-genene-npm-ejs-0-8-8-package-tgz tar:///Users/emmanuelgenene/.npm/ejs/0.8.8/package.tgz
-226 silly lockFile 6a3cbfef-genene-npm-ejs-0-8-8-package-tgz tar:///Users/emmanuelgenene/.npm/ejs/0.8.8/package.tgz
-227 info preinstall ejs@0.8.8
-228 verbose readDependencies using package.json deps
-229 verbose readDependencies using package.json deps
-230 silly resolved []
-231 verbose about to build /Users/emmanuelgenene/Documents/CIS450/cis550-project/cis550-project/node_modules/ejs-locals/node_modules/ejs
-232 info build /Users/emmanuelgenene/Documents/CIS450/cis550-project/cis550-project/node_modules/ejs-locals/node_modules/ejs
-233 verbose linkStuff [ false,
-233 verbose linkStuff   false,
-233 verbose linkStuff   false,
-233 verbose linkStuff   '/Users/emmanuelgenene/Documents/CIS450/cis550-project/cis550-project/node_modules/ejs-locals/node_modules' ]
-234 info linkStuff ejs@0.8.8
-235 verbose linkBins ejs@0.8.8
-236 verbose linkMans ejs@0.8.8
-237 verbose rebuildBundles ejs@0.8.8
-238 info install ejs@0.8.8
-239 info postinstall ejs@0.8.8
-240 verbose about to build /Users/emmanuelgenene/Documents/CIS450/cis550-project/cis550-project/node_modules/ejs-locals
-241 info build /Users/emmanuelgenene/Documents/CIS450/cis550-project/cis550-project/node_modules/ejs-locals
-242 verbose linkStuff [ false,
-242 verbose linkStuff   false,
-242 verbose linkStuff   false,
-242 verbose linkStuff   '/Users/emmanuelgenene/Documents/CIS450/cis550-project/cis550-project/node_modules' ]
-243 info linkStuff ejs-locals@1.0.2
-244 verbose linkBins ejs-locals@1.0.2
-245 verbose linkMans ejs-locals@1.0.2
-246 verbose rebuildBundles ejs-locals@1.0.2
-247 verbose rebuildBundles [ 'ejs' ]
-248 info install ejs-locals@1.0.2
-249 info postinstall ejs-locals@1.0.2
-250 info build /Users/emmanuelgenene/Documents/CIS450/cis550-project/cis550-project
-251 verbose linkStuff [ false,
-251 verbose linkStuff   false,
-251 verbose linkStuff   false,
-251 verbose linkStuff   '/Users/emmanuelgenene/Documents/CIS450/cis550-project' ]
-252 info linkStuff cis550-project@1.0.0
-253 verbose linkBins cis550-project@1.0.0
-254 verbose linkMans cis550-project@1.0.0
-255 verbose rebuildBundles cis550-project@1.0.0
-256 verbose rebuildBundles [ '.bin',
-256 verbose rebuildBundles   'async',
-256 verbose rebuildBundles   'ejs',
-256 verbose rebuildBundles   'ejs-locals',
-256 verbose rebuildBundles   'express',
-256 verbose rebuildBundles   'jade',
-256 verbose rebuildBundles   'nib',
-256 verbose rebuildBundles   'oracle',
-256 verbose rebuildBundles   'stylus' ]
-257 verbose rebuild bundle /Users/emmanuelgenene/Documents/CIS450/cis550-project/cis550-project/node_modules/jade
-258 info build /Users/emmanuelgenene/Documents/CIS450/cis550-project/cis550-project/node_modules/jade
-259 info preinstall jade@1.9.2
-260 verbose linkStuff [ false,
-260 verbose linkStuff   false,
-260 verbose linkStuff   false,
-260 verbose linkStuff   '/Users/emmanuelgenene/Documents/CIS450/cis550-project/cis550-project/node_modules' ]
-261 info linkStuff jade@1.9.2
-262 verbose linkBins jade@1.9.2
-263 verbose link bins [ { jade: './bin/jade.js' },
-263 verbose link bins   '/Users/emmanuelgenene/Documents/CIS450/cis550-project/cis550-project/node_modules/.bin',
-263 verbose link bins   false ]
-264 verbose linkMans jade@1.9.2
-265 verbose rebuildBundles jade@1.9.2
-266 verbose rebuildBundles [ '.bin',
-266 verbose rebuildBundles   'character-parser',
-266 verbose rebuildBundles   'commander',
-266 verbose rebuildBundles   'constantinople',
-266 verbose rebuildBundles   'mkdirp',
-266 verbose rebuildBundles   'transformers',
-266 verbose rebuildBundles   'void-elements',
-266 verbose rebuildBundles   'with' ]
-267 error Error: EACCES, unlink '/Users/emmanuelgenene/Documents/CIS450/cis550-project/cis550-project/node_modules/.bin/jade'
-267 error  { [Error: EACCES, unlink '/Users/emmanuelgenene/Documents/CIS450/cis550-project/cis550-project/node_modules/.bin/jade']
-267 error   errno: 3,
-267 error   code: 'EACCES',
-267 error   path: '/Users/emmanuelgenene/Documents/CIS450/cis550-project/cis550-project/node_modules/.bin/jade' }
-268 error Please try running this command again as root/Administrator.
-269 error System Darwin 14.3.0
-270 error command "node" "/usr/local/bin/npm" "install"
-271 error cwd /Users/emmanuelgenene/Documents/CIS450/cis550-project/cis550-project
-272 error node -v v0.10.33
-273 error npm -v 1.4.28
-274 error path /Users/emmanuelgenene/Documents/CIS450/cis550-project/cis550-project/node_modules/.bin/jade
-275 error code EACCES
-276 error errno 3
-277 error stack Error: EACCES, unlink '/Users/emmanuelgenene/Documents/CIS450/cis550-project/cis550-project/node_modules/.bin/jade'
-278 verbose exit [ 3, true ]
+3 info using node@v0.10.37
+4 verbose node symlink /usr/bin/node
+5 verbose cache add [ 'node-geocoder', null ]
+6 verbose cache add name=undefined spec="node-geocoder" args=["node-geocoder",null]
+7 verbose parsed url { protocol: null,
+7 verbose parsed url   slashes: null,
+7 verbose parsed url   auth: null,
+7 verbose parsed url   host: null,
+7 verbose parsed url   port: null,
+7 verbose parsed url   hostname: null,
+7 verbose parsed url   hash: null,
+7 verbose parsed url   search: null,
+7 verbose parsed url   query: null,
+7 verbose parsed url   pathname: 'node-geocoder',
+7 verbose parsed url   path: 'node-geocoder',
+7 verbose parsed url   href: 'node-geocoder' }
+8 silly lockFile 251daf80-node-geocoder node-geocoder
+9 verbose lock node-geocoder /home/vincent/.npm/251daf80-node-geocoder.lock
+10 silly lockFile 251daf80-node-geocoder node-geocoder
+11 silly lockFile 251daf80-node-geocoder node-geocoder
+12 verbose addNamed [ 'node-geocoder', '' ]
+13 verbose addNamed [ null, '*' ]
+14 silly lockFile b68df4f5-node-geocoder node-geocoder@
+15 verbose lock node-geocoder@ /home/vincent/.npm/b68df4f5-node-geocoder.lock
+16 silly addNameRange { name: 'node-geocoder', range: '*', hasData: false }
+17 verbose request where is /node-geocoder
+18 verbose request registry http://registry.npmjs.org/
+19 verbose request id f7497f3f8f88f348
+20 verbose url raw /node-geocoder
+21 verbose url resolving [ 'http://registry.npmjs.org/', './node-geocoder' ]
+22 verbose url resolved http://registry.npmjs.org/node-geocoder
+23 verbose request where is http://registry.npmjs.org/node-geocoder
+24 info trying registry request attempt 1 at 13:32:46
+25 http GET http://registry.npmjs.org/node-geocoder
+26 http 200 http://registry.npmjs.org/node-geocoder
+27 silly registry.get cb [ 200,
+27 silly registry.get   { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+27 silly registry.get     etag: '"BW6L91KZCX9IR13L6VJETSCM0"',
+27 silly registry.get     'content-type': 'application/json',
+27 silly registry.get     'cache-control': 'max-age=60',
+27 silly registry.get     'content-length': '78236',
+27 silly registry.get     'accept-ranges': 'bytes',
+27 silly registry.get     date: 'Sat, 25 Apr 2015 17:32:46 GMT',
+27 silly registry.get     via: '1.1 varnish',
+27 silly registry.get     age: '0',
+27 silly registry.get     connection: 'keep-alive',
+27 silly registry.get     'x-served-by': 'cache-iad2133-IAD',
+27 silly registry.get     'x-cache': 'MISS',
+27 silly registry.get     'x-cache-hits': '0',
+27 silly registry.get     'x-timer': 'S1429983166.375159,VS0,VE603',
+27 silly registry.get     vary: 'Accept' } ]
+28 silly addNameRange number 2 { name: 'node-geocoder', range: '*', hasData: true }
+29 silly addNameRange versions [ 'node-geocoder',
+29 silly addNameRange   [ '0.0.1',
+29 silly addNameRange     '0.0.2',
+29 silly addNameRange     '0.0.3',
+29 silly addNameRange     '0.0.4',
+29 silly addNameRange     '0.0.5',
+29 silly addNameRange     '0.1.0',
+29 silly addNameRange     '0.2.0',
+29 silly addNameRange     '0.3.0',
+29 silly addNameRange     '0.4.0',
+29 silly addNameRange     '0.5.0',
+29 silly addNameRange     '0.6.0',
+29 silly addNameRange     '0.7.0',
+29 silly addNameRange     '1.0.0',
+29 silly addNameRange     '1.0.1',
+29 silly addNameRange     '1.0.2',
+29 silly addNameRange     '1.0.3',
+29 silly addNameRange     '1.1.0',
+29 silly addNameRange     '1.2.0',
+29 silly addNameRange     '1.3.0',
+29 silly addNameRange     '1.4.0',
+29 silly addNameRange     '2.0.0',
+29 silly addNameRange     '2.0.1',
+29 silly addNameRange     '2.1.0',
+29 silly addNameRange     '2.1.1',
+29 silly addNameRange     '2.2.0',
+29 silly addNameRange     '2.3.0',
+29 silly addNameRange     '2.4.0',
+29 silly addNameRange     '2.4.1',
+29 silly addNameRange     '2.5.0',
+29 silly addNameRange     '2.5.1',
+29 silly addNameRange     '2.5.2',
+29 silly addNameRange     '2.5.3',
+29 silly addNameRange     '2.6.0',
+29 silly addNameRange     '2.7.0',
+29 silly addNameRange     '2.7.1',
+29 silly addNameRange     '2.8.0',
+29 silly addNameRange     '2.8.1',
+29 silly addNameRange     '2.8.2',
+29 silly addNameRange     '2.9.0',
+29 silly addNameRange     '2.9.1',
+29 silly addNameRange     '2.9.2',
+29 silly addNameRange     '2.10.0',
+29 silly addNameRange     '2.11.0',
+29 silly addNameRange     '2.11.1',
+29 silly addNameRange     '2.12.0',
+29 silly addNameRange     '2.12.1',
+29 silly addNameRange     '2.13.0',
+29 silly addNameRange     '2.13.1',
+29 silly addNameRange     '2.13.2',
+29 silly addNameRange     '2.13.3',
+29 silly addNameRange     '2.13.4',
+29 silly addNameRange     '2.14.0',
+29 silly addNameRange     '2.15.0',
+29 silly addNameRange     '2.15.1',
+29 silly addNameRange     '2.16.0',
+29 silly addNameRange     '2.16.1',
+29 silly addNameRange     '2.17.0',
+29 silly addNameRange     '2.17.1',
+29 silly addNameRange     '2.18.1',
+29 silly addNameRange     '2.18.2',
+29 silly addNameRange     '2.19.0',
+29 silly addNameRange     '2.19.1',
+29 silly addNameRange     '2.19.2',
+29 silly addNameRange     '2.20.0' ] ]
+30 verbose addNamed [ 'node-geocoder', '2.20.0' ]
+31 verbose addNamed [ '2.20.0', '2.20.0' ]
+32 silly lockFile e3adb456-node-geocoder-2-20-0 node-geocoder@2.20.0
+33 verbose lock node-geocoder@2.20.0 /home/vincent/.npm/e3adb456-node-geocoder-2-20-0.lock
+34 silly lockFile 11561cc6-eocoder-node-geocoder-2-20-0-tgz http://registry.npmjs.org/node-geocoder/-/node-geocoder-2.20.0.tgz
+35 verbose lock http://registry.npmjs.org/node-geocoder/-/node-geocoder-2.20.0.tgz /home/vincent/.npm/11561cc6-eocoder-node-geocoder-2-20-0-tgz.lock
+36 verbose addRemoteTarball [ 'http://registry.npmjs.org/node-geocoder/-/node-geocoder-2.20.0.tgz',
+36 verbose addRemoteTarball   '8fe4ebd4d1f04409ebdccf0e8883922df4ab366a' ]
+37 info retry fetch attempt 1 at 13:32:47
+38 verbose fetch to= /tmp/npm-24860-rImvl2qV/registry.npmjs.org/node-geocoder/-/node-geocoder-2.20.0.tgz
+39 http GET http://registry.npmjs.org/node-geocoder/-/node-geocoder-2.20.0.tgz
+40 http 200 http://registry.npmjs.org/node-geocoder/-/node-geocoder-2.20.0.tgz
+41 silly lockFile 11561cc6-eocoder-node-geocoder-2-20-0-tgz http://registry.npmjs.org/node-geocoder/-/node-geocoder-2.20.0.tgz
+42 silly lockFile 11561cc6-eocoder-node-geocoder-2-20-0-tgz http://registry.npmjs.org/node-geocoder/-/node-geocoder-2.20.0.tgz
+43 silly lockFile e3adb456-node-geocoder-2-20-0 node-geocoder@2.20.0
+44 silly lockFile e3adb456-node-geocoder-2-20-0 node-geocoder@2.20.0
+45 silly lockFile b68df4f5-node-geocoder node-geocoder@
+46 silly lockFile b68df4f5-node-geocoder node-geocoder@
+47 silly resolved [ { name: 'node-geocoder',
+47 silly resolved     version: '2.20.0',
+47 silly resolved     description: 'Node Geocoder, node geocoding library, supports google maps, mapquest, open street map, tom tom, promise',
+47 silly resolved     main: 'index.js',
+47 silly resolved     scripts: { test: 'mocha --check-leaks', lint: 'jshint lib test' },
+47 silly resolved     bin:
+47 silly resolved      { geocoder: 'bin/geocoder',
+47 silly resolved        'geocoder-reverse': 'bin/geocoder-reverse' },
+47 silly resolved     repository:
+47 silly resolved      { type: 'git',
+47 silly resolved        url: 'https://github.com/nchaulet/node-geocoder.git' },
+47 silly resolved     keywords:
+47 silly resolved      [ 'geocoder',
+47 silly resolved        'geocoding',
+47 silly resolved        'geo',
+47 silly resolved        'google',
+47 silly resolved        'maps',
+47 silly resolved        'mapquest',
+47 silly resolved        'agol',
+47 silly resolved        'arcgis',
+47 silly resolved        'tomtom' ],
+47 silly resolved     author: { name: 'nchaulet' },
+47 silly resolved     license: 'MIT',
+47 silly resolved     bugs: { url: 'https://github.com/nchaulet/node-geocoder/issues' },
+47 silly resolved     dependencies: { commander: '^2.6.0', q: '^1.1.2' },
+47 silly resolved     devDependencies:
+47 silly resolved      { chai: '^1.8.1',
+47 silly resolved        jshint: '^2.5.11',
+47 silly resolved        mocha: '^1.14.0',
+47 silly resolved        sinon: '^1.7.3' },
+47 silly resolved     gitHead: 'ae9c9dd635a33d7d7ff269e156b3a20e5da02da4',
+47 silly resolved     homepage: 'https://github.com/nchaulet/node-geocoder',
+47 silly resolved     _id: 'node-geocoder@2.20.0',
+47 silly resolved     _shasum: '8fe4ebd4d1f04409ebdccf0e8883922df4ab366a',
+47 silly resolved     _from: 'node-geocoder@',
+47 silly resolved     _npmVersion: '2.1.11',
+47 silly resolved     _nodeVersion: '0.10.33',
+47 silly resolved     _npmUser: { name: 'nchaulet', email: 'n.chaulet@gmail.com' },
+47 silly resolved     maintainers: [ [Object] ],
+47 silly resolved     dist:
+47 silly resolved      { shasum: '8fe4ebd4d1f04409ebdccf0e8883922df4ab366a',
+47 silly resolved        tarball: 'http://registry.npmjs.org/node-geocoder/-/node-geocoder-2.20.0.tgz' },
+47 silly resolved     directories: {},
+47 silly resolved     _resolved: 'http://registry.npmjs.org/node-geocoder/-/node-geocoder-2.20.0.tgz' } ]
+48 info install node-geocoder@2.20.0 into /usr/lib
+49 info installOne node-geocoder@2.20.0
+50 verbose lib/node_modules/node-geocoder unbuild
+51 verbose tar unpack /home/vincent/.npm/node-geocoder/2.20.0/package.tgz
+52 silly lockFile fe064f76-r-lib-node-modules-node-geocoder tar:///usr/lib/node_modules/node-geocoder
+53 verbose lock tar:///usr/lib/node_modules/node-geocoder /home/vincent/.npm/fe064f76-r-lib-node-modules-node-geocoder.lock
+54 silly lockFile c9adfbda-node-geocoder-2-20-0-package-tgz tar:///home/vincent/.npm/node-geocoder/2.20.0/package.tgz
+55 verbose lock tar:///home/vincent/.npm/node-geocoder/2.20.0/package.tgz /home/vincent/.npm/c9adfbda-node-geocoder-2-20-0-package-tgz.lock
+56 silly gunzTarPerm modes [ '775', '664' ]
+57 error Error: EACCES, mkdir '/usr/lib/node_modules/node-geocoder'
+57 error  { [Error: EACCES, mkdir '/usr/lib/node_modules/node-geocoder']
+57 error   errno: 3,
+57 error   code: 'EACCES',
+57 error   path: '/usr/lib/node_modules/node-geocoder',
+57 error   fstream_type: 'Directory',
+57 error   fstream_path: '/usr/lib/node_modules/node-geocoder',
+57 error   fstream_class: 'DirWriter',
+57 error   fstream_stack:
+57 error    [ '/usr/lib/node_modules/npm/node_modules/fstream/lib/dir-writer.js:36:23',
+57 error      '/usr/lib/node_modules/npm/node_modules/mkdirp/index.js:46:53',
+57 error      'Object.oncomplete (fs.js:108:15)' ] }
+58 error Please try running this command again as root/Administrator.
+59 error System Linux 3.8.0-44-generic
+60 error command "/usr/bin/node" "/usr/bin/npm" "install" "-g" "node-geocoder"
+61 error cwd /home/vincent/Documents/CIS450/cis550-project
+62 error node -v v0.10.37
+63 error npm -v 1.4.28
+64 error path /usr/lib/node_modules/node-geocoder
+65 error fstream_path /usr/lib/node_modules/node-geocoder
+66 error fstream_type Directory
+67 error fstream_class DirWriter
+68 error code EACCES
+69 error errno 3
+70 error stack Error: EACCES, mkdir '/usr/lib/node_modules/node-geocoder'
+71 error fstream_stack /usr/lib/node_modules/npm/node_modules/fstream/lib/dir-writer.js:36:23
+71 error fstream_stack /usr/lib/node_modules/npm/node_modules/mkdirp/index.js:46:53
+71 error fstream_stack Object.oncomplete (fs.js:108:15)
+72 verbose exit [ 3, true ]
