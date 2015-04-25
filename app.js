@@ -45,11 +45,14 @@ app.get('/', routes.login);
 app.get('/login', routes.login); 
 app.get('/results', routes.results); 
 app.post('/check_pass', routes.check_pass);
+app.post('/edit_pass', routes.edit_pass);
 app.get('/home', routes.home);  
 app.get('/signup', routes.signup);
 app.post('/create_user', routes.create_user);  
 app.post('/group_search', routes.group_search);
 app.get('/user_profile', routes.user_profile);
+app.get('/change_password', routes.change_password);
+app.get('/change_address', routes.change_address);
 app.get('/group', routes.group);
 
 // Listen on the port we specify

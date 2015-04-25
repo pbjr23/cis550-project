@@ -38,8 +38,27 @@ exports.login = function(req, res){
 };
 
 exports.user_profile = function(req, res){
-  res.render('user_profile.ejs', { 
-	  title: 'User Profile' 
+   res.render('user_profile.ejs', { 
+	   title: 'User Profile' 
+   });
+	// var callback = function(results) { 
+ //  	res.render('user_profile.ejs', { 
+	//   title: 'User Profile',
+	//   address: results
+ //  	});
+ //  };
+ //  db.getUserAddress(process.env.username, callback);
+};
+
+exports.change_password = function(req, res){
+  res.render('change_password.ejs', { 
+	  title: 'Change Password' 
+  });
+};
+
+exports.change_address = function(req, res){
+  res.render('change_address.ejs', { 
+	  title: 'Change Address' 
   });
 };
 
@@ -89,6 +108,27 @@ exports.check_pass = function(req, res){
 	db.validatePassword(req.body.username, req.body.password, callback);
 
 };  
+
+exports.edit_pass = function(req, res){ 
+
+	var callback = function(err, result) { 
+		if (err) throw err;  
+	}; 
+
+	db.changePassword(process.env.username, req.body.password, callback);
+
+};  
+
+exports.edit_address = function(req, res){ 
+
+	var callback = function(err, result) { 
+		if (err) throw err;  
+	}; 
+
+	db.changeAddress(process.env.username, req.body.address_label, 
+		req.body.address, callback);
+
+}; 
 
 /*
  * Searches for restaurants 
