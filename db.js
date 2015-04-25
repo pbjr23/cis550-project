@@ -319,6 +319,49 @@
 		});
 	}
 
+	db.prototype.create = function(username, password, address, addressLabel, lat, lon, callback) {
+		console.log('adding user: ' + username);
+		oracle.connect(connectData, function(err, connection) {
+			if (err) {
+				callback(err, null);
+			} else {
+				connection.execute("insert into users (username,password) values ('" + username + "','" + password + "')",
+				       [], function(err, results) {
+					if (err) {
+						console.log(err);
+						callback(err, null);
+					} else {
+						console.log(results);
+						callback(null, results);
+					}
+				});
+			}
+		});
+		//encryptPassword(password, function(encryptedPass) {
+			/*
+			oracle.connect(connectData, function(err, connection) {
+			if (err) {
+				callback(err, null);
+			} else {
+				console.log("here.....");
+				//add to users table
+				connection.execute("INSERT INTO address (address_label,username,address,lat,lon) "
+					+ "VALUES ('" + addressLabel + "','" + username + "','" + address + "'," + lat + "," + lon + ")",
+				       [], function(err, results) {
+					if (err) {
+						console.log(err);
+						callback(err, null);
+					} else {
+						console.log('hereee');
+						console.log(results);
+						
+					}
+				});
+			}
+		//});
+		});*/
+	}
+
 	db.prototype.createUser = function(username, password, address, addressLabel, lat, lon, callback) {
 		console.log('adding user: ' + username);
 		encryptPassword(password, function(encryptedPass) {
@@ -326,13 +369,19 @@
 			if (err) {
 				callback(err, null);
 			} else {
+				console.log("here");
 				//add to users table
+				console.log("INSERT INTO users (username,password) "
+					+ "VALUES ('" + username + "','" + encryptedPass + "')");
 				connection.execute("INSERT INTO users (username,password) "
 					+ "VALUES ('" + username + "','" + encryptedPass + "')",
 				       [], function(err, results) {
 					if (err) {
+						console.log(err);
 						callback(err, null);
 					} else {
+						console.log('hereee');
+						console.log(results);
 						oracle.connect(connectData, function(err, connection) {
 					if (err) {
 						callback(err, null);
@@ -344,7 +393,7 @@
 						if (err) {
 							callback(err, null);
 						} else {
-							callback(null, results.prototype.push.apply(results, results2));
+							callback(null, results2);
 						}
 					});
 				}
@@ -411,8 +460,7 @@
 					if (err) {
 						callback(err, null);
 					} else {
-						console.log(results);
-						callback(results[0].GROUP_NAME);
+						callback(null, results[0].GROUP_NAME);
 					}
 				});
 			}
@@ -431,7 +479,7 @@
 					if (err) {
 						callback(err, null);
 					} else {
-						callback(results);
+						callback(null, results);
 					}
 				});
 			}

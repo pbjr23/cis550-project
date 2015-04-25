@@ -5,12 +5,12 @@ exports.init = function(dbObj) {
 	db = dbObj;
 }
 exports.testFunction = function(req, res) {
-	//db.createUser('userD', 'abcPass', 'testAddress', 'home', 40, -70, function(result) {
-	//	console.log(result);
-	//});
-	db.getPassword('userD', function(results) {
-		console.log(results);
+	db.createUser('userA', 'abcPass', 'testAddress', 'home', 40, -70, function(err, result) {
+		console.log(result);
 	});
+	//db.validatePassword('userD', 'abcPass', function(err, results) {
+	//	console.log(results);
+	//});
 	//db.getRestStars('Mo3eTair_CFEw-vXQqsGEQ', function(results) {
 	//	console.log(results);
 	//});
