@@ -59,6 +59,17 @@ exports.groups = function(req, res){
   });
 };
 
+exports.group = function(req, res) {
+	var groupID = req.query.groupID;
+	db.getGroupMembers(groupID, function(members) {
+		console.log(members);
+		res.render('group.ejs', {
+			title: 'GroupID: ' + groupID,
+			members: members
+		});
+	});
+};
+
 /*
  * Create new user 
  */

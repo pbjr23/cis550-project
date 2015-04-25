@@ -35,6 +35,7 @@ routes.init(dbObj);
 // .. and our app
 init_app(app);
 
+//for testing
 testRoute.init(dbObj);
 app.get('/test', testRoute.testFunction);
 
@@ -50,6 +51,7 @@ app.get('/groups', routes.groups);
 app.post('/create_user', routes.create_user);  
 app.post('/group_search', routes.group_search);
 app.get('/user_profile', routes.user_profile);
+app.get('/group', routes.group);
 
 // Listen on the port we specify
 http.createServer(app).listen(app.get('port'), function(){

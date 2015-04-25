@@ -8,6 +8,7 @@
 	  "database": "equiDB" };
 
 	var oracle =  require("oracle");
+	var async = require('async');
 
 	//constructor
 	function db() {
@@ -457,7 +458,15 @@
 					if (err) {
 						console.log(err);
 					} else {
-						callback(results);
+						console.log('here');
+						var usernames = [];
+						async.each(results, function(userObj, call) {
+							var name = userObj.USERNAME;
+							usernames.push(name);
+							call();
+						}, function() {
+							callback(usernames);
+						});
 					}
 				});
 			}
@@ -483,8 +492,6 @@
 		});
 	}
 	
-	// TODO: ORA-00001: unique constraint (EQUIDIST.IN_GROUP_GROUP_ID) violated
-	// somehow duplicate group ID's is not allowed
 	db.prototype.addUserToGroup = function(groupID, username, callback) {
 		console.log('adding user: ' + username + ', to group: ' + groupID);
 		oracle.connect(connectData, function(err, connection) {
