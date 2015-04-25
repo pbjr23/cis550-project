@@ -74,11 +74,28 @@ exports.change_address = function(req, res){
 
 exports.group = function(req, res) {
 	var groupID = req.query.groupID;
-	db.getGroupMembers(groupID, function(members) {
-		db.getGroupName(groupID, function(groupName) {
-			res.render('group.ejs', {
+	db.getGroupMembers(groupID, function(err, members) {
+		if (err) {
+			// TODO: redirect to error page
+		}
+		db.getGroupName(groupID, function(err, groupName) {
+			if (err) {
+				// TODO: redirect to error page
+			}
+			var names = [];
+			async.each(members, function(userID, call) {
+				db.getUserName(userID, function(err, nameObj) {
+					// TODO: redirect to error page
+					var fullName = nameObj.FIRST_NAME + " " 
+										+ nameObj.LAST_NAME;
+					names.push(fullName);
+					call();
+				})
+			}, function() {
+				res.render('group.ejs', {
 				title: groupName,
-				members: members
+				memberNames: names
+				});
 			});
 		});
 	});
