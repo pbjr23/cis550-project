@@ -9,11 +9,36 @@
 
 	var oracle =  require("oracle");
 	var async = require('async');
+	var crypto = require('crypto'),
+		key = 'helpYelp_secretKey';
 
 	//constructor
 	function db() {
 
 	};
+
+	function encryptPassword(pass, callback) {
+		var cipher = crypto.createCipher('aes-256-cbc', key);
+		var encrypted = cipher.update(pass, 'utf8', 'base64');
+		encrypted += cipher.final('base64');
+		
+		console.log("unencrypted: " + pass);
+		console.log("adding encrypted password: " + encrypted);
+		
+		callback(encrypted);
+	}
+
+	function decryptPassword(pass, callback) {
+		//decrypt password from DB
+		var decipher = crypto.createDecipher('aes-256-cbc', key);
+		var decrypted = 
+			decipher.update(pass, 'base64', 'utf8');
+		decrypted += decipher.final('utf8');
+		
+		console.log('decrypted pass: ' + decrypted);
+		
+		callback(decrypted);
+	}
 
 	/* restaurant table methods */
 	// returns a single object with all info for restaurant
@@ -298,44 +323,49 @@
 			}
 		});
 	}
-	//TODO: need to get address and other info
+	/* returns single object, format: { USERNAME: 'abc', 
+	 *                                  FB_ID: 123,
+	 * 									PASSWORD: 'pass',
+	 * 									ADDRESS_LABEL: 'home',
+	 *									ADDRESS: 'address',
+	 * 									LAT: 40,
+	 * 									LON: -70}
+	*/
 	db.prototype.getAllUserInfo = function(username, callback) {
 		console.log('getting all user info of: ' + username);
 		oracle.connect(connectData, function(err, connection) {
 			if (err) {
 				console.log(err);
 			} else {
-				connection.execute("SELECT * FROM users WHERE username = '" + username + "'", 
+				connection.execute("SELECT * FROM users U "
+					+ "INNER JOIN address A ON U.username = A.username "
+					+ "WHERE U.username = '" + username + "'", 
 				       [], function(err, results) {
 					if (err) {
 						console.log(err);
 					} else {
-						callback(results);
+						callback(results[0]);
 					}
 				});
 			}
 		});
 	}
-	//TODO: needs testing
+
 	db.prototype.createUser = function(username, password, address, addressLabel, lat, lon, callback) {
 		console.log('adding user: ' + username);
-		oracle.connect(connectData, function(err, connection) {
+		encryptPassword(password, function(encryptedPass) {
+			oracle.connect(connectData, function(err, connection) {
 			if (err) {
 				console.log(err);
 			} else {
 				//add to users table
 				connection.execute("INSERT INTO users (username,password) "
-					+ "VALUES ('" + username + "','" + password + "')",
+					+ "VALUES ('" + username + "','" + encryptedPass + "')",
 				       [], function(err, results) {
 					if (err) {
 						console.log(err);
 					} else {
-						//add to password table
 						oracle.connect(connectData, function(err, connection) {
-							if (err) {
-								console.log(err);
-							} else {
-								oracle.connect(connectData, function(err, connection) {
 					if (err) {
 						console.log(err);
 					} else {
@@ -348,7 +378,6 @@
 					+ "VALUES ('" + addressLabel + "','" + username + "','" + address + "'," + lat + "," + lon + ")",
 												       [], function(err, results) {
 													if (err) {
-														console.log("5"); 
 														console.log(err);
 													} else {
 														callback(results);
@@ -356,30 +385,25 @@
 												});
 											}
 										});
-									}
-								});
-							}
-						});
 					}
 				});
 			}
 		});
+		});
 	}
-
-
-	/* password table methods */
+	//returns string that is decrypted password
 	db.prototype.getPassword = function(username, callback) {
 		console.log('getting password for: ' + username);
 		oracle.connect(connectData, function(err, connection) {
 			if (err) {
 				console.log(err);
 			} else {
-				connection.execute("SELECT pass FROM password WHERE username = '" + username + "'",
+				connection.execute("SELECT password FROM users WHERE username = '" + username + "'",
 				       [], function(err, results) {
 					if (err) {
 						console.log(err);
 					} else {
-						callback(results);
+						decryptPassword(results[0].PASSWORD, callback);
 					}
 				});
 			}

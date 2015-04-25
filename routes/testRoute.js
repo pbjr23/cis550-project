@@ -5,7 +5,10 @@ exports.init = function(dbObj) {
 	db = dbObj;
 }
 exports.testFunction = function(req, res) {
-	db.getFriends('userA', function(results) {
+	//db.createUser('userD', 'abcPass', 'testAddress', 'home', 40, -70, function(result) {
+	//	console.log(result);
+	//});
+	db.getPassword('userD', function(results) {
 		console.log(results);
 	});
 	//db.getRestStars('Mo3eTair_CFEw-vXQqsGEQ', function(results) {
