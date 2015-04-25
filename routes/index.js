@@ -255,7 +255,7 @@ exports.edit_pass = function(req, res){
 exports.edit_address = function(req, res){ 
 
 	var callback = function(err, result) { 
-		if (err) throw err;  
+		if (err) throw err;
 	}; 
 
   var geocoderProvider = 'google';
@@ -263,13 +263,16 @@ exports.edit_address = function(req, res){
 	var geocoder = require('node-geocoder')(geocoderProvider, httpAdapter);
 	geocoder.geocode(req.body.address, function(err, results) {
   	if (results.length == 1) {
+  		 res.send("success");
   		console.log("Latitude: " + results[0].latitude + " Longitude: " + results[0].longitude);
-  		db.changeAddressAndLabel(req.session.username, req.body.address_label, 
-		  req.body.address, results[0].latitude, results[0].longitude, callback);
+  		db.changeUserAddressLatLon(req.session.username, req.body.address, req.body.address_label, 
+		  results[0].latitude, results[0].longitude, callback);
   	}
-  	else console.log("Insert Valid Address");
-  });
-
+  	else {
+  		rest.send("failure");
+  		console.log("Insert Valid Address");
+  	}
+	});
 }; 
 
 /*

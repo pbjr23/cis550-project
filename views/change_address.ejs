@@ -28,16 +28,22 @@ New Address:<br>
       address_label = address_label.trim(); 
       address = address.trim();
       if (address_label.length != 0 && address.length != 0) { 
-        var info = {"address":address, "address_label":address_label}; 
-        $.post("/edit_address", info,function(data, status) {
-            if (data == "success")
-            // go to home page 
-            location.href = "/home";
-            else if (data == "failure") {
-              $("#error").text("Invalid address.");
-              $("#error").css('color', 'red');
-            } 
-        });         
+        if (address_label.length > 20) {
+          $("#error").text("Address labels can be at most 20 characters.");
+          $("#error").css('color', 'red');
+        }
+        else {
+          var info = {"address":address, "address_label":address_label}; 
+          $.post("/edit_address", info,function(data, status) {
+              if (data == "success")
+              // go to home page 
+              location.href = "/user_profile";
+              else if (data == "failure") {
+                $("#error").text("Invalid address.");
+                $("#error").css('color', 'red');
+              } 
+          }); 
+        }        
       }
       else { 
         $("#error").text("All Fields Must Be Filled.");
