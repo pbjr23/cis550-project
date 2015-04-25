@@ -1,57 +1,43 @@
 <!-- Embed the layout.ejs file -->
 <% layout( 'layout' ) -%>
 
-
-<head></head> 
-Edit Profile 
-<br><br>
-Username:<br>
-<input type="text" id="username"> 
-<br>
-Password:<br>
-<input type="password" id="password"> 
-<br>
+<button id="change_name">Change Name</button><br><br>
+<button id="change_password">Change Password</button><br><br>
+<button id="change_address">Change Address</button><br><br>
+<button id="back_to_homepage">Back to Homepage</button><br>
 
 <script>
 	
   $(document).ready(function() {
   	
   	// Upon click of the AJAX request...
-  	$("#submit").click(function() {
+  	$("#change_name").click(function() {
   		// Fetch some data from the server via an AJAX
   		// call.  
-  		
-  		var username = $("#username").val(); 
-  		var password = $("#password").val();
-  		username = username.trim(); 
-  		password = password.trim();
-  		if (username.length != 0 && password.length != 0) { 
-        var info = {"username": username, "password": password}; 
-  		  
-        $.post("/check_pass", info,function(data, status) {
-            // go to home page 
-            if (data == "success") 
-              location.href = "/home";
-            else if (data == "failure") {
-              $("#error").text("Incorrect Password");
-              $("#error").css('color', 'red');  
-            }         
-        }); 
+  		location.href = "/change_name"
+  	});
 
+  	$("#change_password").click(function() {
+  		// Fetch some data from the server via an AJAX
+  		// call.  
+  		location.href = "/change_password"
+  	});
 
-  		}
-  		else { 
-  			$("#error").text("All Fields Must be filled.");
-  			$("#error").css('color', 'red');
-  		}
+  	$("#change_address").click(function() {
+  		// Fetch some data from the server via an AJAX
+  		// call.  
+  		location.href = "/change_address"
+  	});
+
+  	// Upon click of the AJAX request...
+  	$("#back_to_homepage").click(function() {
+  		// Fetch some data from the server via an AJAX
+  		// call.  
+  		location.href = "/home"
   	});
   	
   });
 </script>
-
-  <button id="submit">Login</button>
-  <br>
-  <a href="/signup">Create an account</a>
   <span id="data"></span>
   <br>
   <span id="error"></span> 

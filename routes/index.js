@@ -12,18 +12,21 @@ exports.init = function(dbObj) {
 exports.home = function(req, res){
   // if logged in 
   if (req.session.username != null) {
-  	var callback = function(results) { 
-  		res.render('home.ejs', { 
-	  	title: 'Homepage',
-	  	groups: results
-  	});
+  	var callback = function(err, results) { 
+  		if (err) throw err;
+  		else {
+  			res.render('home.ejs', { 
+	  			title: 'Homepage',
+	  			groups: results
+  			});
+  		}
   	};
   	db.getGroups(req.session.username, callback); 
   }
   // render login page 
   else 
 	exports.login(req,res);
-};  
+}; 
 
 exports.results = function(req, res){
   res.render('results.ejs', { 
@@ -63,11 +66,31 @@ exports.change_password = function(req, res){
 };
 
 exports.change_address = function(req, res){
-  res.render('change_address.ejs', { 
-	  title: 'Change Address',
-	  address: req.session.address,
-	  address_label: req.session.address_label
-  });
+	var callback = function(err, results) {
+		if (err) throw err;
+		else {
+		  res.render('change_address.ejs', { 
+			  title: 'Change Address',
+			  address: results.ADDRESS,
+			  address_label: results.ADDRESS_LABEL
+		  });
+		}
+	}
+	db.getUserAddressAll(req.session.username, callback);
+};
+
+exports.change_name = function(req, res){
+	var callback = function(err, results) {
+		if (err) throw err;
+		else {
+		  res.render('change_name.ejs', { 
+			  title: 'Change Name',
+			  first_name: results[0],
+			  last_name: results[1]
+		  });
+		}
+	}
+	db.getUserName(req.session.username, callback);
 };
 
 exports.group = function(req, res) {
@@ -91,13 +114,54 @@ exports.group = function(req, res) {
 				})
 			}, function() {
 				res.render('group.ejs', {
-				title: groupName,
-				memberNames: names
+					title: groupName,
+					memberNames: names,
+					usernames: members,
+					groupID: groupID
 				});
 			});
 		});
 	});
 };
+
+exports.removeUserFromGroup = function(req, res) {
+	var groupID = req.query.groupID;
+	var username = req.query.username;
+	console.log(groupID + " " + username);
+	db.removeUserFromGroup(groupID, username, function(err, results) {
+		if (err) {
+			console.log(err);
+		} else {
+			db.getGroupMembers(groupID, function(err, members) {
+				if (err) {
+					// TODO: redirect to error page
+				}
+				db.getGroupName(groupID, function(err, groupName) {
+					if (err) {
+						// TODO: redirect to error page
+					}
+					var names = [];
+					async.each(members, function(userID, call) {
+						db.getUserName(userID, function(err, nameObj) {
+							// TODO: redirect to error page
+							var fullName = nameObj.FIRST_NAME + " " 
+												+ nameObj.LAST_NAME;
+							names.push(fullName);
+							call();
+						})
+					}, function() {
+						res.render('group.ejs', {
+							title: groupName,
+							memberNames: names,
+							usernames: members,
+							groupID: groupID
+						});
+					});
+				});
+			});
+		}
+	})
+}
 
 /*
  * Create new user 
@@ -119,7 +183,7 @@ exports.create_user = function(req, res){
   		res.send("success");
   		console.log(results);
   		db.createUser(req.body.username, req.body.password, req.body.address, 
-			req.body.label, results[0].latitude, results[1].longitude, callback);
+			req.body.label, results[0].latitude, results[0].longitude, callback);
   	}
   	else {
   		res.send("failure");

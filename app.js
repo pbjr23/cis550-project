@@ -59,10 +59,12 @@ app.post('/create_user', routes.create_user);
 app.post('/group_search', routes.group_search);
 app.get('/user_profile', routes.user_profile);
 app.get('/change_password', routes.change_password);
+app.get('/change_name', routes.change_name);
 app.get('/change_address', routes.change_address);
 app.post('/address_to_lat_and_lon_tester', routes.address_to_lat_and_lon_tester);
 app.get('/group', routes.group);
 app.get('/create_group', routes.create_group);
+app.get('/removeUserFromGroup', routes.removeUserFromGroup);
 
 // Listen on the port we specify
 http.createServer(app).listen(app.get('port'), function(){

@@ -1,16 +1,10 @@
--<!-- Embed the layout.ejs file -->
--<% layout( 'layout' ) -%>
--
--Group ID: 
--<br> 
--<br> 
--
--<head></head> 
--
--Group Members:
--
--<ul>
--  <% for(var i=0; i< members.length; i++) {%>
--    <li><%= members[i] %></li>
--  <% } %>
--</ul>
+<!-- Embed the layout.ejs file -->
+<% layout( 'layout' ) -%>
+
+Group Members:
+
+<ul>
+  <% for(var i=0; i< memberNames.length; i++) {%>
+    <li><%= memberNames[i] %> <a href='/removeUserFromGroup?groupID=<%=groupID%>&username=<%=usernames[i]%>'>delete</a></li>
+  <% } %>
+</ul>

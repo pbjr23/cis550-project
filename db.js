@@ -581,6 +581,30 @@
 		});
 	}
 
+	db.prototype.changePassword = function(username, newPass, callback) {
+		console.log('changing password for: ' + username);
+		encryptPassword(newPass, function(encryptedPass) {
+			oracle.connect(connectData, function(err, connection) {
+				if (err) {
+					console.log(err); 
+					callback(err, null);
+				} else {
+					connection.execute("UPDATE users "
+						+ "SET password='" + encryptedPass + "' "
+						+ "WHERE username = '" + username + "'",
+					       [], function(err, results) {
+						if (err) {
+							console.log(err); 
+							callback(err, null);
+						} else {
+							callback(null, results);
+						}
+					});
+				}
+			});
+		});
+	}
+
 	//returns string that is decrypted password
 	/*
 	db.prototype.getPassword = function(username, callback) {
@@ -737,7 +761,7 @@
 			}
 		});
 	}
-
+	//returns new group ID
 	db.prototype.createGroup = function(groupName, callback) {
 		getNextAvailalbleGroupId(function(maxID){
 			var groupID = maxID + 1;
@@ -757,7 +781,7 @@
 							console.log(err);
 							callback(err, null);
 						} else {
-							callback(null, results);
+							callback(null, groupID);
 						}
 					});
 				}

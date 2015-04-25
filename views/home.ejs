@@ -14,6 +14,7 @@ Groups:<br>
 <% } %> 
 </ul>
 
+
 <script>
 	$(document).ready(function() {
   	
@@ -35,7 +36,11 @@ Groups:<br>
         $("#error").css('color', 'red');
       }
 
+  	});
 
+  	// Upon click of the AJAX request...
+  	$("#user_profile").click(function() {
+  		location.href = "/user_profile";
   	});
   	
   });
@@ -51,3 +56,4 @@ New Group Name:
 <a href="/user_profile">Edit Profile</a>
 <br>
 <span id="error"></span>
+
