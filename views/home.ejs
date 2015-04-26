@@ -5,19 +5,38 @@
 <head></head> 
 
 Groups:<br>
+
 <ul>
-<% if (groups != null) for(var i=0; i<groups.length; i++) {%>
+<% if (groups != null) {%>
+<% for(var i=0; i<groups.length; i++) {%>
    <li><a href="/group?id=<%= groups[i] %>") ><%= groups[i] %></a></li>
 <% } %>
-</ul><br>
+<% } %> 
+</ul>
+
 
 <script>
 	$(document).ready(function() {
   	
   	// Upon click of the AJAX request...
-  	$("#create_group").click(function() {
-  	
-  		
+  	$("#submit").click(function() {
+      var groupName = $("#group_name").val(); 
+      groupName = groupName.trim(); 
+      if (groupName.length != 0) {
+        $.get("/create_group?groupName=" + groupName, function(data, status) { 
+
+          var groupId = data; 
+          console.log("here");
+          $.get("/group?groupID=" + groupId, function(data, status) {
+          }); 
+
+          }); 
+      } 
+      else {
+        $("#error").text("New Group Name Must be filled.");
+        $("#error").css('color', 'red');
+      }
+
   	});
 
   	// Upon click of the AJAX request...
@@ -29,7 +48,13 @@ Groups:<br>
 
 </script>
 
+New Group Name: 
+<br>
+<input type="text" id="group_name"> 
+<br>
+<button id="submit">Create new group</button>
+<br>
+<a href="/user_profile">Edit Profile</a>
+<br>
+<span id="error"></span>
 
-<button id="create_group">Create New Group</button>
-<br><br>
-<button id="user_profile">Edit Profile</button>

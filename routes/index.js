@@ -25,9 +25,6 @@ exports.home = function(req, res){
   }
   // render login page 
   else 
-  // 	res.render('login.ejs', { 
-	 //  title: 'Login' 
-  // }); 
 	exports.login(req,res);
 }; 
 
@@ -300,6 +297,30 @@ exports.group_search = function(req, res){
 
 	db.getRestsSquareCoords(req.body.minlat, req.body.minlong, 
 		req.body.maxlat, req.body.maxlong, callback);
+
+}; 
+
+exports.create_group = function(req, res){ 
+
+	var callback = function(err, result) { 
+		if (err) 
+			throw err; 
+		else { 
+			console.log(result) 
+			var callback2 = function(err2, result2) { 
+				if (err2) 
+					throw err2;  
+				else { 
+					console.log(result2); 
+					console.log(result);
+					res.send(result.toString());
+				}
+			};
+			db.addUserToGroup(result, req.session.username, callback2);  
+		}
+	}; 
+
+	db.createGroup(req.query.groupName ,callback);
 
 }; 
 

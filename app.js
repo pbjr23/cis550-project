@@ -65,6 +65,7 @@ app.post('/address_to_lat_and_lon_tester', routes.address_to_lat_and_lon_tester)
 app.post('/edit_address', routes.edit_address);
 app.post('/edit_name', routes.edit_name);
 app.get('/group', routes.group);
+app.get('/create_group', routes.create_group);
 app.get('/removeUserFromGroup', routes.removeUserFromGroup);
 
 // Listen on the port we specify
