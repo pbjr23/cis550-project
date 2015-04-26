@@ -46,19 +46,24 @@ Address Label:<br>
       label = label.trim(); 
   		if (username.length != 0 && password.length != 0 && address.length != 0 
         && label.length != 0 && first_name.length != 0 && last_name.length != 0) { 
-        var info = {"username": username, "password": password, "address": 
-          address, "label": label, "first_name": first_name, "last_name": last_name};
-          
-        $.post("/create_user", info,function(data, status) {
-            if (data == "success")
-            // go to home page 
-            location.href = "/home";
-            else if (data == "failure") {
-              $("#error").text("Invalid address.");
-              $("#error").css('color', 'red');
-            }            
-        }); 
-
+        if (label.length > 20) {
+          $("#error").text("Address labels can be at most 20 characters.");
+          $("#error").css('color', 'red');
+        }
+        else {
+          var info = {"username": username, "password": password, "address": 
+            address, "label": label, "first_name": first_name, "last_name": last_name};
+            
+          $.post("/create_user", info,function(data, status) {
+              if (data == "success")
+              // go to home page 
+              location.href = "/home";
+              else if (data == "failure") {
+                $("#error").text("Invalid address.");
+                $("#error").css('color', 'red');
+              }            
+          }); 
+        }
 
   		}
   		else { 

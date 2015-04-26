@@ -180,9 +180,9 @@ exports.create_user = function(req, res){
   	if (results.length == 1) {
   		res.send("success");
   		console.log(results);
-  		db.createUser(req.body.username, req.body.password, req.body.address, 
-			req.body.label, results[0].latitude, results[0].longitude, 
-			req.body.first_name, req.body.last_name, callback);
+  		db.createUser(req.body.username, req.body.password, req.body.first_name, 
+  			req.body.last_name, req.body.address, req.body.label, 
+  			results[0].latitude, results[0].longitude, callback);
   	}
   	else {
   		res.send("failure");
