@@ -516,7 +516,10 @@
 		});
 	}
 
-	db.prototype.createUser = function(username, password, address, addressLabel, lat, lon, callback) {
+	db.prototype.createUser = function(username, password, 
+									first_name, last_name, 
+									address, addressLabel, 
+									lat, lon, callback) {
 		console.log('adding user: ' + username);
 		encryptPassword(password, function(encryptedPass) {
 			oracle.connect(connectData, function(err, connection) {
@@ -524,8 +527,10 @@
 				console.log(err); 
 				callback(err, null);
 			} else {
-				connection.execute("INSERT INTO users (username,password) "
-					+ "VALUES ('" + username + "','" + encryptedPass + "')",
+				connection.execute("INSERT INTO users (username,password,"
+					+ "first_name,last_name) "
+					+ "VALUES ('" + username + "','" + encryptedPass
+					+ "','" + first_name + "','" + last_name + "')",
 				       [], function(err, results) {
 					if (err) {
 						console.log(err);
