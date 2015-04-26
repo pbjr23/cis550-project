@@ -29,18 +29,25 @@ Password:<br>
   		password = password.trim();
   		if (username.length != 0 && password.length != 0) { 
         var info = {"username": username, "password": password}; 
-  		  
-        $.post("/check_pass", info,function(data, status) {
+        
+        $.post("/check_username", info,function(data, status) {
             // go to home page 
-            if (data == "success") 
-              location.href = "/home";
+            if (data == "success") {
+              $.post("/check_pass", info,function(data, status) {
+              // go to home page 
+              if (data == "success") 
+                location.href = "/home";
+              else if (data == "failure") {
+                $("#error").text("Incorrect Password");
+                $("#error").css('color', 'red');  
+              }         
+              }); 
+            }
             else if (data == "failure") {
-              $("#error").text("Incorrect Password");
+              $("#error").text("Not a valid username.");
               $("#error").css('color', 'red');  
             }         
         }); 
-
-
   		}
   		else { 
   			$("#error").text("All Fields Must be filled.");
