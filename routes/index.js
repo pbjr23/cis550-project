@@ -104,19 +104,26 @@ exports.group = function(req, res) {
 				// TODO: redirect to error page
 			}
 			var names = [];
+			var addresses = [];
 			async.each(members, function(userID, call) {
 				db.getUserName(userID, function(err, nameObj) {
-					// TODO: redirect to error page
+					if (err) {
+						// TODO: redirect to error page
+					}				
 					var fullName = nameObj.FIRST_NAME + " " 
 										+ nameObj.LAST_NAME;
 					names.push(fullName);
-					call();
+					db.getUserAddress(userID, function(err, address) {
+						addresses.push(address);
+						call();
+					});
 				})
 			}, function() {
 				res.render('group.ejs', {
 					title: groupName,
 					memberNames: names,
 					usernames: members,
+					addresses: addresses,
 					groupID: groupID
 				});
 			});

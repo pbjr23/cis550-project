@@ -7,9 +7,12 @@ Group Members:
 
 <ul>
   <% for (var i=0; i < memberNames.length; i++) {%>
-    <li><%= memberNames[i] %> 
-    	<button id='remove_<%= usernames[i] %>'>delete</button>
+    <li><%= memberNames[i] %>
+    	<button id='remove_<%= usernames[i] %>'>delete from group</button>
+    	<br>
+    	current address: <%= addresses[i] %>
     </li>
+    <br>
   <% } %>
 </ul>
 
@@ -24,6 +27,9 @@ Add new user to the group:<br>
 
 <script>
    $(document).ready(function() {
+   		console.log(geoplugin_city());
+   		console.log(geoplugin_latitude());
+   		console.log(geoplugin_longitude());
         $('#error').hide();
    		$('#addUser').click(function() {
    			var username = $('#newUsername').val();
