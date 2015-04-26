@@ -66,7 +66,8 @@ app.post('/edit_address', routes.edit_address);
 app.post('/edit_name', routes.edit_name);
 app.get('/group', routes.group);
 app.get('/create_group', routes.create_group);
-app.get('/removeUserFromGroup', routes.removeUserFromGroup);
+app.post('/removeUserFromGroup', routes.removeUserFromGroup);
+app.post('/addUserToGroup', routes.addUserToGroup);
 app.get('/get_group_name', routes.get_group_name);
 app.get('/logout', routes.logout);
 
