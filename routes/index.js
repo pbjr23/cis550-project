@@ -302,7 +302,8 @@ exports.create_group = function(req, res){
 					throw err2;  
 				else { 
 					console.log(result2); 
-					res.send(result);
+					console.log(result);
+					res.send(result.toString());
 				}
 			};
 			db.addUserToGroup(result, req.session.username, callback2);  

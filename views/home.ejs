@@ -26,6 +26,7 @@ Groups:<br>
         $.get("/create_group?groupName=" + groupName, function(data, status) { 
 
           var groupId = data; 
+          console.log("here");
           $.get("/group?groupID=" + groupId, function(data, status) {
           }); 
 
