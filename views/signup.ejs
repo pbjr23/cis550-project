@@ -4,11 +4,17 @@
 
 <head></head> 
 
-New Username:<br>
+Username:<br>
 <input type="text" id="username"> 
 <br><br>
-New Password:<br>
+Password:<br>
 <input type="password" id="password"> 
+<br><br>
+First Name:<br>
+<input type="text" id="first_name"> 
+<br><br>
+Last Name:<br>
+<input type="text" id="last_name"> 
 <br><br>
 Address:<br>
 <input type="text" id="address"> 
@@ -16,12 +22,6 @@ Address:<br>
 Address Label:<br> 
 <input type="text" id="label"> 
 <br><br>
-<!-- Latitude:<br>
-<input type="text" id="latitude"> 
-<br> 
-Longitude:<br>
-<input type="text" id="longitude"> 
-<br> -->
 
 <script>
 	
@@ -35,28 +35,55 @@ Longitude:<br>
   		var username = $("#username").val(); 
   		var password = $("#password").val();
   		var address = $("#address").val();  
-      // var latitude = $("#latitude").val(); 
-      // var longitude = $("#longitude").val(); 
+      var first_name = $("#first_name").val(); 
+      var last_name = $("#last_name").val(); 
       var label = $("#label").val(); 
   		username = username.trim(); 
   		password = password.trim();
   		address = address.trim(); 
-      // latitude = latitude.trim(); 
-      // longitude = longitude.trim(); 
+      first_name = first_name.trim(); 
+      last_name = last_name.trim(); 
       label = label.trim(); 
-  		if (username.length != 0 && password.length != 0 && address.length != 0 && label.length != 0) {//latitude.length != 0 && longitude.length != 0 && label.length != 0) { 
-        var info = {"username": username, "password": password, "address": address, "label": label};//"lat": latitude, "lon": longitude
-  		  
-        $.post("/create_user", info,function(data, status) {
-            if (data == "success")
-            // go to home page 
-            location.href = "/home";
-            else if (data == "failure") {
-              $("#error").text("Invalid address.");
-              $("#error").css('color', 'red');
-            }            
-        }); 
-
+  		if (username.length != 0 && password.length != 0 && address.length != 0 
+        && label.length != 0 && first_name.length != 0 && last_name.length != 0) { 
+        if (username.length > 20) {
+          $("#error").text("Usernames can be at most 20 characters.");
+          $("#error").css('color', 'red');
+        }
+        else if (password.length > 30) {
+          $("#error").text("Passwords can be at most 30 characters.");
+          $("#error").css('color', 'red');
+        }
+        else if (address.length > 150) {
+          $("#error").text("Address labels can be at most 150 characters.");
+          $("#error").css('color', 'red');
+        }
+        else if (label.length > 20) {
+          $("#error").text("Address labels can be at most 20 characters.");
+          $("#error").css('color', 'red');
+        }
+        else if (first_name.length > 20) {
+          $("#error").text("First names can be at most 20 characters.");
+          $("#error").css('color', 'red');
+        }
+        else if (last_name.length > 20) {
+          $("#error").text("Last names can be at most 20 characters.");
+          $("#error").css('color', 'red');
+        }
+        else {
+          var info = {"username": username, "password": password, "address": 
+            address, "label": label, "first_name": first_name, "last_name": last_name};
+            
+          $.post("/create_user", info,function(data, status) {
+              if (data == "success")
+              // go to home page 
+              location.href = "/home";
+              else if (data == "failure") {
+                $("#error").text("Invalid address.");
+                $("#error").css('color', 'red');
+              }            
+          }); 
+        }
 
   		}
   		else { 

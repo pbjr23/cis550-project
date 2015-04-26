@@ -55,6 +55,7 @@
 						console.log(err); 
 						callback(err, null);
 					} else {
+						connection.close();
 						//will only be 1 result for a rid
 						callback(null, results[0]);
 					}
@@ -76,6 +77,7 @@
 						console.log(err); 
 						callback(err, null);
 					} else {
+						connection.close();
 						callback(null, results[0].NAME);
 					}
 				});
@@ -96,6 +98,7 @@
 						console.log(err); 
 						callback(err, null);
 					} else {
+						connection.close();
 						callback(null, results[0].ADDRESS);
 					}
 				});
@@ -115,6 +118,7 @@
 						console.log(err);
 						callback(err, null);
 					} else {
+						connection.close();
 						callback(null, results);
 					}
 				});
@@ -135,6 +139,7 @@
 						console.log(err); 
 						callback(err, null);
 					} else {
+						connection.close();
 						callback(null, results[0]);
 					}
 				});
@@ -155,6 +160,7 @@
 						console.log(err); 
 						callback(err, null);
 					} else {
+						connection.close();
 						callback(null, results[0].STARS);
 					}
 				});
@@ -184,6 +190,7 @@
 						console.log(err);
 						callback(err, null);
 					} else {
+						connection.close();
 						callback(null, results);
 					}
 				});
@@ -208,6 +215,7 @@
 						console.log(err); 
 						callback(err, null);
 					} else {
+						connection.close();
 						callback(null, results[0].ADDRESS);
 					}
 				});
@@ -228,6 +236,7 @@
 						console.log(err); 
 						callback(err, null);
 					} else {
+						connection.close();
 						callback(null, results[0]);
 					}
 				});
@@ -254,6 +263,7 @@
 						console.log(err); 
 						callback(err, null);
 					} else {
+						connection.close();
 						callback(null, results[0]);
 					}
 				});
@@ -279,6 +289,7 @@
 						console.log(err);
 						callback(err, null);
 					} else {
+						connection.close();
 						callback(null, results);
 					}
 				});
@@ -300,6 +311,7 @@
 						console.log(err); 
 						callback(err, null);
 					} else {
+						connection.close();
 						callback(null, results[0]);
 					}
 				});
@@ -321,6 +333,7 @@
 						console.log(err); 
 						callback(err, null);
 					} else {
+						connection.close();
 						callback(null, results);
 					}
 				});
@@ -342,6 +355,7 @@
 						console.log(err); 
 						callback(err, null);
 					} else {
+						connection.close();
 						callback(null, results);
 					}
 				});
@@ -364,6 +378,7 @@
 						console.log(err); 
 						callback(err, null);
 					} else {
+						connection.close();
 						callback(null, results);
 					}
 				});
@@ -392,6 +407,7 @@
 							userResults.prototype.push(user2.USER2);
 							call();
 						}, function() {
+							connection.close();
 							callback(null, userResults);
 						});
 					}
@@ -415,6 +431,7 @@
 						console.log(err);
 						callback(err, null);
 					} else {
+						connection.close();
 						callback(null, results);
 					}
 				});
@@ -437,6 +454,7 @@
 						console.log(err);
 						callback(err, null);
 					} else {
+						connection.close();
 						callback(null, results);
 					}
 				});
@@ -457,6 +475,7 @@
 						console.log(err);
 						callback(err, null);
 					} else {
+						connection.close();
 						callback(null, results);
 					}
 				});
@@ -478,6 +497,7 @@
 						console.log(err); 
 						callback(err, null);
 					} else {
+						connection.close();
 						callback(null, results[0].FB_ID);
 					}
 				});
@@ -509,6 +529,7 @@
 						console.log(err); 
 						callback(err, null);
 					} else {
+						connection.close();
 						callback(null, results[0]);
 					}
 				});
@@ -516,7 +537,10 @@
 		});
 	}
 
-	db.prototype.createUser = function(username, password, address, addressLabel, lat, lon, callback) {
+	db.prototype.createUser = function(username, password, 
+									first_name, last_name, 
+									address, addressLabel, 
+									lat, lon, callback) {
 		console.log('adding user: ' + username);
 		encryptPassword(password, function(encryptedPass) {
 			oracle.connect(connectData, function(err, connection) {
@@ -524,8 +548,10 @@
 				console.log(err); 
 				callback(err, null);
 			} else {
-				connection.execute("INSERT INTO users (username,password) "
-					+ "VALUES ('" + username + "','" + encryptedPass + "')",
+				connection.execute("INSERT INTO users (username,password,"
+					+ "first_name,last_name) "
+					+ "VALUES ('" + username + "','" + encryptedPass
+					+ "','" + first_name + "','" + last_name + "')",
 				       [], function(err, results) {
 					if (err) {
 						console.log(err);
@@ -545,6 +571,7 @@
 							console.log(err);
 							callback(err, null);
 						} else {
+							connection.close();
 							callback(null, results2);
 						}
 					});
@@ -573,6 +600,7 @@
 					} else {
 						decryptPassword(results[0].PASSWORD, 
 							function(decrypted) {
+								connection.close();
 								callback(null, decrypted === enteredPass);
 						});
 					}
@@ -597,6 +625,7 @@
 							console.log(err); 
 							callback(err, null);
 						} else {
+							connection.close();
 							callback(null, results);
 						}
 					});
@@ -640,6 +669,7 @@
 						console.log(err); 
 						callback(err, null);
 					} else {
+						connection.close();
 						callback(null, results[0].GROUP_NAME);
 					}
 				});
@@ -665,6 +695,7 @@
 							ids.push(idObj.GROUP_ID);
 							call();
 						}, function() {
+							connection.close();
 							callback(null, ids);
 						});
 					}
@@ -692,6 +723,7 @@
 							usernames.push(name);
 							call();
 						}, function() {
+							connection.close();
 							callback(null, usernames);
 						});
 					}
@@ -714,6 +746,7 @@
 						console.log(err);
 						callback(err, null);
 					} else {
+						connection.close();
 						callback(null, results);
 					}
 				});
@@ -735,6 +768,7 @@
 						console.log(err);
 						callback(err, null);
 					} else {
+						connection.close();
 						callback(null, results);
 					}
 				});
@@ -755,6 +789,7 @@
 						console.log(err); 
 						callback(err, null);
 					} else {
+						connection.close();
 						callback(results[0].MAXID);
 					}
 				});
@@ -781,6 +816,7 @@
 							console.log(err);
 							callback(err, null);
 						} else {
+							connection.close();
 							callback(null, groupID);
 						}
 					});
@@ -815,6 +851,7 @@
 										console.log(err); 
 										callback(err, null);
 									} else {
+										connection.close();
 										callback(null, results);
 									}
 								});
@@ -839,6 +876,7 @@
 						console.log(err);
 						callback(err, null);
 					} else {
+						connection.close();
 						callback(null, results);
 					}
 				});

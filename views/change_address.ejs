@@ -32,6 +32,10 @@ New Address:<br>
           $("#error").text("Address labels can be at most 20 characters.");
           $("#error").css('color', 'red');
         }
+        else if (address.length > 150) {
+          $("#error").text("Addresses can be at most 150 characters.");
+          $("#error").css('color', 'red');
+        }
         else {
           var info = {"address":address, "address_label":address_label}; 
           $.post("/edit_address", info,function(data, status) {

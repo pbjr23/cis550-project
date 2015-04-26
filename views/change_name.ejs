@@ -4,9 +4,9 @@
 
 <head></head> 
 Current First Name:<br>
-<br><br>
+<%= first_name %><br><br>
 Current Last Name:<br>
-<br><br>
+<%= last_name %><br><br>
 New First Name:<br>
 <input type="text" id="first_name"> 
 <br><br>
@@ -22,29 +22,35 @@ New Last Name:<br>
   	$("#submit").click(function() {
   		// Fetch some data from the server via an AJAX
   		// call.  
-  		
-  		var password1 = $("#password1").val(); 
-  		var password2 = $("#password2").val();
-  		password1 = password1.trim(); 
-  		password2 = password2.trim();
-  		if (password1.length != 0 && password1 === password2) { 
-        var info = {"password": password1}; 
-        $.post("/edit_pass", info,function(data, status) {
-            // go to home page 
-            location.href = "/user_profile";
-        });         
-  		}
-  		else { 
-  			// $("#error").text("Fields Entered Incorrectly.");
-     //    $("#error").css('color', 'red');
-        if (password1.length != 0 && password2.length != 0) {
-          $("#error").text("Passwords must match.");
+  		var first_name = $("#first_name").val(); 
+  		var last_name = $("#last_name").val();
+  		first_name = first_name.trim(); 
+  		last_name = last_name.trim();
+  		if (first_name.length != 0 && last_name.length != 0) { 
+        if (first_name.length > 20) {
+        $("#error").text("First names can be at most 20 characters.");
+        $("#error").css('color', 'red');
+        }
+        else if (last_name.length > 20) {
+          $("#error").text("Last names can be at most 20 characters.");
           $("#error").css('color', 'red');
         }
         else {
-          $("#error").text("All Fields Must Be Filled.");
-          $("#error").css('color', 'red');
-        }
+          var info = {"first_name": first_name, "last_name": last_name}; 
+          $.post("/edit_name", info,function(data, status) {
+             if (data == "success")
+             // go to home page 
+             location.href = "/user_profile";
+             else if (data == "failure") {
+               $("#error").text("Invalid name.");
+               $("#error").css('color', 'red');
+             }
+          });
+        }         
+  		}
+  		else { 
+        $("#error").text("All Fields Must Be Filled.");
+        $("#error").css('color', 'red');
   		}
     });
 
@@ -59,7 +65,7 @@ New Last Name:<br>
 </script>
 
   <br>
-  <button id="submit">Submit New Password</button>
+  <button id="submit">Submit New Name</button>
   <br><br>
   <button id="back_to_profile">Back to Profile Without Saving Changes</button><br>
   <span id="data"></span>
