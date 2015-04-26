@@ -22,22 +22,31 @@ New Last Name:<br>
   	$("#submit").click(function() {
   		// Fetch some data from the server via an AJAX
   		// call.  
-  		
   		var first_name = $("#first_name").val(); 
   		var last_name = $("#last_name").val();
   		first_name = first_name.trim(); 
   		last_name = last_name.trim();
   		if (first_name.length != 0 && last_name.length != 0) { 
-        var info = {"first_name": first_name, "last_name": last_name}; 
-        $.post("/edit_name", info,function(data, status) {
-            if (data == "success")
-            // go to home page 
-            location.href = "/user_profile";
-            else if (data == "failure") {
-              $("#error").text("Invalid name.");
-              $("#error").css('color', 'red');
-            }
-        });         
+        if (first_name.length > 20) {
+        $("#error").text("First names can be at most 20 characters.");
+        $("#error").css('color', 'red');
+        }
+        else if (last_name.length > 20) {
+          $("#error").text("Last names can be at most 20 characters.");
+          $("#error").css('color', 'red');
+        }
+        else {
+          var info = {"first_name": first_name, "last_name": last_name}; 
+          $.post("/edit_name", info,function(data, status) {
+             if (data == "success")
+             // go to home page 
+             location.href = "/user_profile";
+             else if (data == "failure") {
+               $("#error").text("Invalid name.");
+               $("#error").css('color', 'red');
+             }
+          });
+        }         
   		}
   		else { 
         $("#error").text("All Fields Must Be Filled.");

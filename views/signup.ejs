@@ -46,8 +46,28 @@ Address Label:<br>
       label = label.trim(); 
   		if (username.length != 0 && password.length != 0 && address.length != 0 
         && label.length != 0 && first_name.length != 0 && last_name.length != 0) { 
-        if (label.length > 20) {
+        if (username.length > 20) {
+          $("#error").text("Usernames can be at most 20 characters.");
+          $("#error").css('color', 'red');
+        }
+        else if (password.length > 30) {
+          $("#error").text("Passwords can be at most 30 characters.");
+          $("#error").css('color', 'red');
+        }
+        else if (address.length > 150) {
+          $("#error").text("Address labels can be at most 150 characters.");
+          $("#error").css('color', 'red');
+        }
+        else if (label.length > 20) {
           $("#error").text("Address labels can be at most 20 characters.");
+          $("#error").css('color', 'red');
+        }
+        else if (first_name.length > 20) {
+          $("#error").text("First names can be at most 20 characters.");
+          $("#error").css('color', 'red');
+        }
+        else if (last_name.length > 20) {
+          $("#error").text("Last names can be at most 20 characters.");
           $("#error").css('color', 'red');
         }
         else {
