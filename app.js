@@ -66,6 +66,9 @@ app.post('/edit_address', routes.edit_address);
 app.get('/group', routes.group);
 app.get('/create_group', routes.create_group);
 app.get('/removeUserFromGroup', routes.removeUserFromGroup);
+app.get('/get_group_name', routes.get_group_name);
+app.get('/logout', routes.logout);
+
 
 // Listen on the port we specify
 http.createServer(app).listen(app.get('port'), function(){

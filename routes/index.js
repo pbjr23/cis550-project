@@ -314,5 +314,28 @@ exports.create_group = function(req, res){
 
 }; 
 
+exports.get_group_name = function(req, res){ 
+
+	var groupID = req.query.groupID; 
+
+	var callback = function(err, result) {
+		if (err) 
+			throw err; 
+		else { 
+			res.send([result, groupID]);  
+		} 
+	}; 
+
+	db.getGroupName(groupID, callback);
+
+};  
+
+exports.logout = function(req, res){ 
+
+	req.session.username = null; 
+	res.send("");
+
+}; 
+
 
 
