@@ -88,8 +88,8 @@ exports.change_name = function(req, res){
 		else {
 		  res.render('change_name.ejs', { 
 			  title: 'Change Name',
-			  first_name: results[0],
-			  last_name: results[1]
+			  first_name: results.FIRST_NAME,
+			  last_name: results.LAST_NAME
 		  });
 		}
 	}
@@ -174,8 +174,6 @@ exports.create_user = function(req, res){
 
 	var callback = function(result) { 
 		req.session.username = req.body.username;
-		req.session.address = req.body.address;
-		req.session.address_label = req.body.address_label;
 		//res.send("");  
 	}; 
 	var geocoderProvider = 'google';
@@ -186,7 +184,8 @@ exports.create_user = function(req, res){
   		res.send("success");
   		console.log(results);
   		db.createUser(req.body.username, req.body.password, req.body.address, 
-			req.body.label, results[0].latitude, results[0].longitude, callback);
+			req.body.label, results[0].latitude, results[0].longitude, 
+			req.body.first_name, req.body.last_name, callback);
   	}
   	else {
   		res.send("failure");
@@ -245,12 +244,23 @@ exports.check_pass = function(req, res){
 
 };  
 
+exports.edit_name = function(req, res){ 
+
+	var callback = function(err, result) { 
+		if (err) throw err;  
+	}; 
+	res.send("success");
+	db.changeUserFirstLastName(req.session.username, req.body.first_name, 
+		req.body.last_name, callback);
+
+};  
+
 exports.edit_pass = function(req, res){ 
 
 	var callback = function(err, result) { 
 		if (err) throw err;  
 	}; 
-
+	res.send("success");
 	db.changePassword(req.session.username, req.body.password, callback);
 
 };  
