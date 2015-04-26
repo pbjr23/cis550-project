@@ -197,8 +197,6 @@
 			}
 		});
 	}
-	
-
 
 	/* address table methods */
 	// returns single string of the user's address
@@ -295,7 +293,29 @@
 				});
 			}
 		});
-	}	
+	}
+
+	// returns boolean
+	db.prototype.checkUsernameExists = function(username, callback) {
+		console.log('checking whether username exists: ' + username);
+		oracle.connect(connectData, function(err, connection) {
+			if (err) {
+				console.log(err); 
+				callback(err, null);
+			} else {
+				connection.execute("SELECT * FROM users WHERE username = '" + username + "'", 
+				       [], function(err, results) {
+					if (err) {
+						console.log(err); 
+						callback(err, null);
+					} else {
+						connection.close();
+						callback(null, results.length !== 0);
+					}
+				});
+			}
+		});
+	}
 
 	// returns single object with format { FIRST_NAME: 'abc', LAST_NAME: 'def'}
 	db.prototype.getUserName = function(username, callback) {
