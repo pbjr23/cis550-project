@@ -26,9 +26,11 @@ exports.home = function(req, res){
     					call();
     				});
     			}, function() {
+    				console.log(groupIDs);
+    				console.log(groupNames);
     				res.render('home.ejs', {
     					title: 'Homepage',
-    					groupsIDs: groupIDs,
+    					groupIDs: groupIDs,
     					groupNames: groupNames
     				});
     			});
