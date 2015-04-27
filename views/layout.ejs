@@ -5,9 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <script language="JavaScript" src="http://www.geoplugin.net/javascript.gp" type="text/javascript"></script>
   <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
-<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+  <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
     <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <link href="/stylesheets/custom.css" rel="stylesheet" type="text/css">
 
   <!-- Optional theme -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
@@ -15,20 +16,13 @@
   <!-- Latest compiled and minified JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
   <title><%= title %></title>
-  
+
 </head>
 
   <body>
-  <div class="container">
-  
-  <!-- embed the header -->
-	<% include header %>
 
   <!-- embed the body of the page (specified by the referrer when it calls layout()) -->
     <%- body %>
 
-  <!-- embed the footer -->
-	<% include footer %>
-  </div>
   </body>
 </html>

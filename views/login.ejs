@@ -2,65 +2,153 @@
 <% layout( 'layout' ) -%>
 
 
-<head></head> 
+<head>
+  <script>
+    $(document).ready(function() {
 
-Username:<br>
-<input type="text" id="username"> 
-<br><br>
-Password:<br>
-<input type="password" id="password"> 
-<br><br>
+      if (location.pathname != '/login')
+        location.pathname = '/login';
 
-<script>
-	
-  $(document).ready(function() {
-  	
-    if (location.pathname != '/login') 
-      location.pathname = '/login';
+      // Upon click of the AJAX request...
+      $("#submit").click(function() {
+        // Fetch some data from the server via an AJAX
+        // call.
 
-  	// Upon click of the AJAX request...
-  	$("#submit").click(function() {
-  		// Fetch some data from the server via an AJAX
-  		// call.  
-  		
-  		var username = $("#username").val(); 
-  		var password = $("#password").val();
-  		username = username.trim(); 
-  		password = password.trim();
-  		if (username.length != 0 && password.length != 0) { 
-        var info = {"username": username, "password": password}; 
-        
-        $.post("/check_username", info,function(data, status) {
-            // go to home page 
-            if (data == "success") {
-              $.post("/check_pass", info,function(data, status) {
-              // go to home page 
-              if (data == "success") 
-                location.href = "/home";
+        var username = $("#username").val();
+        var password = $("#password").val();
+        username = username.trim();
+        password = password.trim();
+        if (username.length != 0 && password.length != 0) {
+          var info = {"username": username, "password": password};
+
+          $.post("/check_username", info,function(data, status) {
+              // go to home page
+              if (data == "success") {
+                $.post("/check_pass", info,function(data, status) {
+                // go to home page
+                if (data == "success")
+                  location.href = "/home";
+                else if (data == "failure") {
+                  $("#error").text("Incorrect Password");
+                  $("#error").css('color', 'red');
+                }
+                });
+              }
               else if (data == "failure") {
-                $("#error").text("Incorrect Password");
-                $("#error").css('color', 'red');  
-              }         
-              }); 
-            }
-            else if (data == "failure") {
-              $("#error").text("Not a valid username.");
-              $("#error").css('color', 'red');  
-            }         
-        }); 
-  		}
-  		else { 
-  			$("#error").text("All Fields Must be filled.");
-  			$("#error").css('color', 'red');
-  		}
-  	});
-  	
-  });
-</script>
+                $("#error").text("Not a valid username.");
+                $("#error").css('color', 'red');
+              }
+          });
+        }
+        else {
+          $("#error").text("All Fields Must be filled.");
+          $("#error").css('color', 'red');
+        }
+      });
 
-  <button id="submit">Login</button>
-  <br>
-  <a href="/signup">Create an account</a>
-  <span id="data"></span>
-  <br>
-  <span id="error"></span> 
+    });
+  </script>
+
+
+</head>
+
+<body>
+  <div class="navbar navbar-fixed-top alt" data-spy="affix" data-offset-top="1000">
+    <div class="container">
+      <div class="navbar-header">
+        <a href="#" class="navbar-brand">Home</a>
+        <a class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </a>
+      </div>
+      <div class="navbar-collapse collapse" id="navbar">
+        <ul class="nav navbar-nav">
+          <li><a href="#sec2">About</a></li>
+        </ul>
+      </div>
+     </div>
+  </div>
+
+  <div class="header alt vert">
+    <div class="container text-center">
+
+      <h1>Find Your Food</h1>
+        <p class="lead">A Yelp Webapp for Finding Food for Your Group!</p>
+        <div>&nbsp;</div>
+
+        <h2 class="form-signin-heading">Please sign in</h2>
+        <input type="text" id="username" placeholder="Enter username" class="form-control" autofocus>
+        <input type="password" id="password" placeholder="Enter password" class="form-control">
+        <div>
+          <button class="btn btn-default" id="submit" type="submit">Sign in</button>
+        </div>
+        <div>
+          <a href="/signup">Create an account</a>
+        </div>
+        <div>
+          <span id="data"></span>
+        </div>
+        <div>
+          <span id="error"></span>
+        </div>
+    <!--
+    Username:<br>
+    <input type="text" id="username">
+    <br><br>
+    Password:<br>
+    <input type="password" id="password">
+    <br><br>
+    <button id="submit">Login</button>
+    <br>
+    <a href="/signup">Create an account</a>
+    <span id="data"></span>
+    <br>
+    <span id="error"></span>
+   -->
+
+    </div>
+  </div>
+
+
+  <div class="featurette" id="sec2">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <h1>About the App</h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-2 col-md-offset-2 text-center">
+          <div class="featurette-item">
+            <i class="icon-rocket"></i>
+            <h4>Rocket</h4>
+            <p>Up-up-and-away with this starter template.</p>
+          </div>
+        </div>
+        <div class="col-md-2 text-center">
+          <div class="featurette-item">
+            <i class="icon-magnet"></i>
+            <h4>Magnet</h4>
+            <p>For you are a magnet and I am steel.</p>
+          </div>
+        </div>
+        <div class="col-md-2 text-center">
+          <div class="featurette-item">
+            <i class="icon-shield"></i>
+            <h4>Shield</h4>
+            <p>Protect yourself. Don't design like it's 1999.</p>
+          </div>
+        </div>
+        <div class="col-md-2 text-center">
+          <div class="featurette-item">
+            <i class="icon-pencil"></i>
+            <h4>Scholar</h4>
+            <p>Because lead pencils are pretty smart looking.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
