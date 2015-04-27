@@ -7,9 +7,9 @@
 Groups:<br>
 
 <ul id="gList">
-<% if (groups != null) {%>
-<% for(var i=0; i<groups.length; i++) {%>
-   <li><a href="/group?groupID=<%= groups[i] %>" id="el<%= i %>") ><span id="group<%= groups[i] %>"></span></a></li>
+<% if (groupIDs != null) {%>
+<% for(var i=0; i<groupIDs.length; i++) {%>
+   <li><a href="/group?groupID=<%= groupIDs[i] %>")><%= groupNames[i] %></a></li>
 <% } %>
 <% } %> 
 </ul>
@@ -17,16 +17,7 @@ Groups:<br>
 
 <script>
 	$(document).ready(function() {
-  	numEl = $("#gList li").length;
-    for (var i=0; i<numEl; i++) { 
-      var pathEl = $("#el" + i).attr('href'); 
-      var gID = pathEl.substring(pathEl.indexOf('=') + 1);
-      $.get("/get_group_name?groupID=" + gID, function(data, status) {
-          var name = data[0]; 
-          var id = data[1];  
-          $("#group" + id).text(name);
-        }); 
-    }
+
 
   	// Upon click of the AJAX request...
   	$("#submit").click(function() {
