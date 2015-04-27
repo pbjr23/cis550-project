@@ -26,9 +26,9 @@ Groups:<br>
       if (groupName.length != 0) {
         $.get("/create_group?groupName=" + groupName, function(data, status) { 
 
-          var groupId = data; 
-          $.get("/group?groupID=" + groupId, function(data, status) {
-          }); 
+          var groupId = data;
+          var url = "/group?groupID=" + groupId;  
+          location.href=url;
 
           }); 
       } 
