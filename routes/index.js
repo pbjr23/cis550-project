@@ -40,32 +40,64 @@ exports.home = function(req, res){
     } else {
     	exports.login(req, res);
     }
-}; 
+};
 
 exports.results = function(req, res){
-  res.render('results.ejs', { 
-	  title: 'Results' 
-  });
+  res.render('results.ejs', {
+    title: 'Results'
+  });  // var members = req.body.users;
+
+  // var minLat = members[0]['latitude'];
+  // var maxLat = members[0]['latitude'];
+  // var minLong = members[0]['longitude'];
+  // var maxLong = members[0]['longitude'];
+
+  // for (var user in members) {
+  //   if (user['latitude'] < minLat) {
+  //     minLat = user['latitude'];
+  //   }
+  //   if (user['latitude'] > maxLat) {
+  //     maxLat = user['latitude'];
+  //   }
+  //   if (user['longitude'] < minLong) {
+  //     minLong = user['longitude'];
+  //   }
+  //   if (user['longitude'] > maxLong) {
+  //     maxLong = user['longitude'];
+  //   }
+  // }
+
+  // var callback = function(err, restaurants) {
+  //   if (err) throw err;
+  //   else {
+  //     res.render('results.ejs', {
+  //       members: members,
+  //       restaurants: restaurants,
+  //     });
+  //   }
+  // }
+
+  // db.getRestsSquareCoords(minLat, minLong, maxLat, maxLong, callback);
 };
 
 exports.signup = function(req, res){
-  res.render('signup.ejs', { 
-	  title: 'Sign Up' 
+  res.render('signup.ejs', {
+	  title: 'Sign Up'
   });
-}; 
+};
 
 exports.login = function(req, res){
-  res.render('login.ejs', { 
-	  title: 'Login' 
+  res.render('login.ejs', {
+	  title: 'Login'
   });
 };
 
 exports.user_profile = function(req, res){
-   res.render('user_profile.ejs', { 
-	   title: 'User Profile' 
+   res.render('user_profile.ejs', {
+	   title: 'User Profile'
    });
-	// var callback = function(results) { 
- //  	res.render('user_profile.ejs', { 
+	// var callback = function(results) {
+ //  	res.render('user_profile.ejs', {
 	//   title: 'User Profile',
 	//   address: results
  //  	});
@@ -74,8 +106,8 @@ exports.user_profile = function(req, res){
 };
 
 exports.change_password = function(req, res){
-  res.render('change_password.ejs', { 
-	  title: 'Change Password' 
+  res.render('change_password.ejs', {
+	  title: 'Change Password'
   });
 };
 
@@ -83,7 +115,7 @@ exports.change_address = function(req, res){
 	var callback = function(err, results) {
 		if (err) throw err;
 		else {
-		  res.render('change_address.ejs', { 
+		  res.render('change_address.ejs', {
 			  title: 'Change Address',
 			  address: results.ADDRESS,
 			  address_label: results.ADDRESS_LABEL
@@ -97,7 +129,7 @@ exports.change_name = function(req, res){
 	var callback = function(err, results) {
 		if (err) throw err;
 		else {
-		  res.render('change_name.ejs', { 
+		  res.render('change_name.ejs', {
 			  title: 'Change Name',
 			  first_name: results.FIRST_NAME,
 			  last_name: results.LAST_NAME
@@ -129,8 +161,8 @@ exports.group = function(req, res) {
 						db.getAllUserInfo(userID, function(err, obj) {
 							if (err) {
 								// TODO: redirect to error page
-							}				
-							var fullName = obj.FIRST_NAME + " " 
+							}
+							var fullName = obj.FIRST_NAME + " "
 												+ obj.LAST_NAME;
 							names.push(fullName);
 							addresses.push(obj.ADDRESS);
@@ -161,7 +193,7 @@ exports.group = function(req, res) {
 							});
 		}
 			});
-		
+
 	});
 };
 
@@ -196,15 +228,15 @@ exports.removeUserFromGroup = function(req, res) {
 }
 
 /*
- * Create new user 
+ * Create new user
  */
 
-exports.create_user = function(req, res){ 
+exports.create_user = function(req, res){
 
-	var callback = function(result) { 
+	var callback = function(result) {
 		req.session.username = req.body.username;
-		//res.send("");  
-	}; 
+		//res.send("");
+	};
 	var geocoderProvider = 'google';
 	var httpAdapter = 'http';
 	var geocoder = require('node-geocoder')(geocoderProvider, httpAdapter);
@@ -212,27 +244,27 @@ exports.create_user = function(req, res){
   	if (results.length == 1) {
   		res.send("success");
   		console.log(results);
-  		db.createUser(req.body.username, req.body.password, req.body.first_name, 
-  			req.body.last_name, req.body.address, req.body.label, 
+  		db.createUser(req.body.username, req.body.password, req.body.first_name,
+  			req.body.last_name, req.body.address, req.body.label,
   			results[0].latitude, results[0].longitude, callback);
   	}
   	else {
   		res.send("failure");
   	}
 	});
-	// db.createUser(req.body.username, req.body.password, req.body.address, 
+	// db.createUser(req.body.username, req.body.password, req.body.address,
 	// 	req.body.label, req.body.lat, req.body.lon, callback);
 
-};   
+};
 
-exports.address_to_lat_and_lon_tester = function(req, res){ 
+exports.address_to_lat_and_lon_tester = function(req, res){
 
-	// var callback = function(result) { 
+	// var callback = function(result) {
 	// 	req.session.username = req.body.username;
 	// 	req.session.address = req.body.address;
 	// 	req.session.address_label = req.body.address_label;
-	// 	res.send("");  
-	// }; 
+	// 	res.send("");
+	// };
 	var geocoderProvider = 'google';
 	var httpAdapter = 'http';
 	var geocoder = require('node-geocoder')(geocoderProvider, httpAdapter);
@@ -249,74 +281,74 @@ exports.address_to_lat_and_lon_tester = function(req, res){
  //    .catch(function(err) {
  //        console.log(err);
  //    });
-	// db.createUser(req.body.username, req.body.password, req.body.address, 
+	// db.createUser(req.body.username, req.body.password, req.body.address,
 	// 	req.body.label, req.body.lat, req.body.lon, callback);
 
-};  
+};
 
-exports.check_username = function(req, res){ 
+exports.check_username = function(req, res){
 
-	var callback = function(err, result) { 
-		if (err) 
-			throw err; 
+	var callback = function(err, result) {
+		if (err)
+			throw err;
 		else {
 			if (result) {
-				res.send("success"); 
+				res.send("success");
 			}
-			else 
+			else
 				res.send("failure");
-		}   
-	}; 
+		}
+	};
 
 	db.checkUsernameExists(req.body.username, callback);
 
-};  
+};
 
-exports.check_pass = function(req, res){ 
+exports.check_pass = function(req, res){
 
-	var callback = function(err, result) { 
-		if (err) 
-			throw err; 
+	var callback = function(err, result) {
+		if (err)
+			throw err;
 		else {
 			if (result) {
 				req.session.username = req.body.username;
-				res.send("success"); 
+				res.send("success");
 			}
-			else 
+			else
 				res.send("failure");
-		}   
-	}; 
+		}
+	};
 
 	db.validatePassword(req.body.username, req.body.password, callback);
 
-};  
+};
 
-exports.edit_name = function(req, res){ 
+exports.edit_name = function(req, res){
 
-	var callback = function(err, result) { 
-		if (err) throw err;  
-	}; 
+	var callback = function(err, result) {
+		if (err) throw err;
+	};
 	res.send("success");
-	db.changeUserFirstLastName(req.session.username, req.body.first_name, 
+	db.changeUserFirstLastName(req.session.username, req.body.first_name,
 		req.body.last_name, callback);
 
-};  
+};
 
-exports.edit_pass = function(req, res){ 
+exports.edit_pass = function(req, res){
 
-	var callback = function(err, result) { 
-		if (err) throw err;  
-	}; 
+	var callback = function(err, result) {
+		if (err) throw err;
+	};
 	res.send("success");
 	db.changePassword(req.session.username, req.body.password, callback);
 
-};  
+};
 
-exports.edit_address = function(req, res){ 
+exports.edit_address = function(req, res){
 
-	var callback = function(err, result) { 
+	var callback = function(err, result) {
 		if (err) throw err;
-	}; 
+	};
 
   var geocoderProvider = 'google';
 	var httpAdapter = 'http';
@@ -325,7 +357,7 @@ exports.edit_address = function(req, res){
   	if (results.length == 1) {
   		 res.send("success");
   		console.log("Latitude: " + results[0].latitude + " Longitude: " + results[0].longitude);
-  		db.changeUserAddressLatLon(req.session.username, req.body.address, req.body.address_label, 
+  		db.changeUserAddressLatLon(req.session.username, req.body.address, req.body.address_label,
 		  results[0].latitude, results[0].longitude, callback);
   	}
   	else {
@@ -333,55 +365,55 @@ exports.edit_address = function(req, res){
   		console.log("Insert Valid Address");
   	}
 	});
-}; 
+};
 
 /*
- * Searches for restaurants 
+ * Searches for restaurants
  */
 
-exports.group_search = function(req, res){ 
+exports.group_search = function(req, res){
 
-	var callback = function(result) { 
-		res.send(result);  
-	}; 
+	var callback = function(result) {
+		res.send(result);
+	};
 
-	db.getRestsSquareCoords(req.body.minlat, req.body.minlong, 
+	db.getRestsSquareCoords(req.body.minlat, req.body.minlong,
 		req.body.maxlat, req.body.maxlong, callback);
 
-}; 
+};
 
-exports.create_group = function(req, res){ 
+exports.create_group = function(req, res){
 
-	var callback = function(err, result) { 
-		if (err) 
-			throw err; 
-		else { 
-			console.log(result) 
-			var callback2 = function(err2, result2) { 
-				if (err2) 
-					throw err2;  
-				else { 
-					console.log(result2); 
+	var callback = function(err, result) {
+		if (err)
+			throw err;
+		else {
+			console.log(result)
+			var callback2 = function(err2, result2) {
+				if (err2)
+					throw err2;
+				else {
+					console.log(result2);
 					console.log(result);
 					res.send(result.toString());
 				}
 			};
-			db.addUserToGroup(result, req.session.username, callback2);  
+			db.addUserToGroup(result, req.session.username, callback2);
 		}
-	}; 
+	};
 
 	db.createGroup(req.query.groupName ,callback);
 
-}; 
+};
 
 
 
-exports.logout = function(req, res){ 
+exports.logout = function(req, res){
 
-	req.session.username = null; 
+	req.session.username = null;
 	res.send("");
 
-}; 
+};
 
 
 
