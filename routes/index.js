@@ -238,6 +238,24 @@ exports.address_to_lat_and_lon_tester = function(req, res){
 
 };  
 
+exports.check_username = function(req, res){ 
+
+	var callback = function(err, result) { 
+		if (err) 
+			throw err; 
+		else {
+			if (result) {
+				res.send("success"); 
+			}
+			else 
+				res.send("failure");
+		}   
+	}; 
+
+	db.checkUsernameExists(req.body.username, callback);
+
+};  
+
 exports.check_pass = function(req, res){ 
 
 	var callback = function(err, result) { 

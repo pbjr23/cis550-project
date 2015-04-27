@@ -51,6 +51,7 @@ app.get('/test', testRoute.testFunction);
 app.get('/', routes.login); 
 app.get('/login', routes.login); 
 app.get('/results', routes.results); 
+app.post('/check_username', routes.check_username);
 app.post('/check_pass', routes.check_pass);
 app.post('/edit_pass', routes.edit_pass);
 app.get('/home', routes.home);  
