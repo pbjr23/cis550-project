@@ -110,7 +110,7 @@ img.grayscale {
 }
 
 .header {
-  height: 80%;
+  padding-bottom: 20px;
   background: #f68076 url('http://www.bootply.com/assets/example/pt_topo_l.png') repeat center center fixed;
 }
 

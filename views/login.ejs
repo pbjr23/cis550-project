@@ -53,23 +53,8 @@
 </head>
 
 <body>
-  <div class="navbar navbar-fixed-top alt" data-spy="affix" data-offset-top="1000">
-    <div class="container">
-      <div class="navbar-header">
-        <a href="#" class="navbar-brand">Home</a>
-        <a class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </a>
-      </div>
-      <div class="navbar-collapse collapse" id="navbar">
-        <ul class="nav navbar-nav">
-          <li><a href="#sec2">About</a></li>
-        </ul>
-      </div>
-     </div>
-  </div>
+
+  <% include navbar_basic %>
 
   <div class="header alt vert">
     <div class="container text-center">
@@ -111,44 +96,5 @@
     </div>
   </div>
 
-
-  <div class="featurette" id="sec2">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12 text-center">
-          <h1>About the App</h1>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-2 col-md-offset-2 text-center">
-          <div class="featurette-item">
-            <i class="icon-rocket"></i>
-            <h4>Rocket</h4>
-            <p>Up-up-and-away with this starter template.</p>
-          </div>
-        </div>
-        <div class="col-md-2 text-center">
-          <div class="featurette-item">
-            <i class="icon-magnet"></i>
-            <h4>Magnet</h4>
-            <p>For you are a magnet and I am steel.</p>
-          </div>
-        </div>
-        <div class="col-md-2 text-center">
-          <div class="featurette-item">
-            <i class="icon-shield"></i>
-            <h4>Shield</h4>
-            <p>Protect yourself. Don't design like it's 1999.</p>
-          </div>
-        </div>
-        <div class="col-md-2 text-center">
-          <div class="featurette-item">
-            <i class="icon-pencil"></i>
-            <h4>Scholar</h4>
-            <p>Because lead pencils are pretty smart looking.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <% include about %>
 </body>
