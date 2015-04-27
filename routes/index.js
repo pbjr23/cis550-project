@@ -95,39 +95,57 @@ exports.change_name = function(req, res){
 
 exports.group = function(req, res) {
 	var groupID = req.query.groupID;
+	// logged in username
+	var username = req.session.username;
 	db.getGroupMembers(groupID, function(err, members) {
 		if (err) {
 			// TODO: redirect to error page
 		}
-		db.getGroupName(groupID, function(err, groupName) {
-			if (err) {
-				// TODO: redirect to error page
-			}
-			var names = [];
-			var addresses = [];
-			async.each(members, function(userID, call) {
-				db.getUserName(userID, function(err, nameObj) {
-					if (err) {
-						// TODO: redirect to error page
-					}				
-					var fullName = nameObj.FIRST_NAME + " " 
-										+ nameObj.LAST_NAME;
-					names.push(fullName);
-					db.getUserAddress(userID, function(err, address) {
-						addresses.push(address);
-						call();
+		
+			db.getGroupName(groupID, function(err, groupName) {
+				if (err) {
+					// TODO: redirect to error page
+				}
+				// if user is in the group
+				if (members.indexOf(username) !== -1) {
+					console.log(username + " is in the group!");
+					var names = [];
+					var addresses = [];
+					async.each(members, function(userID, call) {
+						db.getUserName(userID, function(err, nameObj) {
+							if (err) {
+								// TODO: redirect to error page
+							}				
+							var fullName = nameObj.FIRST_NAME + " " 
+												+ nameObj.LAST_NAME;
+							names.push(fullName);
+							db.getUserAddress(userID, function(err, address) {
+								addresses.push(address);
+								call();
+							});
+						})
+					}, function() {
+						res.render('group.ejs', {
+							title: groupName,
+							memberNames: names,
+							usernames: members,
+							addresses: addresses,
+							groupID: groupID
+						});
 					});
-				})
-			}, function() {
-				res.render('group.ejs', {
-					title: groupName,
-					memberNames: names,
-					usernames: members,
-					addresses: addresses,
-					groupID: groupID
-				});
+				// user is not in the group
+				} else {
+					console.log(username + " is not in the group!");
+					res.render('group.ejs', {
+								title: 'user is not in ' + groupName,
+								memberNames: [],
+								usernames: [],
+								addresses: [],
+								groupID: groupID
+							});
+		}
 			});
-		});
+		
 	});
 };
 
