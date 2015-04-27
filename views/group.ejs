@@ -10,7 +10,7 @@ Group Members:
     <li><%= memberNames[i] %>
     	<button id='remove_<%= usernames[i] %>'>delete from group</button>
     	<br>
-    	current address: <%= addresses[i] %>
+    	<span id='<%= usernames[i] %>_address'>current address: <%= addresses[i] %></span>
     </li>
     <br>
   <% } %>
@@ -20,6 +20,11 @@ Group Members:
 <p> There are no members in this group </p>
 <% } %>
 
+<br>
+<p>Get restaurants based on above locations</p>
+<button id='getRests'>Get restaurants</button>
+
+<br><br>
 Add new user to the group:<br>
 <input type="text" id="newUsername" value="username">
 <button id="addUser">Add</button>
@@ -44,6 +49,11 @@ Add new user to the group:<br>
    			});
    		});
 
+   		$('#getRests').click(function() {
+   			var users = JSON.stringify(<%- users %>);
+   			console.log("getting results for users: " + users);
+   		});
+
    		<% if (memberNames.length > 0) { %>
    		<% for (var i=0; i < memberNames.length; i++) {%>
    		    $('#remove_<%= usernames[i] %>').click(function() {
@@ -57,8 +67,8 @@ Add new user to the group:<br>
    		    })
 		<% } %>
 		<% } %>
-		console.log(geoplugin_city());
-   		console.log(geoplugin_latitude());
-   		console.log(geoplugin_longitude());
+		//console.log(geoplugin_city());
+   		//console.log(geoplugin_latitude());
+   		//console.log(geoplugin_longitude());	
    });
 </script>

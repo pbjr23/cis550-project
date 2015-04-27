@@ -10,22 +10,34 @@ exports.init = function(dbObj) {
 }
 
 exports.home = function(req, res){
-  // if logged in 
-  if (req.session.username != null) {
-  	var callback = function(err, results) { 
-  		if (err) throw err;
-  		else {
-  			res.render('home.ejs', { 
-	  			title: 'Homepage',
-	  			groups: results
-  			});
-  		}
-  	};
-  	db.getGroups(req.session.username, callback); 
-  }
-  // render login page 
-  else 
-	exports.login(req,res);
+	var username = req.session.username;
+
+	//if logged in
+    if (username) {
+    	db.getGroups(username, function(err, groupIDs) {
+    		if (err) {
+    			//TODO: send to error page
+    			exports.login(req, res);
+    		} else {
+    			var groupNames = [];
+    			async.each(groupIDs, function(id, call) {
+    				db.getGroupName(id, function(err, name) {
+    					groupNames.push(name);
+    					call();
+    				});
+    			}, function() {
+    				res.render('home.ejs', {
+    					title: 'Homepage',
+    					groupsIDs: groupIDs,
+    					groupNames: groupNames
+    				});
+    			});
+    		}
+    	});
+    //not logged in
+    } else {
+    	exports.login(req, res);
+    }
 }; 
 
 exports.results = function(req, res){
@@ -101,7 +113,6 @@ exports.group = function(req, res) {
 		if (err) {
 			// TODO: redirect to error page
 		}
-		
 			db.getGroupName(groupID, function(err, groupName) {
 				if (err) {
 					// TODO: redirect to error page
@@ -111,26 +122,29 @@ exports.group = function(req, res) {
 					console.log(username + " is in the group!");
 					var names = [];
 					var addresses = [];
+					var usersObjs = [];
 					async.each(members, function(userID, call) {
-						db.getUserName(userID, function(err, nameObj) {
+						db.getAllUserInfo(userID, function(err, obj) {
 							if (err) {
 								// TODO: redirect to error page
 							}				
-							var fullName = nameObj.FIRST_NAME + " " 
-												+ nameObj.LAST_NAME;
+							var fullName = obj.FIRST_NAME + " " 
+												+ obj.LAST_NAME;
 							names.push(fullName);
-							db.getUserAddress(userID, function(err, address) {
-								addresses.push(address);
-								call();
-							});
+							addresses.push(obj.ADDRESS);
+							usersObjs.push(obj);
+							call();
 						})
 					}, function() {
+						var userJSON = JSON.stringify(usersObjs);
+						console.log(userJSON);
 						res.render('group.ejs', {
 							title: groupName,
 							memberNames: names,
 							usernames: members,
 							addresses: addresses,
-							groupID: groupID
+							groupID: groupID,
+							users: userJSON
 						});
 					});
 				// user is not in the group
