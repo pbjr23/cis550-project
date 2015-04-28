@@ -54,6 +54,57 @@
 
 <body>
 
+	<div
+	  class="fb-like"
+	  data-share="true"
+	  data-width="450"
+	  data-show-faces="true">
+	</div>
+
+  <div id="fb-root"></div>
+	<script>
+	(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.3&appId=1381120492218478";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));
+
+	function get_fb_id() {
+    FB.api('/me', function(data) {
+      var info = {"fb_id": data.id};
+      $.post("/get_fb_user_username", info,function(data, status) {
+        // go to home page
+        if (data == "success") {
+          location.href = "/home";
+        }
+        else if (data == "failure") {
+          location.href = "/signup";
+        }
+  		}); 
+    });
+  }
+
+  function check_if_logged_in() {
+    FB.getLoginStatus(function(data) {
+      if (data.status === 'connected') {
+        get_fb_id();
+      } 
+      else 
+      {
+        fb_login();
+      }
+    });
+  }
+
+  function fb_login() {
+    FB.login(function(data) {
+       get_fb_id();
+    });
+  }
+	</script>
+
   <% include navbar_basic %>
 
   <div class="header alt vert">
@@ -71,10 +122,9 @@
         </div>
         <div>
           <a href="/signup">Create an account</a>
-        </div>
-        <div>
           <span id="data"></span>
         </div>
+        <div class="fb-login-button" data-max-rows="1" data-size="large" data-show-faces="false" data-auto-logout-link="false" onlogin="check_if_logged_in();"></div>
         <div>
           <span id="error"></span>
         </div>
