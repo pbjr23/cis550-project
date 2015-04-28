@@ -42,43 +42,70 @@ exports.home = function(req, res){
     }
 };
 
-exports.results = function(req, res){
-  res.render('results.ejs', {
-    title: 'Results'
-  });  // var members = req.body.users;
+exports.results_handler = function(req, res){
+    var callback = function(err, result) {
+        if (err) throw err;
+    };
+    var members = req.body.users;
+    console.log(members);
 
-  // var minLat = members[0]['latitude'];
-  // var maxLat = members[0]['latitude'];
-  // var minLong = members[0]['longitude'];
-  // var maxLong = members[0]['longitude'];
+    var minLat = members[0]['LAT'];
+    var maxLat = members[0]['LAT'];
+    var minLong = members[0]['LON'];
+    var maxLong = members[0]['LON'];
+    console.log(minLat, maxLat, minLong, maxLong);
 
-  // for (var user in members) {
-  //   if (user['latitude'] < minLat) {
-  //     minLat = user['latitude'];
-  //   }
-  //   if (user['latitude'] > maxLat) {
-  //     maxLat = user['latitude'];
-  //   }
-  //   if (user['longitude'] < minLong) {
-  //     minLong = user['longitude'];
-  //   }
-  //   if (user['longitude'] > maxLong) {
-  //     maxLong = user['longitude'];
-  //   }
-  // }
+    for (var i = 0; i < members.length; i++) {
+      if (members[i]['LAT'] < minLat) {
+        minLat = members[i]['LAT'];
+      }
+      if (members[i]['LAT'] > maxLat) {
+        maxLat = members[i]['LAT'];
+      }
+      if (members[i]['LON'] > minLong) {
+        minLong = members[i]['LON'];
+      }
+      if (members[i]['LON'] < maxLong) {
+        maxLong = members[i]['LON'];
+      }
+    }
 
-  // var callback = function(err, restaurants) {
-  //   if (err) throw err;
-  //   else {
-  //     res.render('results.ejs', {
-  //       members: members,
-  //       restaurants: restaurants,
-  //     });
-  //   }
-  // }
+    console.log(minLat, maxLat, minLong, maxLong);
 
-  // db.getRestsSquareCoords(minLat, minLong, maxLat, maxLong, callback);
+    var callback = function(err, restaurants) {
+        if (err) throw err;
+        else {
+          console.log('got inside here');
+          console.log(members[0]);
+          console.log(restaurants[0]);
+          req.session.members = members;
+          req.session.restaurants = restaurants;
+          console.log("testing session");
+          console.log(req.session.members[0]);
+          console.log(req.session.restaurants[0]);
+          res.send("success");
+        }
+    }
+
+    db.getRestsSquareCoords(minLat, minLong, maxLat, maxLong, callback);
+
+
+  // res.render('results.ejs', {
+  //   title: 'Results'
+  // });  // var members = req.body.users;
+
+
 };
+
+exports.results = function(req, res) {
+  console.log(req.session.members[0]);
+  console.log(req.session.restaurants[0]);
+  res.render('results.ejs', {
+    title: 'Results',
+    members: req.session.members,
+    restaurants: req.session.restaurants
+  });
+}
 
 exports.signup = function(req, res){
   res.render('signup.ejs', {

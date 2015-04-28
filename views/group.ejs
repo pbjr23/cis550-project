@@ -34,6 +34,17 @@
             console.log($( selector ).val());
           }
           console.log(users);
+          var info = {'users': users};
+
+          $.post("/results_handler", info, function(data, status) {
+            if (data == "failure") {
+              $("#error").text("Invalid name.");
+              $("#error").css('color', 'red');
+            } else {
+              location.href = "/results";
+            }
+          });
+
         });
 
         <% if (memberNames.length > 0) { %>

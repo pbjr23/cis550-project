@@ -178,13 +178,20 @@
 				callback(err, null);
 			} else {
 				//gives top 10 results according to stars
+				console.log("SELECT *"
+						+ " FROM (select * from restaurant"
+						+ " WHERE lat >= " + minLat
+						+ " AND lon >= " + minLon
+						+ " AND lat <= " + maxLat
+						+ " AND lon <= " + maxLon
+						+ "	ORDER BY stars DESC) WHERE ROWNUM <= 100");
 				var q = "SELECT *"
 						+ " FROM (select * from restaurant"
 						+ " WHERE lat >= " + minLat
 						+ " AND lon >= " + minLon
 						+ " AND lat <= " + maxLat
 						+ " AND lon <= " + maxLon
-						+ "	ORDER BY stars DESC) WHERE ROWNUM <= 10";
+						+ "	ORDER BY stars DESC) WHERE ROWNUM <= 100";
 				connection.execute(q, [], function(err, results) {
 					if (err) {
 						console.log(err);
