@@ -30,6 +30,8 @@ Results
       float: right;
       width: 390px;
       overflow: auto;
+      background: #CDBAE5;
+      padding: 10px;
     }
 
     #map-canvas {
@@ -63,206 +65,139 @@ Results
   </script>
 
   <script type="text/javascript">
+    var members = <%- members %>;
+    var restaurants = <%- restaurants %>;
+    var current_user = get_logged_in_user(members);
+
+    var time_convert = {'walk': 1.0, 'bike': 0.4, 'car': 0.3}
+
+    function taxicab_distance(firstLat, firstLong, secondLat, secondLong) {
+      return Math.abs(firstLat - secondLat) + Math.abs(firstLong - secondLong);
+    }
+
+    function get_logged_in_user(members) {
+      for (var i = 0; i < members.length; i++) {
+        if (members[i]['is_logged_in']) {
+          return members[i];
+        }
+      }
+    }
+
+    function get_relative_time(restaurant) {
+      var lat = restaurant['LAT'];
+      var lon = restaurant['LON'];
+      var total = 0;
+
+      for (var i = 0; i < members.length; i++) {
+        // console.log(members[i]);
+        // console.log(lat, lon, members[i]['LAT'], members[i]['LON']);
+        var time = time_convert[members[i]['transport']] * taxicab_distance(lat, lon, members[i]['LAT'], members[i]['LON']);
+        total += time;
+      }
+
+      // console.log(restaurant['name'], total);
+      return total;
+    }
+
+    function compare(a,b) {
+      if (a['score'] < b['score'])
+         return -1;
+      if (a['score'] > b['score'])
+        return 1;
+      return 0;
+    }
+
+    function calculate_restaurants() {
+      var minStars = restaurants[0]['STARS'];
+      var maxStars = restaurants[0]['STARS'];
+      var minTime = Number.MAX_VALUE;
+      var maxTime = 0;
+      var newRestaurants = restaurants
+      for (var i = 0; i < newRestaurants.length; i++) {
+        var time = get_relative_time(newRestaurants[i]);
+
+        if (time < minTime) {
+          minTime = time;
+        }
+        if (time > maxTime) {
+          maxTime = time;
+        }
+        if (newRestaurants[i]['STARS'] > maxStars) {
+          maxStars = newRestaurants[i]['STARS'];
+        }
+        if (newRestaurants[i]['STARS'] < minStars) {
+          minStars = newRestaurants[i]['STARS'];
+        }
+
+        newRestaurants[i]['time'] = time;
+      }
+
+      for (var i = 0; i < newRestaurants.length; i++) {
+        var adjusted_time = (maxStars - minStars) * (newRestaurants[i]['time'] - minTime) / (maxTime - minTime);
+        newRestaurants[i]['score'] = -0.5 * newRestaurants[i]['STARS'] + 0.5 * adjusted_time;
+        newRestaurants[i]['ADDRESS'] = newRestaurants[i]['ADDRESS'].replace(/(\r\n|\n|\r)/gm," ")
+      }
+
+      newRestaurants.sort(compare);
+
+      return newRestaurants;
+    }
+
+    var directionsDisplay;
+    var directionsService = new google.maps.DirectionsService();
+
+    function initialize() {
+      var newRestaurants = calculate_restaurants(restaurants);
+      for (var i = 0; i < newRestaurants.length; i++) {
+        console.log('<option value="' + newRestaurants[i]['ADDRESS'] + '">' + newRestaurants[i]['name'] + '</option>');
+        $( "#end" ).append( '<option value="' + newRestaurants[i]['ADDRESS'] + '">' + newRestaurants[i]['NAME'] + '</option>' );
+      }
+      directionsDisplay = new google.maps.DirectionsRenderer();
+      var mapOptions = {
+        zoom: 7,
+        center: new google.maps.LatLng(41.850033, -87.6500523)
+      };
+      var map = new google.maps.Map(document.getElementById('map-canvas'),
+          mapOptions);
+      directionsDisplay.setMap(map);
+      directionsDisplay.setPanel(document.getElementById('directions-panel'));
+
+      var control = document.getElementById('control');
+      control.style.display = 'block';
+      map.controls[google.maps.ControlPosition.TOP_CENTER].push(control);
+    }
+
+    function calcRoute() {
+      var selectedMode = document.getElementById('mode').value;
+      var start = get_logged_in_user(members)['ADDRESS'];
+      var end = document.getElementById('end').value;
+      var request = {
+        origin: start,
+        destination: end,
+        travelMode: google.maps.TravelMode[selectedMode]
+      };
+      directionsService.route(request, function(response, status) {
+        if (status == google.maps.DirectionsStatus.OK) {
+          directionsDisplay.setDirections(response);
+        }
+      });
+    }
+
+    google.maps.event.addDomListener(window, 'load', initialize);
+    console.log(get_logged_in_user(members))
+    if (current_user['transport'] === 'walk') {
+      console.log("hello");
+      $( '#walk' ).attr('selected', 'selected');
+    } else if (current_user['transport'] === 'bike') {
+      console.log("hello world");
+      $( '#bike' ).attr('selected', 'selected');
+    } else if (current_user['transport'] === 'car') {
+      console.log("hi world");
+      $( '#car' ).attr('selected', 'selected');
+    }
+
+
     $(document).ready(function() {
-      var asdfas = <%- members %>
-      var asdafas = <%- restaurants %>
-
-      var time_convert = {'walk': 1.0, 'bike': 0.4, 'car': 0.3}
-      var restaurants = [{"rid": "GM4-aWjgQjxN8sOwff7Ufw",
-                        "NAME": "Hyde Park Steakhouse",
-                        "address": "247 N Shore Dr\nNorth Side\nPittsburgh, PA 15212",
-                        "LAT": 40.446363300000002,
-                        "LONG": -80.008406199999996,
-                        "STARS": 3.5},
-                       {"rid": "oYzxISMvvvDuphYHIZKZvw",
-                        "NAME": "Carnegie Science Center",
-                        "address": "1 Allegheny Ave\nNorth Side\nPittsburgh, PA 15212",
-                        "LAT": 40.446333500000001,
-                        "LON": -80.018645899999996,
-                        "STARS": 4.0},
-                       {"rid": "sXHNpYEp4ZpK-6FdR3KsuQ",
-                        "NAME": "Amani Coffee House & Cafe",
-                        "address": "507 Foreland St\nNorth Side\nPittsburgh, PA 15212",
-                        "LAT": 40.454245800000002,
-                        "LON": -80.000494900000007,
-                        "STARS": 4.0},
-                       {"rid": "puwWm1NTtjNiuHR1cQo9Tg",
-                        "NAME": "Priory Fine Pastries",
-                        "address": "528 E Ohio St\nNorth Side\nPittsburgh, PA 15212",
-                        "LAT": 40.453872699999998,
-                        "LON": -79.999777300000005,
-                        "STARS": 4.0},
-                       {"rid": "v6HiAVLwKiXZ9Yqvd4ubNg",
-                        "NAME": "Jerome Bettis Grille 36",
-                        "address": "393 N Shore Dr\nNorth Side\nPittsburgh, PA 15212",
-                        "LAT": 40.4455502,
-                        "LON": -80.0113372,
-                        "STARS": 3.5},
-                       {"rid": "1arFPq3HVIPnGkIVw6RAJw",
-                        "NAME": "Primanti Brothers at PNC Park",
-                        "address": "115 Federal St\nNorth Side\nPittsburgh, PA 15212",
-                        "LAT": 40.446871404624602,
-                        "LON": -80.004648630521302,
-                        "STARS": 3.0},
-                       {"rid": "2KiXw5gtGJfDK1jw9jJ5wA",
-                        "NAME": "Monterey Pub",
-                        "address": "1227 Monterey St\nNorth Side\nPittsburgh, PA 15212",
-                        "LAT": 40.4556076,
-                        "LON": -80.013255200000003,
-                        "STARS": 4.5}]
-
-      var members = [{"USERNAME": "prakhar23",
-                    "FIRST_NAME": "Prakhar",
-                    "LAST_NAME": "Bhandari",
-                    "ADDRESS": "705 Blue Line, Pittsburgh, PA 15212",
-                    "LAT": 40.450268,
-                    "LON": -80.010784,
-                    "is_logged_in": true,
-                    "transport": "walk"},
-                   {"USERNAME": "emmanuel12",
-                    "FIRST_NAME": "Emmanuel",
-                    "LAST_NAME": "Genene",
-                    "ADDRESS": "100 S Commons, Pittsburgh, PA 15212",
-                    "LAT": 40.449942,
-                    "LON": -80.006557,
-                    "is_logged_in": false,
-                    "transport": "car"},
-                   {"USERNAME": "nate55",
-                    "FIRST_NAME": "Nathaniel",
-                    "LAST_NAME": "Chan",
-                    "ADDRESS": "Stage AE, 400 N Shore Dr, Pittsburgh, PA 15212",
-                    "LAT": 40.446349,
-                    "LON": -80.013123,
-                    "is_logged_in": false,
-                    "transport": "bike"},
-                   {"USERNAME": "vincent34",
-                    "FIRST_NAME": "Vincent",
-                    "LAST_NAME": "Gubitosi",
-                    "ADDRESS": "1205 Loraine St, Pittsburgh, PA 15212",
-                    "LAT": 40.456277,
-                    "LON": -80.005570,
-                    "is_logged_in": false,
-                    "transport": "walk"}]
-
-      function taxicab_distance(firstLat, firstLong, secondLat, secondLong) {
-        return Math.abs(firstLat - secondLat) + Math.abs(firstLong - secondLong);
-      }
-
-      function get_logged_in_user(members) {
-        for (var i = 0; i < members.length; i++) {
-          if (members[i]['is_logged_in']) {
-            return members[i];
-          }
-        }
-      }
-
-      function get_relative_time(restaurant) {
-        var lat = restaurant['LAT'];
-        var lon = restaurant['LON'];
-        var total = 0;
-
-        for (var i = 0; i < members.length; i++) {
-          // console.log(members[i]);
-          // console.log(lat, lon, members[i]['LAT'], members[i]['LON']);
-          var time = time_convert[members[i]['transport']] * taxicab_distance(lat, lon, members[i]['LAT'], members[i]['LON']);
-          total += time;
-        }
-
-        // console.log(restaurant['name'], total);
-        return total;
-      }
-
-      function compare(a,b) {
-        if (a['score'] < b['score'])
-           return -1;
-        if (a['score'] > b['score'])
-          return 1;
-        return 0;
-      }
-
-      function calculate_restaurants() {
-        var minStars = restaurants[0]['STARS'];
-        var maxStars = restaurants[0]['STARS'];
-        var minTime = Number.MAX_VALUE;
-        var maxTime = 0;
-        var newRestaurants = restaurants
-        for (var i = 0; i < newRestaurants.length; i++) {
-          var time = get_relative_time(newRestaurants[i]);
-
-          if (time < minTime) {
-            minTime = time;
-          }
-          if (time > maxTime) {
-            maxTime = time;
-          }
-          if (newRestaurants[i]['STARS'] > maxStars) {
-            maxStars = newRestaurants[i]['STARS'];
-          }
-          if (newRestaurants[i]['STARS'] < minStars) {
-            minStars = newRestaurants[i]['STARS'];
-          }
-
-          newRestaurants[i]['time'] = time;
-        }
-
-        for (var i = 0; i < newRestaurants.length; i++) {
-          var adjusted_time = (maxStars - minStars) * (newRestaurants[i]['time'] - minTime) / (maxTime - minTime);
-          newRestaurants[i]['score'] = -0.5 * newRestaurants[i]['STARS'] + 0.5 * adjusted_time;
-          newRestaurants[i]['ADDRESS'] = newRestaurants[i]['ADDRESS'].replace(/(\r\n|\n|\r)/gm," ")
-        }
-
-        newRestaurants.sort(compare);
-
-        return newRestaurants;
-      }
-
-      var directionsDisplay;
-      var directionsService = new google.maps.DirectionsService();
-
-      function initialize() {
-        var newRestaurants = calculate_restaurants(restaurants);
-        for (var i = 0; i < newRestaurants.length; i++) {
-          console.log('<option value="' + newRestaurants[i]['ADDRESS'] + '">' + newRestaurants[i]['name'] + '</option>');
-          $( "#end" ).append( '<option value="' + newRestaurants[i]['ADDRESS'] + '">' + newRestaurants[i]['NAME'] + '</option>' );
-        }
-        directionsDisplay = new google.maps.DirectionsRenderer();
-        var mapOptions = {
-          zoom: 7,
-          center: new google.maps.LatLng(41.850033, -87.6500523)
-        };
-        var map = new google.maps.Map(document.getElementById('map-canvas'),
-            mapOptions);
-        directionsDisplay.setMap(map);
-        directionsDisplay.setPanel(document.getElementById('directions-panel'));
-
-        var control = document.getElementById('control');
-        control.style.display = 'block';
-        map.controls[google.maps.ControlPosition.TOP_CENTER].push(control);
-      }
-
-      function calcRoute() {
-        var selectedMode = document.getElementById('mode').value;
-        var start = get_logged_in_user(members)['ADDRESS'];
-        var end = document.getElementById('end').value;
-        var request = {
-          origin: start,
-          destination: end,
-          travelMode: google.maps.TravelMode[selectedMode]
-        };
-        directionsService.route(request, function(response, status) {
-          if (status == google.maps.DirectionsStatus.OK) {
-            directionsDisplay.setDirections(response);
-          }
-        });
-      }
-
-
-
-      google.maps.event.addDomListener(window, 'load', initialize);
-
-      console.log(get_logged_in_user(members))
-
-
       $("#error").text("All Fields Must be filled.");
       $("#error").css('color', 'red');
 
@@ -281,18 +216,24 @@ Results
 
 
 <body>
-  <span id="data"></span>
-  <br>
-  <span id="error"></span>
+  <% include navbar_logged_in %>
+  <div class="header alt vert">
+    <div class="container center-text">
+      <h1>Find Your Food</h1>
+      <p class="lead">A Yelp Webapp for Finding Food for Your Group!</p>
+      <div>&nbsp;</div>
+
+
+    </div>
   </div>
   <div id="control">
     <strong>Restaurant:</strong>
     <select id="end" onchange="calcRoute();">
     </select>
     <select id="mode" onchange="calcRoute();">
-      <option value="DRIVING">Driving</option>
-      <option value="WALKING">Walking</option>
-      <option value="BICYCLING">Bicycling</option>
+      <option id="walk" value="WALKING">Walking</option>
+      <option id="car" value="DRIVING">Driving</option>
+      <option id="bike" value="BICYCLING">Bicycling</option>
     </select>
   </div>
   <div id="directions-panel"></div>

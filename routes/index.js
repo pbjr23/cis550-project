@@ -102,8 +102,8 @@ exports.results = function(req, res) {
   console.log(req.session.restaurants[0]);
   res.render('results.ejs', {
     title: 'Results',
-    members: req.session.members,
-    restaurants: req.session.restaurants
+    members: JSON.stringify(req.session.members),
+    restaurants: JSON.stringify(req.session.restaurants)
   });
 }
 
