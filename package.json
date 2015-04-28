@@ -18,15 +18,17 @@
   "homepage": "https://github.com/pbjr23/cis550-project",
   "dependencies": {
     "async": "^0.9.0",
+    "aws-sdk": "^2.1.26",
     "body-parser": "*",
+    "cookie-parser": "*",
     "ejs": "^1.0.0",
     "ejs-locals": "*",
     "express": "3.2.6",
+    "express-session": "*",
+    "lru-cache": "^2.6.2",
     "nib": "*",
     "node-geocoder": "^2.20.0",
     "oracle": "*",
-    "stylus": "*",
-    "cookie-parser": "*",
-    "express-session": "*"
+    "stylus": "*"
   }
 }

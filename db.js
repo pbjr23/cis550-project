@@ -7,14 +7,16 @@
 	  "password": "helpyelp450",
 	  "database": "equiDB" };
 
-	var oracle =  require("oracle");
+	var oracle =  require('oracle');
+	var aws = require('./keyvaluestore.js'),
+	    hours = new aws('hours');
 	var async = require('async');
 	var crypto = require('crypto'),
 		key = 'helpYelp_secretKey';
 
 	//constructor
 	function db() {
-
+		hours.init(function(){});
 	};
 
 	function encryptPassword(pass, callback) {
@@ -981,6 +983,26 @@
 					}
 				});
 			}
+		});
+	}
+
+	/* 
+	 * methods for hours table on DynamoDB, returns JSON object
+	 * sample format: { Monday: { close: '00:00', open: '10:00' },
+  						Tuesday: { close: '00:00', open: '10:00' },
+					 	Friday: { close: '00:00', open: '10:00' },
+					  	Wednesday: { close: '00:00', open: '10:00' },
+					  	Thursday: { close: '00:00', open: '10:00' },
+					  	Sunday: { close: '20:00', open: '12:00' },
+					  	Saturday: { close: '20:00', open: '12:00' } }
+	 */
+	db.prototype.getHoursInfo = function(groupID, callback) {
+		hours.get(groupID, function(err, results) {
+			if (err) {
+				callback(err, null);
+			}
+			var obj = JSON.parse(results);
+			callback(null, obj['hours']);
 		});
 	}
 
