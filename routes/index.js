@@ -272,9 +272,15 @@ exports.create_user = function(req, res){
   	if (results.length == 1) {
   		res.send("success");
   		console.log(results);
-  		db.createUser(req.body.username, req.body.password, req.body.first_name,
-  			req.body.last_name, req.body.address, req.body.label,
-  			results[0].latitude, results[0].longitude, callback);
+  		console.log("Facebook id: " + req.session.fb_id);
+  		if (req.session.fb_id)
+  			db.createFacebookUser(req.body.username, req.body.password, req.body.first_name,
+	  			req.body.last_name, req.body.address, req.body.label,
+	  			results[0].latitude, results[0].longitude, req.session.fb_id, callback);
+  		else 
+	  		db.createUser(req.body.username, req.body.password, req.body.first_name,
+	  			req.body.last_name, req.body.address, req.body.label,
+	  			results[0].latitude, results[0].longitude, callback);
   	}
   	else {
   		res.send("failure");
@@ -312,6 +318,30 @@ exports.address_to_lat_and_lon_tester = function(req, res){
 	// db.createUser(req.body.username, req.body.password, req.body.address,
 	// 	req.body.label, req.body.lat, req.body.lon, callback);
 
+};
+
+exports.get_fb_user_username = function(req, res){
+
+	var callback = function(err, result) {
+		if (err)
+			throw err;
+		else {
+			if (result) {
+				console.log("successful facebook login");
+				req.session.username = result;
+				console.log("username:" + result);
+				res.send("success");
+
+			}
+			else {
+				res.send("failure");
+				console.log("failed facebook login");
+			}
+		}
+	};
+
+	req.session.fb_id = req.body.fb_id;
+	db.getUsername(req.session.fb_id, callback);
 };
 
 exports.check_username = function(req, res){

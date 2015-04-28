@@ -54,6 +54,7 @@ app.post('/results_handler', routes.results_handler);
 app.get('/results', routes.results);
 app.post('/check_username', routes.check_username);
 app.post('/check_pass', routes.check_pass);
+app.post('/get_fb_user_username', routes.get_fb_user_username);
 app.post('/edit_pass', routes.edit_pass);
 app.get('/home', routes.home);
 app.get('/signup', routes.signup);
