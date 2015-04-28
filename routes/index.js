@@ -172,13 +172,15 @@ exports.group = function(req, res) {
 					}, function() {
 						var userJSON = JSON.stringify(usersObjs);
 						console.log(userJSON);
+                        console.log(username);
 						res.render('group.ejs', {
 							title: groupName,
 							memberNames: names,
 							usernames: members,
 							addresses: addresses,
 							groupID: groupID,
-							users: userJSON
+							users: userJSON,
+                            username: username
 						});
 					});
 				// user is not in the group

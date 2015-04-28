@@ -1,10 +1,10 @@
 (function() {
 
 	// Connect string to Oracle
-	var connectData = { 
-	  "hostname": "yelpequidistance.cqf3bokykxqv.us-east-1.rds.amazonaws.com", 
-	  "user": "equidist", 
-	  "password": "helpyelp450", 
+	var connectData = {
+	  "hostname": "yelpequidistance.cqf3bokykxqv.us-east-1.rds.amazonaws.com",
+	  "user": "equidist",
+	  "password": "helpyelp450",
 	  "database": "equiDB" };
 
 	var oracle =  require("oracle");
@@ -21,22 +21,22 @@
 		var cipher = crypto.createCipher('aes-256-cbc', key);
 		var encrypted = cipher.update(pass, 'utf8', 'base64');
 		encrypted += cipher.final('base64');
-		
+
 		console.log("unencrypted: " + pass);
 		console.log("adding encrypted password: " + encrypted);
-		
+
 		callback(encrypted);
 	}
 
 	function decryptPassword(pass, callback) {
 		//decrypt password from DB
 		var decipher = crypto.createDecipher('aes-256-cbc', key);
-		var decrypted = 
+		var decrypted =
 			decipher.update(pass, 'base64', 'utf8');
 		decrypted += decipher.final('utf8');
-		
+
 		console.log('decrypted pass: ' + decrypted);
-		
+
 		callback(decrypted);
 	}
 
@@ -46,13 +46,13 @@
 		console.log('getRestInfo: ' + bussID);
 		oracle.connect(connectData, function(err, connection) {
 			if (err) {
-				console.log(err); 
+				console.log(err);
 				callback(err, null);
 			} else {
-				connection.execute("SELECT * FROM restaurant WHERE rid ='" + bussID + "'", 
+				connection.execute("SELECT * FROM restaurant WHERE rid ='" + bussID + "'",
 				       [], function(err, results) {
 					if (err) {
-						console.log(err); 
+						console.log(err);
 						callback(err, null);
 					} else {
 						connection.close();
@@ -68,13 +68,13 @@
 		console.log('getRestName: ' + bussID);
 		oracle.connect(connectData, function(err, connection) {
 			if (err) {
-				console.log(err); 
+				console.log(err);
 				callback(err, null);
 			} else {
-				connection.execute("SELECT name FROM restaurant WHERE rid ='" + bussID + "'", 
+				connection.execute("SELECT name FROM restaurant WHERE rid ='" + bussID + "'",
 				       [], function(err, results) {
 					if (err) {
-						console.log(err); 
+						console.log(err);
 						callback(err, null);
 					} else {
 						connection.close();
@@ -89,13 +89,13 @@
 		console.log('getRestAddress: ' + bussID);
 		oracle.connect(connectData, function(err, connection) {
 			if (err) {
-				console.log(err); 
+				console.log(err);
 				callback(err, null);
 			} else {
-				connection.execute("SELECT address FROM restaurant WHERE rid = '" + bussID + "'", 
+				connection.execute("SELECT address FROM restaurant WHERE rid = '" + bussID + "'",
 				       [], function(err, results) {
 					if (err) {
-						console.log(err); 
+						console.log(err);
 						callback(err, null);
 					} else {
 						connection.close();
@@ -110,7 +110,7 @@
 		console.log('searching restaurants whose name contains: ' + name);
 		oracle.connect(connectData, function(err, connection) {
 			if (err) {
-				console.log(err); 
+				console.log(err);
 				callback(err, null);
 			} else {
 				connection.execute("SELECT * FROM restaurant WHERE name LIKE '%" + name + "%'", [], function(err, results) {
@@ -130,13 +130,13 @@
 		console.log('getRestLatLong: ' + bussID);
 		oracle.connect(connectData, function(err, connection) {
 			if (err) {
-				console.log(err); 
+				console.log(err);
 				callback(err, null);
 			} else {
-				connection.execute("SELECT lat, lon FROM restaurant WHERE rid ='" + bussID + "'", 
+				connection.execute("SELECT lat, lon FROM restaurant WHERE rid ='" + bussID + "'",
 				       [], function(err, results) {
 					if (err) {
-						console.log(err); 
+						console.log(err);
 						callback(err, null);
 					} else {
 						connection.close();
@@ -151,13 +151,13 @@
 		console.log('getRestStars: ' + bussID);
 		oracle.connect(connectData, function(err, connection) {
 			if (err) {
-				console.log(err); 
+				console.log(err);
 				callback(err, null);
 			} else {
-				connection.execute("SELECT stars FROM restaurant WHERE rid ='" + bussID + "'", 
+				connection.execute("SELECT stars FROM restaurant WHERE rid ='" + bussID + "'",
 				       [], function(err, results) {
 					if (err) {
-						console.log(err); 
+						console.log(err);
 						callback(err, null);
 					} else {
 						connection.close();
@@ -169,12 +169,12 @@
 	}
 	// returns array of objects, each with all info for a restaurant
 	db.prototype.getRestsSquareCoords = function(minLat, minLon, maxLat, maxLon, callback) {
-		console.log('getting restaurants within: lat(min: ' + minLat 
-			+ ',max: ' + maxLat + ')  lon(min: ' + minLon + ',max: ' 
+		console.log('getting restaurants within: lat(min: ' + minLat
+			+ ',max: ' + maxLat + ')  lon(min: ' + minLon + ',max: '
 			+ maxLon + ')');
 		oracle.connect(connectData, function(err, connection) {
 			if (err) {
-				console.log(err); 
+				console.log(err);
 				callback(err, null);
 			} else {
 				//gives top 10 results according to stars
@@ -204,13 +204,13 @@
 		console.log('getUserAddress: ' + username);
 		oracle.connect(connectData, function(err, connection) {
 			if (err) {
-				console.log(err); 
+				console.log(err);
 				callback(err, null);
 			} else {
-				connection.execute("SELECT address FROM address WHERE username = '" + username + "'", 
+				connection.execute("SELECT address FROM address WHERE username = '" + username + "'",
 				       [], function(err, results) {
 					if (err) {
-						console.log(err); 
+						console.log(err);
 						callback(err, null);
 					} else {
 						connection.close();
@@ -225,13 +225,13 @@
 		console.log('getUserLatLon: ' + username);
 		oracle.connect(connectData, function(err, connection) {
 			if (err) {
-				console.log(err); 
+				console.log(err);
 				callback(err, null);
 			} else {
-				connection.execute("SELECT lat, lon FROM address WHERE username = '" + username + "'", 
+				connection.execute("SELECT lat, lon FROM address WHERE username = '" + username + "'",
 				       [], function(err, results) {
 					if (err) {
-						console.log(err); 
+						console.log(err);
 						callback(err, null);
 					} else {
 						connection.close();
@@ -251,14 +251,14 @@
 		console.log('getting user address info for: ' + username);
 		oracle.connect(connectData, function(err, connection) {
 			if (err) {
-				console.log(err); 
+				console.log(err);
 				callback(err, null);
 			} else {
-				connection.execute("SELECT * FROM address WHERE username = '" 
-					+ username + "'", 
+				connection.execute("SELECT * FROM address WHERE username = '"
+					+ username + "'",
 				       [], function(err, results) {
 					if (err) {
-						console.log(err); 
+						console.log(err);
 						callback(err, null);
 					} else {
 						connection.close();
@@ -269,11 +269,11 @@
 		});
 	}
 
-	db.prototype.changeUserAddressLatLon = 
+	db.prototype.changeUserAddressLatLon =
 		function(username, newAddress, newLabel, newLat, newLon, callback) {
 		oracle.connect(connectData, function(err, connection) {
 			if (err) {
-				console.log(err); 
+				console.log(err);
 				callback(err, null);
 			} else {
 				connection.execute("UPDATE address "
@@ -300,13 +300,13 @@
 		console.log('checking whether username exists: ' + username);
 		oracle.connect(connectData, function(err, connection) {
 			if (err) {
-				console.log(err); 
+				console.log(err);
 				callback(err, null);
 			} else {
-				connection.execute("SELECT * FROM users WHERE username = '" + username + "'", 
+				connection.execute("SELECT * FROM users WHERE username = '" + username + "'",
 				       [], function(err, results) {
 					if (err) {
-						console.log(err); 
+						console.log(err);
 						callback(err, null);
 					} else {
 						connection.close();
@@ -322,13 +322,13 @@
 		console.log('getting name of user: ' + username);
 		oracle.connect(connectData, function(err, connection) {
 			if (err) {
-				console.log(err); 
+				console.log(err);
 				callback(err, null);
 			} else {
-				connection.execute("SELECT first_name, last_name FROM users WHERE username = '" + username + "'", 
+				connection.execute("SELECT first_name, last_name FROM users WHERE username = '" + username + "'",
 				       [], function(err, results) {
 					if (err) {
-						console.log(err); 
+						console.log(err);
 						callback(err, null);
 					} else {
 						connection.close();
@@ -343,14 +343,14 @@
 		console.log('changing first name of user: ' + username);
 		oracle.connect(connectData, function(err, connection) {
 			if (err) {
-				console.log(err); 
+				console.log(err);
 				callback(err, null);
 			} else {
-				connection.execute("UPDATE users SET first_name ='" 
-					+ newFirstName + "' WHERE username='" + username + "'", 
+				connection.execute("UPDATE users SET first_name ='"
+					+ newFirstName + "' WHERE username='" + username + "'",
 				       [], function(err, results) {
 					if (err) {
-						console.log(err); 
+						console.log(err);
 						callback(err, null);
 					} else {
 						connection.close();
@@ -365,14 +365,14 @@
 		console.log('changing last name of user: ' + username);
 		oracle.connect(connectData, function(err, connection) {
 			if (err) {
-				console.log(err); 
+				console.log(err);
 				callback(err, null);
 			} else {
-				connection.execute("UPDATE users SET last_name ='" 
-					+ newFirstName + "' WHERE username='" + username + "'", 
+				connection.execute("UPDATE users SET last_name ='"
+					+ newFirstName + "' WHERE username='" + username + "'",
 				       [], function(err, results) {
 					if (err) {
-						console.log(err); 
+						console.log(err);
 						callback(err, null);
 					} else {
 						connection.close();
@@ -387,15 +387,15 @@
 		console.log('changing name of user: ' + username);
 		oracle.connect(connectData, function(err, connection) {
 			if (err) {
-				console.log(err); 
+				console.log(err);
 				callback(err, null);
 			} else {
-				connection.execute("UPDATE users SET first_name ='" 
+				connection.execute("UPDATE users SET first_name ='"
 					+ newFirstName + "', last_name ='"
-					+ newLastName + "' WHERE username='" + username + "'", 
+					+ newLastName + "' WHERE username='" + username + "'",
 				       [], function(err, results) {
 					if (err) {
-						console.log(err); 
+						console.log(err);
 						callback(err, null);
 					} else {
 						connection.close();
@@ -413,13 +413,13 @@
 		console.log('getting friends of: ' + username);
 		oracle.connect(connectData, function(err, connection) {
 			if (err) {
-				console.log(err); 
+				console.log(err);
 				callback(err, null);
 			} else {
-				connection.execute("SELECT user2 FROM friends WHERE user1 = '" + username + "'", 
+				connection.execute("SELECT user2 FROM friends WHERE user1 = '" + username + "'",
 				       [], function(err, results) {
 					if (err) {
-						console.log(err); 
+						console.log(err);
 						callback(err, null);
 					} else {
 						var userResults = [];
@@ -437,11 +437,11 @@
 	}
 
 	db.prototype.addFriend = function(username, friendUsername, callback) {
-		console.log('adding friend for user: ' + username 
+		console.log('adding friend for user: ' + username
 			+ ', friend: ' + friendUsername);
 		oracle.connect(connectData, function(err, connection) {
 			if (err) {
-				console.log(err); 
+				console.log(err);
 				callback(err, null);
 			} else {
 				connection.execute('INSERT INTO friends (user1, user2) '
@@ -460,14 +460,14 @@
 	}
 
 	db.prototype.removeSingleFriend = function(username, friendUsername, callback) {
-		console.log('removing friend for user: ' + username 
+		console.log('removing friend for user: ' + username
 			+ ', friend: ' + friendUsername);
 		oracle.connect(connectData, function(err, connection) {
 			if (err) {
-				console.log(err); 
+				console.log(err);
 				callback(err, null);
 			} else {
-				connection.execute("DELETE FROM friends WHERE user1='" + 
+				connection.execute("DELETE FROM friends WHERE user1='" +
 					username + "' AND user2='" + friendUsername + "'",
 				       [], function(err, results) {
 					if (err) {
@@ -485,10 +485,10 @@
 	db.prototype.removeAllFriends = function(username, callback) {
 		oracle.connect(connectData, function(err, connection) {
 			if (err) {
-				console.log(err); 
+				console.log(err);
 				callback(err, null);
 			} else {
-				connection.execute("DELETE FROM friends WHERE user1='" + 
+				connection.execute("DELETE FROM friends WHERE user1='" +
 					username + "'",
 				       [], function(err, results) {
 					if (err) {
@@ -508,13 +508,13 @@
 		console.log('getting FBid of: ' + username);
 		oracle.connect(connectData, function(err, connection) {
 			if (err) {
-				console.log(err); 
+				console.log(err);
 				callback(err, null);
 			} else {
-				connection.execute("SELECT fb_id FROM users WHERE username ='" + username + "'", 
+				connection.execute("SELECT fb_id FROM users WHERE username ='" + username + "'",
 				       [], function(err, results) {
 					if (err) {
-						console.log(err); 
+						console.log(err);
 						callback(err, null);
 					} else {
 						connection.close();
@@ -524,7 +524,7 @@
 			}
 		});
 	}
-	/* returns single object, format: { USERNAME: 'abc', 
+	/* returns single object, format: { USERNAME: 'abc',
 	 *                                  FB_ID: 123,
 	 * 									PASSWORD: 'pass',
 	 * 									ADDRESS_LABEL: 'home',
@@ -538,15 +538,15 @@
 		console.log('getting all user info of: ' + username);
 		oracle.connect(connectData, function(err, connection) {
 			if (err) {
-				console.log(err); 
+				console.log(err);
 				callback(err, null);
 			} else {
 				connection.execute("SELECT * FROM users U "
 					+ "INNER JOIN address A ON U.username = A.username "
-					+ "WHERE U.username = '" + username + "'", 
+					+ "WHERE U.username = '" + username + "'",
 				       [], function(err, results) {
 					if (err) {
-						console.log(err); 
+						console.log(err);
 						callback(err, null);
 					} else {
 						connection.close();
@@ -557,15 +557,15 @@
 		});
 	}
 
-	db.prototype.createUser = function(username, password, 
-									first_name, last_name, 
-									address, addressLabel, 
+	db.prototype.createUser = function(username, password,
+									first_name, last_name,
+									address, addressLabel,
 									lat, lon, callback) {
 		console.log('adding user: ' + username);
 		encryptPassword(password, function(encryptedPass) {
 			oracle.connect(connectData, function(err, connection) {
 			if (err) {
-				console.log(err); 
+				console.log(err);
 				callback(err, null);
 			} else {
 				connection.execute("INSERT INTO users (username,password,"
@@ -580,7 +580,7 @@
 						console.log(results);
 						oracle.connect(connectData, function(err, connection) {
 					if (err) {
-						console.log(err); 
+						console.log(err);
 						callback(err, null);
 					} else {
 					connection.execute(
@@ -609,16 +609,16 @@
 		console.log('getting password for: ' + username);
 		oracle.connect(connectData, function(err, connection) {
 			if (err) {
-				console.log(err); 
+				console.log(err);
 				callback(err, null);
 			} else {
 				connection.execute("SELECT password FROM users WHERE username = '" + username + "'",
 				       [], function(err, results) {
 					if (err) {
-						console.log(err); 
+						console.log(err);
 						callback(err, null);
 					} else {
-						decryptPassword(results[0].PASSWORD, 
+						decryptPassword(results[0].PASSWORD,
 							function(decrypted) {
 								connection.close();
 								callback(null, decrypted === enteredPass);
@@ -634,7 +634,7 @@
 		encryptPassword(newPass, function(encryptedPass) {
 			oracle.connect(connectData, function(err, connection) {
 				if (err) {
-					console.log(err); 
+					console.log(err);
 					callback(err, null);
 				} else {
 					connection.execute("UPDATE users "
@@ -642,7 +642,7 @@
 						+ "WHERE username = '" + username + "'",
 					       [], function(err, results) {
 						if (err) {
-							console.log(err); 
+							console.log(err);
 							callback(err, null);
 						} else {
 							connection.close();
@@ -680,13 +680,13 @@
 		console.log('getting group name for: ' + groupID);
 		oracle.connect(connectData, function(err, connection) {
 			if (err) {
-				console.log(err); 
+				console.log(err);
 				callback(err, null);
 			} else {
-				connection.execute("SELECT group_name FROM groups WHERE group_id = " + groupID, 
+				connection.execute("SELECT group_name FROM groups WHERE group_id = " + groupID,
 				       [], function(err, results) {
 					if (err) {
-						console.log(err); 
+						console.log(err);
 						callback(err, null);
 					} else {
 						connection.close();
@@ -701,10 +701,10 @@
 		console.log('getting groups where user is in: ' + username);
 		oracle.connect(connectData, function(err, connection) {
 			if (err) {
-				console.log(err); 
+				console.log(err);
 				callback(err, null);
 			} else {
-				connection.execute("SELECT group_id FROM in_group WHERE username = '" + username + "'", 
+				connection.execute("SELECT group_id FROM in_group WHERE username = '" + username + "'",
 				       [], function(err, results) {
 					if (err) {
 						console.log(err);
@@ -728,10 +728,10 @@
 		console.log('getting group members of groupID: ' + groupID);
 		oracle.connect(connectData, function(err, connection) {
 			if (err) {
-				console.log(err); 
+				console.log(err);
 				callback(err, null);
 			} else {
-				connection.execute("SELECT username FROM in_group WHERE group_id =" + groupID, 
+				connection.execute("SELECT username FROM in_group WHERE group_id =" + groupID,
 				       [], function(err, results) {
 					if (err) {
 						console.log(err);
@@ -751,15 +751,15 @@
 			}
 		});
 	}
-	
+
 	db.prototype.removeUserFromGroup = function (groupID, username, callback) {
 		console.log('removing user: ' + username + ', from group: ' + groupID);
 		oracle.connect(connectData, function(err, connection) {
 			if (err) {
-				console.log(err); 
+				console.log(err);
 				callback(err, null);
 			} else {
-				connection.execute("DELETE FROM in_group WHERE username='" 
+				connection.execute("DELETE FROM in_group WHERE username='"
 					+ username + "' AND group_id=" + groupID,
 				       [], function(err, results) {
 					if (err) {
@@ -773,12 +773,13 @@
 			}
 		});
 	}
-	
+
 	db.prototype.addUserToGroup = function(groupID, username, callback) {
 		console.log('adding user: ' + username + ', to group: ' + groupID);
+		console.log("INSERT INTO in_group (group_id, username) " + "VALUES (" + groupID + ",'" + username + "')");
 		oracle.connect(connectData, function(err, connection) {
 			if (err) {
-				console.log(err); 
+				console.log(err);
 				callback(err, null);
 			} else {
 				connection.execute("INSERT INTO in_group (group_id, username) "
@@ -795,18 +796,18 @@
 			}
 		});
 	}
-	
+
 	function getNextAvailalbleGroupId(callback) {
 		console.log('getting max group_id');
 		oracle.connect(connectData, function(err, connection) {
 			if (err) {
-				console.log(err); 
+				console.log(err);
 				callback(err, null);
 			} else {
 				connection.execute("SELECT MAX(group_id) AS maxID FROM groups",
 				       [], function(err, results) {
 					if (err) {
-						console.log(err); 
+						console.log(err);
 						callback(err, null);
 					} else {
 						connection.close();
@@ -821,14 +822,14 @@
 		getNextAvailalbleGroupId(function(maxID){
 			var groupID = maxID + 1;
 			console.log("new groupID: " + groupID);
-			console.log('creating group: ' +  groupName 
+			console.log('creating group: ' +  groupName
 				+ ' with groupID: ' + groupID);
 			oracle.connect(connectData, function(err, connection) {
 				if (err) {
 					console.log(err);
 					callback(err, null);
 				} else {
-					connection.execute("INSERT INTO groups " 
+					connection.execute("INSERT INTO groups "
 						+ "(group_id, group_name) VALUES (" + groupID + ",'"
 					    + groupName + "')",
 					       [], function(err, results) {
@@ -844,7 +845,7 @@
 			});
 		});
 	};
-		
+
 	db.prototype.deleteGroup = function(groupID, callback) {
 		oracle.connect(connectData, function(err, connection) {
 			if (err) {
@@ -852,7 +853,7 @@
 				callback(err, null);
 			} else {
 				//delete users from in_group
-				connection.execute("DELETE FROM in_group WHERE group_id=" 
+				connection.execute("DELETE FROM in_group WHERE group_id="
 					+ groupID,
 				       [], function(err, results) {
 					if (err) {
@@ -868,7 +869,7 @@
 								connection.execute(" DELETE FROM groups WHERE group_id=" + groupID,
 								       [], function(err, results) {
 									if (err) {
-										console.log(err); 
+										console.log(err);
 										callback(err, null);
 									} else {
 										connection.close();
@@ -886,7 +887,7 @@
 	db.prototype.renameGroup = function(groupID, newName, callback) {
 		oracle.connect(connectData, function(err, connection) {
 			if (err) {
-				console.log(err); 
+				console.log(err);
 				callback(err, null);
 			} else {
 				connection.execute("UPDATE groups SET group_name ='" + newName
@@ -902,7 +903,7 @@
 				});
 			}
 		});
-	}	
+	}
 
 	module.exports = db;
 
