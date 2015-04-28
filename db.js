@@ -533,7 +533,32 @@
 			}
 		});
 	}
-	/* returns single object, format: { USERNAME: 'abc',
+
+	db.prototype.getUsername = function(fb_id, callback) {
+		console.log('getting username of: ' + fb_id);
+		oracle.connect(connectData, function(err, connection) {
+			if (err) {
+				console.log(err); 
+				callback(err, null);
+			} else {
+				connection.execute("SELECT username FROM users WHERE fb_id =" + fb_id, 
+				       [], function(err, results) {
+					if (err) {
+						console.log(err); 
+						callback(err, null);
+					} else {
+						connection.close();
+						if (results[0])
+							callback(null, results[0].USERNAME);
+						else
+							callback(null, null);
+					}
+				});
+			}
+		});
+	}
+
+	/* returns single object, format: { USERNAME: 'abc', 
 	 *                                  FB_ID: 123,
 	 * 									PASSWORD: 'pass',
 	 * 									ADDRESS_LABEL: 'home',
@@ -590,6 +615,53 @@
 						oracle.connect(connectData, function(err, connection) {
 					if (err) {
 						console.log(err);
+						callback(err, null);
+					} else {
+					connection.execute(
+					"INSERT INTO address (address_label,username,address,lat,lon) "
+					+ "VALUES ('" + addressLabel + "','" + username + "','" + address + "'," + lat + "," + lon + ")",
+					       [], function(err, results2) {
+						if (err) {
+							console.log(err);
+							callback(err, null);
+						} else {
+							connection.close();
+							callback(null, results2);
+						}
+					});
+				}
+			});
+					}
+				});
+			}
+		});
+		});
+	}
+
+	db.prototype.createFacebookUser = function(username, password, 
+									first_name, last_name, 
+									address, addressLabel, 
+									lat, lon, fb_id, callback) {
+		console.log('adding user: ' + username);
+		encryptPassword(password, function(encryptedPass) {
+			oracle.connect(connectData, function(err, connection) {
+			if (err) {
+				console.log(err); 
+				callback(err, null);
+			} else {
+				connection.execute("INSERT INTO users (username,password,"
+					+ "fb_id,first_name,last_name) "
+					+ "VALUES ('" + username + "','" + encryptedPass
+					+ "'," + fb_id + ",'" + first_name + "','" + last_name + "')",
+				       [], function(err, results) {
+					if (err) {
+						console.log(err);
+						callback(err, null);
+					} else {
+						console.log(results);
+						oracle.connect(connectData, function(err, connection) {
+					if (err) {
+						console.log(err); 
 						callback(err, null);
 					} else {
 					connection.execute(

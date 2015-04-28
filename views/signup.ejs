@@ -53,15 +53,37 @@
             var info = {"username": username, "password": password, "address":
               address, "label": label, "first_name": first_name, "last_name": last_name};
 
-            $.post("/create_user", info,function(data, status) {
-                if (data == "success")
-                // go to home page
-                location.href = "/home";
-                else if (data == "failure") {
-                  $("#error").text("Invalid address.");
+            $.post("/check_username", info,function(data, status) {
+                if (data == "success") {
+                  $("#error").text("Username already exists.");
                   $("#error").css('color', 'red');
                 }
+                else if (data == "failure") {
+                  $.post("/create_user", info,function(data2, status2) {
+                    if (data2 == "success")
+                    // go to home page
+                    location.href = "/home";
+                    else if (data2 == "failure") {
+                      $("#error").text("Invalid address.");
+                      $("#error").css('color', 'red');
+                    }
+                  });
+                }
             });
+
+              // $.post("/create_user", info,function(data, status) {
+              //     if (data == "success")
+              //     // go to home page
+              //     location.href = "/home";
+              //     else if (data == "failure") {
+              //       $("#error").text("Invalid address.");
+              //       $("#error").css('color', 'red');
+              //     }
+              //     else if (data == "Username already exists") {
+              //       $("#error").text("Username already exists");
+              //       $("#error").css('color', 'red');
+              //     }
+              // });
           }
 
         }
