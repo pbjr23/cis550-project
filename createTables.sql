@@ -17,7 +17,7 @@ CREATE TABLE friends (
 
 # weak entity, one user can save multiple addresses
 CREATE TABLE address (
-	address_label VARCHAR(10) NOT NULL,
+	address_label VARCHAR(30) NOT NULL,
 	username VARCHAR(20) NOT NULL,
 	address VARCHAR(150) NOT NULL,
 	lat FLOAT(15) NOT NULL,
@@ -97,4 +97,3 @@ drop table user_fav;
 drop table group_fav;
 drop table category;
 drop table hours;
-drop table restaurant;
