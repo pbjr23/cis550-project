@@ -77,7 +77,7 @@ Results
 
     function get_logged_in_user(members) {
       for (var i = 0; i < members.length; i++) {
-        if (members[i]['is_logged_in']) {
+        if (members[i]['is_logged_in'] === "true") {
           return members[i];
         }
       }
@@ -112,7 +112,25 @@ Results
       var maxStars = restaurants[0]['STARS'];
       var minTime = Number.MAX_VALUE;
       var maxTime = 0;
-      var newRestaurants = restaurants
+      var newRestaurants = []
+
+      // Filter by stars
+      var filterStars = parseFloat($( '#stars' ).val());
+      for (var i = 0; i < restaurants.length; i++) {
+        if (restaurants[i]['STARS'] >= filterStars) {
+          newRestaurants.push(restaurants[i]);
+        }
+      }
+
+      // Algorithm preferences
+      var pref = $( "#preference" ).val();
+      var multiplier = 0.5;
+      if (pref === 'distance') {
+        multiplier = 0.7;
+      } else if (pref === 'stars') {
+        multiplier = 0.3;
+      }
+
       for (var i = 0; i < newRestaurants.length; i++) {
         var time = get_relative_time(newRestaurants[i]);
 
@@ -134,7 +152,7 @@ Results
 
       for (var i = 0; i < newRestaurants.length; i++) {
         var adjusted_time = (maxStars - minStars) * (newRestaurants[i]['time'] - minTime) / (maxTime - minTime);
-        newRestaurants[i]['score'] = -0.5 * newRestaurants[i]['STARS'] + 0.5 * adjusted_time;
+        newRestaurants[i]['score'] = -1 * (1 - multiplier) * newRestaurants[i]['STARS'] + multiplier * adjusted_time;
         newRestaurants[i]['ADDRESS'] = newRestaurants[i]['ADDRESS'].replace(/(\r\n|\n|\r)/gm," ")
       }
 
@@ -148,9 +166,25 @@ Results
 
     function initialize() {
       var newRestaurants = calculate_restaurants(restaurants);
-      for (var i = 0; i < newRestaurants.length; i++) {
-        console.log('<option value="' + newRestaurants[i]['ADDRESS'] + '">' + newRestaurants[i]['name'] + '</option>');
+
+      // Filter by number of restaurants
+      var numResults = Math.min(newRestaurants.length, $( "#number" ).val())
+
+      for (var i = 0; i < numResults; i++) {
         $( "#end" ).append( '<option value="' + newRestaurants[i]['ADDRESS'] + '">' + newRestaurants[i]['NAME'] + '</option>' );
+
+        var restData = "<div class='col-md-12'>" +
+          "<div class='featurette-item'>" +
+            "<h4>Restaurant Name</h4>" +
+            "<h5>" + newRestaurants[i]['NAME'] + "</h5>" +
+            "<h4>Restaurant Address</h4>" +
+            "<h5>" + newRestaurants[i]['ADDRESS'] + "</h5>" +
+            "<h4>Restaurant Stars</h4>" +
+            "<h5>" + newRestaurants[i]['STARS'] + "</h5>" +
+          "</div>"
+        "</div>"
+        $( "#restaurantResults" ).append(restData);
+
       }
       directionsDisplay = new google.maps.DirectionsRenderer();
       var mapOptions = {
@@ -183,23 +217,35 @@ Results
       });
     }
 
-    google.maps.event.addDomListener(window, 'load', initialize);
-    console.log(get_logged_in_user(members))
-    if (current_user['transport'] === 'walk') {
-      console.log("hello");
-      $( '#walk' ).attr('selected', 'selected');
-    } else if (current_user['transport'] === 'bike') {
-      console.log("hello world");
-      $( '#bike' ).attr('selected', 'selected');
-    } else if (current_user['transport'] === 'car') {
-      console.log("hi world");
-      $( '#car' ).attr('selected', 'selected');
+    function calculateRestaurants() {
+      $( "#restaurantResults" ).empty();
+      initialize();
+      google.maps.event.addDomListener(window, 'load', initialize);
     }
 
+
+    google.maps.event.addDomListener(window, 'load', initialize);
+
+    if (current_user['transport'] === 'walk') {
+      console.log("hello");
+      $("select#mode").val("WALKING");
+    } else if (current_user['transport'] === 'bike') {
+      console.log("hello world");
+      $("select#mode").val("BICYCLING");
+    } else if (current_user['transport'] === 'car') {
+      console.log("hi world");
+      $("select#mode").val("DRIVING");
+    }
 
     $(document).ready(function() {
       $("#error").text("All Fields Must be filled.");
       $("#error").css('color', 'red');
+
+      $( "#username" ).html(current_user['USERNAME']);
+      $( "#firstlastname" ).html(current_user['FIRST_NAME'] + " " + current_user['LAST_NAME']);
+      $( "#address" ).html(current_user['ADDRESS']);
+      $( "#modetransport" ).html(current_user['transport']);
+
 
       // Upon click of the AJAX request...
       $("#logout").click(function() {
@@ -223,6 +269,62 @@ Results
       <p class="lead">A Yelp Webapp for Finding Food for Your Group!</p>
       <div>&nbsp;</div>
 
+      <div class="row">
+        <div class="col-md-6 text-center">
+          <div class="featurette-item">
+            <h2>Your Information</h2>
+            <h4>Username</h4>
+            <h5 id="username"></h5>
+            <h4>Name</h4>
+            <h5 id="firstlastname"></h5>
+            <h4>Address</h4>
+            <h5 id="address"></h5>
+            <h4>Mode of transport</h4>
+            <h5 id="modetransport"></h5>
+          </div>
+        </div>
+        <div class="col-md-6 text-center">
+          <div class="featurette-item">
+            <h2>Filtering Options</h2>
+
+            <div>
+              <h4>Number of results to display</h4>
+              <input value="5" class="form-control" type="number" id="number" onchange="calculateRestaurants();">
+            </div>
+
+            <div>
+              <h4>Filter by number of stars</h4>
+              <select id="stars" onchange="calculateRestaurants();">
+                <option value="0">At least 0.0 stars</option>
+                <option value="0.5">At least 0.5 stars</option>
+                <option value="1.0">At least 1.0 stars</option>
+                <option value="1.5">At least 1.5 stars</option>
+                <option value="2.0">At least 2.0 stars</option>
+                <option value="2.5">At least 2.5 stars</option>
+                <option value="3.0">At least 3.0 stars</option>
+                <option value="3.5">At least 3.5 stars</option>
+                <option value="4.0">At least 4.0 stars</option>
+                <option value="4.5">At least 4.5 stars</option>
+                <option value="5.0">At least 5.0 stars</option>
+              </select>
+            </div>
+
+            <div>
+              <h4>Select ranking preference</h4>
+              <select id="preference" onchange="calculateRestaurants();">
+                <option value="distance">Prefer less distance</option>
+                <option value="stars">Prefer better restaurants</option>
+                <option value="combo">Prefer combination</option>
+              </select>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div id="restaurantResults" class="row">
+
+      </div>
 
     </div>
   </div>
