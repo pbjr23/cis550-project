@@ -5,7 +5,7 @@ exports.init = function(dbObj) {
 	db = dbObj;
 }
 exports.testFunction = function(req, res) {
-	db.checkUsernameExists('usasd', function(err, result) {
+	db.getHoursInfo('yUVQl7y5e8IEDk4EAHr8zQ', function(err, result) {
 		console.log(result);
 	});
 	//db.validatePassword('userD', 'abcPass', function(err, results) {
