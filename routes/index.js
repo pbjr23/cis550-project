@@ -277,7 +277,7 @@ exports.create_user = function(req, res){
   			db.createFacebookUser(req.body.username, req.body.password, req.body.first_name,
 	  			req.body.last_name, req.body.address, req.body.label,
 	  			results[0].latitude, results[0].longitude, req.session.fb_id, callback);
-  		else 
+  		else
 	  		db.createUser(req.body.username, req.body.password, req.body.first_name,
 	  			req.body.last_name, req.body.address, req.body.label,
 	  			results[0].latitude, results[0].longitude, callback);
