@@ -24,6 +24,9 @@ ON users (username);
 CREATE UNIQUE INDEX users_user_pass_index
 ON users (username, password);
 
+CREATE UNIQUE INDEX address_username_index
+ON address (username)
+
 CREATE INDEX address_latlon_index
 ON address (lat, lon);
 
@@ -33,6 +36,4 @@ ON address (username, lat, lon);
 CREATE UNIQUE INDEX groups_id_name_index
 ON groups (group_id, group_name);
 
-CREATE UNIQUE INDEX in_group_group_id
-ON in_group (group_id);
-
+CREATE INDEX 
