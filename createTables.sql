@@ -20,8 +20,8 @@ CREATE TABLE address (
 	address_label VARCHAR(10) NOT NULL,
 	username VARCHAR(20) NOT NULL,
 	address VARCHAR(150) NOT NULL,
-	lat FLOAT(6) NOT NULL,
-	lon FLOAT(6) NOT NULL,
+	lat FLOAT(15) NOT NULL,
+	lon FLOAT(15) NOT NULL,
 	PRIMARY KEY (username, address_label),
 	FOREIGN KEY (username) REFERENCES users ON DELETE CASCADE
 );

@@ -36,6 +36,10 @@ img.grayscale {
     -webkit-filter: grayscale(100%); /* Chrome 19+, Safari 6+, Safari 6+ iOS */
 }
 
+ul {
+  list-style: none;
+}
+
 .icon-bar {
    background-color:#fff;
 }
@@ -156,6 +160,9 @@ img.grayscale {
 
 .featurette-item {
   margin-bottom: 15px;
+  background: #C4A8E8;
+  padding: 10px;
+  border-radius: 10px;
 }
 
 .featurette-item > i {
@@ -207,4 +214,17 @@ footer {
 input {
   width: auto !important;
   margin: 10px auto 10px auto;
+}
+
+.group-user {
+  padding: 10px;
+  background: #A473E4;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  text-align: left;
+  margin-right: 40px;
+}
+
+.btn-group-lg:hover {
+  background: #bbb;
 }

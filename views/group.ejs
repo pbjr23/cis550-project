@@ -1,77 +1,108 @@
 <!-- Embed the layout.ejs file -->
 <% layout( 'layout' ) -%>
+<head>
+  <script>
+     $(document).ready(function() {
+          $('#error').hide();
+        $('#addUser').click(function() {
+          var username = $('#newUsername').val();
+          username = username.trim();
+          var info = { 'username': username, 'groupID': <%= groupID %> };
+          console.log(info);
+          $.post("/addUserToGroup", info, function(data, status) {
+            if (data === "0") {
+              $('#error').hide();
+              location.href = "/group?groupID=<%= groupID %>";
+            } else {
+              $('#error').css('color', 'red');
+              $('#error').show();
+            }
+          });
+        });
 
-Group Members:
+        $('#getRests').click(function() {
+          var users = JSON.stringify(<%- users %>);
+          console.log("getting results for users: " + users);
+        });
 
-<% if (memberNames.length > 0) { %>
+        <% if (memberNames.length > 0) { %>
+        <% for (var i=0; i < memberNames.length; i++) {%>
+            $('#remove_<%= usernames[i] %>').click(function() {
+              var info = { groupID: <%= groupID %>,
+                           username: '<%= usernames[i] %>' };
+              $.post("/removeUserFromGroup", info, function(data, status) {
+                if (data === "0") {
+                  location.href = "/group?groupID=<%= groupID %>";
+                }
+              });
+            })
+      <% } %>
+      <% } %>
+      //console.log(geoplugin_city());
+        //console.log(geoplugin_latitude());
+        //console.log(geoplugin_longitude());
+     });
 
-<ul>
-  <% for (var i=0; i < memberNames.length; i++) {%>
-    <li><%= memberNames[i] %>
-    	<button id='remove_<%= usernames[i] %>'>delete from group</button>
-    	<br>
-    	<span id='<%= usernames[i] %>_address'>current address: <%= addresses[i] %></span>
-    </li>
-    <br>
-  <% } %>
-</ul>
+    // Upon click of the AJAX request...
+    $("#logout").click(function() {
+      $.get("/logout", function(data, status) {
 
-<% } else { %>
-<p> There are no members in this group </p>
-<% } %>
+        location.href = "/login"
 
-<br>
-<p>Get restaurants based on above locations</p>
-<button id='getRests'>Get restaurants</button>
+        });
+    });
+  </script>
 
-<br><br>
-Add new user to the group:<br>
-<input type="text" id="newUsername" value="username">
-<button id="addUser">Add</button>
-<span id="error">Error, please try again</span>
+</head>
 
-<br>
-  <a href="/home">Homepage</a>
+<body>
+  <% include navbar_logged_in %>
+  <div class="header alt vert" style="height: 100%">
+    <div class="container center-text">
+      <h1>Find Your Food</h1>
+      <p class="lead">A Yelp Webapp for Finding Food for Your Group!</p>
+      <div>&nbsp;</div>
 
-<script>
-   $(document).ready(function() {
-        $('#error').hide();
-   		$('#addUser').click(function() {
-   			var username = $('#newUsername').val();
-   			username = username.trim();
-   			var info = { 'username': username, 'groupID': <%= groupID %> };
-   			console.log(info);
-   			$.post("/addUserToGroup", info, function(data, status) {
-   				if (data === "0") {
-   					$('#error').hide();
-   					location.href = "/group?groupID=<%= groupID %>";
-   				} else {
-   					$('#error').css('color', 'red');
-   					$('#error').show();
-   				}
-   			});
-   		});
+      <div class="row">
+        <div class="col-md-6 text-center">
+          <div class="featurette-item">
+            <h2>Group Members</h2>
+            <% if (memberNames.length > 0) { %>
+            <ul>
+              <% for (var i=0; i < memberNames.length; i++) {%>
+                <div class="group-user">
+                  <li>
+                    <div>
+                      <h4>Name: </h4><span><%= memberNames[i] %></span>
+                    </div>
 
-   		$('#getRests').click(function() {
-   			var users = JSON.stringify(<%- users %>);
-   			console.log("getting results for users: " + users);
-   		});
+                    <div>
+                      <span id='<%= usernames[i] %>_address'><h4>Address: </h4><h5><%= addresses[i] %></h5></span>
+                    </div>
 
-   		<% if (memberNames.length > 0) { %>
-   		<% for (var i=0; i < memberNames.length; i++) {%>
-   		    $('#remove_<%= usernames[i] %>').click(function() {
-   		    	var info = { groupID: <%= groupID %>, 
-   		    	             username: '<%= usernames[i] %>' };
-   		    	$.post("/removeUserFromGroup", info, function(data, status) {
-   		    		if (data === "0") {
-   		    			location.href = "/group?groupID=<%= groupID %>";
-   		    		}
-   		    	});
-   		    })
-		<% } %>
-		<% } %>
-		//console.log(geoplugin_city());
-   		//console.log(geoplugin_latitude());
-   		//console.log(geoplugin_longitude());	
-   });
-</script>
+                    <button class="btn btn-default" id='remove_<%= usernames[i] %>'>Delete from group</button>
+
+                  </li>
+                </div>
+              <% } %>
+            </ul>
+
+            <% } else { %>
+            <p> There are no members in this group </p>
+            <% } %>
+          </div>
+        </div>
+        <div class="col-md-6 text-center">
+          <div class="featurette-item">
+            <h2>Add New User to Group</h2>
+            <input class="form-control" type="text" id="newUsername" placeholder="Enter username">
+            <button class="btn btn-default" id="addUser">Add</button>
+            <span id="error" style="display:none">Error, please try again</span>
+
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-default" id='getRests'>Get restaurants</button>
+    </div>
+  </div>
+</body>

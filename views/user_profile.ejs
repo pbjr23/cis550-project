@@ -1,43 +1,81 @@
 <!-- Embed the layout.ejs file -->
 <% layout( 'layout' ) -%>
+<head>
+  <script>
+    $(document).ready(function() {
 
-<button id="change_name">Change Name</button><br><br>
-<button id="change_password">Change Password</button><br><br>
-<button id="change_address">Change Address</button><br><br>
-<button id="back_to_homepage">Back to Homepage</button><br>
+      // Upon click of the AJAX request...
+      $("#change_name").click(function() {
+        // Fetch some data from the server via an AJAX
+        // call.
+        location.href = "/change_name"
+      });
 
-<script>
-	
-  $(document).ready(function() {
-  	
-  	// Upon click of the AJAX request...
-  	$("#change_name").click(function() {
-  		// Fetch some data from the server via an AJAX
-  		// call.  
-  		location.href = "/change_name"
-  	});
+      $("#change_password").click(function() {
+        // Fetch some data from the server via an AJAX
+        // call.
+        location.href = "/change_password"
+      });
 
-  	$("#change_password").click(function() {
-  		// Fetch some data from the server via an AJAX
-  		// call.  
-  		location.href = "/change_password"
-  	});
+      $("#change_address").click(function() {
+        // Fetch some data from the server via an AJAX
+        // call.
+        location.href = "/change_address"
+      });
 
-  	$("#change_address").click(function() {
-  		// Fetch some data from the server via an AJAX
-  		// call.  
-  		location.href = "/change_address"
-  	});
+      // Upon click of the AJAX request...
+      $("#back_to_homepage").click(function() {
+        // Fetch some data from the server via an AJAX
+        // call.
+        location.href = "/home"
+      });
 
-  	// Upon click of the AJAX request...
-  	$("#back_to_homepage").click(function() {
-  		// Fetch some data from the server via an AJAX
-  		// call.  
-  		location.href = "/home"
-  	});
-  	
-  });
-</script>
-  <span id="data"></span>
-  <br>
-  <span id="error"></span> 
+      // Upon click of the AJAX request...
+      $("#logout").click(function() {
+        $.get("/logout", function(data, status) {
+
+          location.href = "/login"
+
+          });
+      });
+    });
+  </script>
+</head>
+
+
+<body>
+
+  <% include navbar_logged_in %>
+
+  <div class="header alt vert" style="height: 100%">
+    <div class="container text-center">
+
+      <h1>Find Your Food</h1>
+        <p class="lead">A Yelp Webapp for Finding Food for Your Group!</p>
+        <div>&nbsp;</div>
+
+        <div class="row">
+          <div class="col-md-3 col-md-offset-1 text-center">
+            <div class="featurette-item">
+              <button class="btn btn-group-lg" id="change_name">Change Name</button>
+            </div>
+          </div>
+          <div class="col-md-3 text-center">
+            <div class="featurette-item">
+              <button class="btn btn-group-lg" id="change_address">Change Address</button>
+            </div>
+          </div>
+          <div class="col-md-3 text-center">
+            <div class="featurette-item">
+              <button class="btn btn-group-lg" id="change_password">Change Password</button>
+            </div>
+          </div>
+        </div>
+
+      <span id="data"></span>
+      <br>
+      <span id="error"></span>
+
+    </div>
+  </div>
+</body>

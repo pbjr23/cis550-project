@@ -2,69 +2,72 @@
 <% layout( 'layout' ) -%>
 
 
-<head></head> 
+<head>
+  <script>
+    $(document).ready(function() {
+      // Upon click of the AJAX request...
+      $("#submit").click(function() {
+        var groupName = $("#group_name").val();
+        groupName = groupName.trim();
+        if (groupName.length != 0) {
+          $.get("/create_group?groupName=" + groupName, function(data, status) {
 
-Groups:<br>
+            var groupId = data;
+            var url = "/group?groupID=" + groupId;
+            location.href=url;
 
-<ul id="gList">
-<% if (groupIDs != null) {%>
-<% for(var i=0; i<groupIDs.length; i++) {%>
-   <li><a href="/group?groupID=<%= groupIDs[i] %>")><%= groupNames[i] %></a></li>
-<% } %>
-<% } %> 
-</ul>
+            });
+        }
+        else {
+          $("#error").text("New Group Name Must be filled.");
+          $("#error").css('color', 'red');
+        }
 
+      });
 
-<script>
-	$(document).ready(function() {
+      // Upon click of the AJAX request...
+      $("#logout").click(function() {
+        $.get("/logout", function(data, status) {
 
+          location.href = "/login"
 
-  	// Upon click of the AJAX request...
-  	$("#submit").click(function() {
-      var groupName = $("#group_name").val(); 
-      groupName = groupName.trim(); 
-      if (groupName.length != 0) {
-        $.get("/create_group?groupName=" + groupName, function(data, status) { 
+          });
+      });
 
-          var groupId = data;
-          var url = "/group?groupID=" + groupId;  
-          location.href=url;
+    });
+  </script>
+</head>
 
-          }); 
-      } 
-      else {
-        $("#error").text("New Group Name Must be filled.");
-        $("#error").css('color', 'red');
-      }
+<body>
+  <% include navbar_logged_in %>
+  <div class="header alt vert" style="height: 100%">
+    <div class="container center-text">
+      <h1>Find Your Food</h1>
+      <p class="lead">A Yelp Webapp for Finding Food for Your Group!</p>
+      <div>&nbsp;</div>
 
-  	});
-
-  	// Upon click of the AJAX request...
-  	$("#logout").click(function() {
-      $.get("/logout", function(data, status) { 
-
-        location.reload(); 
-
-        }); 
-
-
-  	}); 
-
-
-  	
-  });
-
-</script>
-
-New Group Name: 
-<br>
-<input type="text" id="group_name"> 
-<br>
-<button id="submit">Create new group</button>
-<br>
-<a href="/user_profile">Edit Profile</a>
-<br>
-<button id="logout">Logout</button> 
-<br> 
-<span id="error"></span>
-
+      <div class="row">
+        <div class="col-md-4 col-md-offset-2 text-center">
+          <div class="featurette-item">
+            <h2>Your Groups</h2>
+            <ul id="gList">
+            <% if (groupIDs != null) {%>
+            <% for(var i=0; i<groupIDs.length; i++) {%>
+               <li><a href="/group?groupID=<%= groupIDs[i] %>")><%= groupNames[i] %></a></li>
+            <% } %>
+            <% } %>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-4 text-center">
+          <div class="featurette-item">
+            <h2>Create New Group</h2>
+            <input class="form-control" type="text" id="group_name" placeholder="Enter group name">
+            <button class="btn btn-default" id="submit">Create</button>
+          </div>
+        </div>
+      </div>
+      <span id="error"></span>
+    </div>
+  </div>
+</body>

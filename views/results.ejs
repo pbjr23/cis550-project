@@ -108,42 +108,40 @@ Results
                       "lon": -80.013255200000003,
                       "stars": 4.5}]
 
-    var members = [{"username": "prakhar23",
-                  "first_name": "Prakhar",
-                  "last_name": "Bhandari",
-                  "address": "705 Blue Line Pittsburgh, PA 15212",
-                  "latitude": 40.450268,
-                  "longitude": -80.010784,
+    var members = [{"USERNAME": "prakhar23",
+                  "FIRST_NAME": "Prakhar",
+                  "LAST_NAME": "Bhandari",
+                  "ADDRESS": "705 Blue Line Pittsburgh, PA 15212",
+                  "LAT": 40.450268,
+                  "LON": -80.010784,
                   "is_logged_in": true,
                   "transport": "walk"},
-                 {"username": "emmanuel12",
-                  "first_name": "Emmanuel",
-                  "last_name": "Genene",
-                  "address": "100 S Commons Pittsburgh, PA 15212",
-                  "latitude": 40.449942,
-                  "longitude": -80.006557,
+                 {"USERNAME": "emmanuel12",
+                  "FIRST_NAME": "Emmanuel",
+                  "LAST_NAME": "Genene",
+                  "ADDRESS": "100 S Commons Pittsburgh, PA 15212",
+                  "LAT": 40.449942,
+                  "LON": -80.006557,
                   "is_logged_in": false,
                   "transport": "car"},
-                 {"username": "nate55",
-                  "first_name": "Nathaniel",
-                  "last_name": "Chan",
-                  "address": "Stage AE, 400 N Shore Dr Pittsburgh, PA 15212",
-                  "latitude": 40.446349,
-                  "longitude": -80.013123,
+                 {"USERNAME": "nate55",
+                  "FIRST_NAME": "Nathaniel",
+                  "LAST_NAME": "Chan",
+                  "ADDRESS": "Stage AE, 400 N Shore Dr Pittsburgh, PA 15212",
+                  "LAT": 40.446349,
+                  "LON": -80.013123,
                   "is_logged_in": false,
                   "transport": "bike"},
-                 {"username": "vincent34",
-                  "first_name": "Vincent",
-                  "last_name": "Gubitosi",
-                  "address": "1205 Loraine St Pittsburgh, PA 15212",
-                  "latitude": 40.456277,
-                  "longitude": -80.005570,
+                 {"USERNAME": "vincent34",
+                  "FIRST_NAME": "Vincent",
+                  "LAST_NAME": "Gubitosi",
+                  "ADDRESS": "1205 Loraine St Pittsburgh, PA 15212",
+                  "LAT": 40.456277,
+                  "LON": -80.005570,
                   "is_logged_in": false,
                   "transport": "walk"}]
 
     function taxicab_distance(firstLat, firstLong, secondLat, secondLong) {
-      // console.log(firstLat, firstLong, secondLat, secondLong);
-      // console.log(Math.abs(firstLat - secondLat) + Math.abs(firstLong - secondLong));
       return Math.abs(firstLat - secondLat) + Math.abs(firstLong - secondLong);
     }
 
@@ -162,8 +160,8 @@ Results
 
       for (var i = 0; i < members.length; i++) {
         // console.log(members[i]);
-        // console.log(lat, lon, members[i]['latitude'], members[i]['longitude']);
-        var time = time_convert[members[i]['transport']] * taxicab_distance(lat, lon, members[i]['latitude'], members[i]['longitude']);
+        // console.log(lat, lon, members[i]['LAT'], members[i]['LON']);
+        var time = time_convert[members[i]['transport']] * taxicab_distance(lat, lon, members[i]['LAT'], members[i]['LON']);
         total += time;
       }
 
@@ -207,7 +205,7 @@ Results
       for (var i = 0; i < newRestaurants.length; i++) {
         var adjusted_time = (maxStars - minStars) * (newRestaurants[i]['time'] - minTime) / (maxTime - minTime);
         newRestaurants[i]['score'] = -0.5 * newRestaurants[i]['stars'] + 0.5 * adjusted_time;
-        newRestaurants[i]['address'] = newRestaurants[i]['address'].replace(/(\r\n|\n|\r)/gm," ")
+        newRestaurants[i]['ADDRESS'] = newRestaurants[i]['ADDRESS'].replace(/(\r\n|\n|\r)/gm," ")
       }
 
       newRestaurants.sort(compare);
@@ -221,8 +219,8 @@ Results
     function initialize() {
       var newRestaurants = calculate_restaurants(restaurants);
       for (var i = 0; i < newRestaurants.length; i++) {
-        console.log('<option value="' + newRestaurants[i]['address'] + '">' + newRestaurants[i]['name'] + '</option>');
-        $( "#end" ).append( '<option value="' + newRestaurants[i]['address'] + '">' + newRestaurants[i]['name'] + '</option>' );
+        console.log('<option value="' + newRestaurants[i]['ADDRESS'] + '">' + newRestaurants[i]['name'] + '</option>');
+        $( "#end" ).append( '<option value="' + newRestaurants[i]['ADDRESS'] + '">' + newRestaurants[i]['name'] + '</option>' );
       }
       directionsDisplay = new google.maps.DirectionsRenderer();
       var mapOptions = {
@@ -241,7 +239,7 @@ Results
 
     function calcRoute() {
       var selectedMode = document.getElementById('mode').value;
-      var start = get_logged_in_user(members)['address'];
+      var start = get_logged_in_user(members)['ADDRESS'];
       var end = document.getElementById('end').value;
       var request = {
         origin: start,
