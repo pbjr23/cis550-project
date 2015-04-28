@@ -40,7 +40,7 @@
 
 <body>
   <% include navbar_logged_in %>
-  <div class="header alt vert" style="height: 100%">
+  <div class="header alt vert" style="height: none">
     <div class="container center-text">
       <h1>Find Your Food</h1>
       <p class="lead">A Yelp Webapp for Finding Food for Your Group!</p>
@@ -51,9 +51,9 @@
           <div class="featurette-item">
             <h2>Your Groups</h2>
             <ul id="gList">
-            <% if (groupIDs != null) {%>
-            <% for(var i=0; i<groupIDs.length; i++) {%>
-               <li><a href="/group?groupID=<%= groupIDs[i] %>")><%= groupNames[i] %></a></li>
+            <% if (groupNames != null) {%>
+            <% for(var i=0; i<groupNames.length; i++) {%>
+               <li><a href="/group?groupID=<%= groupNames[i][1] %>")><%= groupNames[i][0] %></a></li>
             <% } %>
             <% } %>
             </ul>

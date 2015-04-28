@@ -21,8 +21,30 @@
         });
 
         $('#getRests').click(function() {
-          var users = JSON.stringify(<%- users %>);
-          console.log("getting results for users: " + users);
+          var users = <%- users %>;
+          console.log(users.length);
+          for (var i = 0; i < users.length; i++) {
+            if (users[i]['USERNAME'] === '<%- username %>') {
+              users[i]['is_logged_in'] = true;
+            } else {
+              users[i]['is_logged_in'] = false;
+            }
+            var selector = '#' + users[i]['USERNAME'] + '_transport'
+            users[i]['transport'] = $( selector ).val();
+            console.log($( selector ).val());
+          }
+          console.log(users);
+          var info = {'users': users};
+
+          $.post("/results_handler", info, function(data, status) {
+            if (data == "failure") {
+              $("#error").text("Invalid name.");
+              $("#error").css('color', 'red');
+            } else {
+              location.href = "/results";
+            }
+          });
+
         });
 
         <% if (memberNames.length > 0) { %>
@@ -57,7 +79,7 @@
 
 <body>
   <% include navbar_logged_in %>
-  <div class="header alt vert" style="height: 100%">
+  <div class="header alt vert" style="height: none%">
     <div class="container center-text">
       <h1>Find Your Food</h1>
       <p class="lead">A Yelp Webapp for Finding Food for Your Group!</p>
@@ -78,6 +100,14 @@
 
                     <div>
                       <span id='<%= usernames[i] %>_address'><h4>Address: </h4><h5><%= addresses[i] %></h5></span>
+                    </div>
+
+                    <div style="margin-bottom: 10px">
+                      <select class="form-control" id='<%= usernames[i] %>_transport' name="mode_of_transport">
+                        <option value="walk">Walking</option>
+                        <option value="bike">Biking</option>
+                        <option value="car">Car</option>
+                      </select>
                     </div>
 
                     <button class="btn btn-default" id='remove_<%= usernames[i] %>'>Delete from group</button>

@@ -1,6 +1,6 @@
 /**
  * Simple Homework 3 application for CIS 550
- * 
+ *
  * zives
  */
 
@@ -12,11 +12,11 @@ var express = require('express')
   , http = require('http')
   , path = require('path')
   , stylus =  require("stylus")
-  , nib =     require("nib") 
+  , nib =     require("nib")
   , engine = require('ejs-locals')
   , bodyParser = require('body-parser')
-  , testRoute = require("./routes/testRoute") 
-  , cookieParser = require('cookie-parser') 
+  , testRoute = require("./routes/testRoute")
+  , cookieParser = require('cookie-parser')
   , session = require('express-session')
 ;
 
@@ -48,16 +48,17 @@ app.get('/test', testRoute.testFunction);
 
 
 // When we get a request for {app}/ we should call routes/index.js
-app.get('/', routes.login); 
-app.get('/login', routes.login); 
-app.get('/results', routes.results); 
+app.get('/', routes.login);
+app.get('/login', routes.login);
+app.post('/results_handler', routes.results_handler);
+app.get('/results', routes.results);
 app.post('/check_username', routes.check_username);
 app.post('/check_pass', routes.check_pass);
 app.post('/get_fb_user_username', routes.get_fb_user_username);
 app.post('/edit_pass', routes.edit_pass);
-app.get('/home', routes.home);  
+app.get('/home', routes.home);
 app.get('/signup', routes.signup);
-app.post('/create_user', routes.create_user);  
+app.post('/create_user', routes.create_user);
 app.post('/group_search', routes.group_search);
 app.get('/user_profile', routes.user_profile);
 app.get('/change_password', routes.change_password);
@@ -91,7 +92,7 @@ function compile(str, path) {
 function init_app() {
 	// all environments
 	app.set('port', process.env.PORT || 8080);
-	
+
 	app.set('views', __dirname + '/views');
 
 

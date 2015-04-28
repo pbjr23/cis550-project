@@ -8,6 +8,8 @@ body {
   height: 100%;
   width: 100%;
   font-family:Arial,sans-serif;
+  background-color: #6E28C9;
+  background: #6E28C9 url('http://www.bootply.com/assets/example/pt_topo_l.png') repeat center center fixed;
 }
 
 /* fix bs3 horizontal scrollbar bug */

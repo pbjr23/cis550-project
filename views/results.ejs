@@ -30,6 +30,8 @@ Results
       float: right;
       width: 390px;
       overflow: auto;
+      background: #CDBAE5;
+      padding: 10px;
     }
 
     #map-canvas {
@@ -63,83 +65,11 @@ Results
   </script>
 
   <script type="text/javascript">
+    var members = <%- members %>;
+    var restaurants = <%- restaurants %>;
+    var current_user = get_logged_in_user(members);
 
     var time_convert = {'walk': 1.0, 'bike': 0.4, 'car': 0.3}
-    var restaurants = [{"rid": "GM4-aWjgQjxN8sOwff7Ufw",
-                      "name": "Hyde Park Steakhouse",
-                      "address": "247 N Shore Dr\nNorth Side\nPittsburgh, PA 15212",
-                      "lat": 40.446363300000002,
-                      "lon": -80.008406199999996,
-                      "stars": 3.5},
-                     {"rid": "oYzxISMvvvDuphYHIZKZvw",
-                      "name": "Carnegie Science Center",
-                      "address": "1 Allegheny Ave\nNorth Side\nPittsburgh, PA 15212",
-                      "lat": 40.446333500000001,
-                      "lon": -80.018645899999996,
-                      "stars": 4.0},
-                     {"rid": "sXHNpYEp4ZpK-6FdR3KsuQ",
-                      "name": "Amani Coffee House & Cafe",
-                      "address": "507 Foreland St\nNorth Side\nPittsburgh, PA 15212",
-                      "lat": 40.454245800000002,
-                      "lon": -80.000494900000007,
-                      "stars": 4.0},
-                     {"rid": "puwWm1NTtjNiuHR1cQo9Tg",
-                      "name": "Priory Fine Pastries",
-                      "address": "528 E Ohio St\nNorth Side\nPittsburgh, PA 15212",
-                      "lat": 40.453872699999998,
-                      "lon": -79.999777300000005,
-                      "stars": 4.0},
-                     {"rid": "v6HiAVLwKiXZ9Yqvd4ubNg",
-                      "name": "Jerome Bettis Grille 36",
-                      "address": "393 N Shore Dr\nNorth Side\nPittsburgh, PA 15212",
-                      "lat": 40.4455502,
-                      "lon": -80.0113372,
-                      "stars": 3.5},
-                     {"rid": "1arFPq3HVIPnGkIVw6RAJw",
-                      "name": "Primanti Brothers at PNC Park",
-                      "address": "115 Federal St\nNorth Side\nPittsburgh, PA 15212",
-                      "lat": 40.446871404624602,
-                      "lon": -80.004648630521302,
-                      "stars": 3.0},
-                     {"rid": "2KiXw5gtGJfDK1jw9jJ5wA",
-                      "name": "Monterey Pub",
-                      "address": "1227 Monterey St\nNorth Side\nPittsburgh, PA 15212",
-                      "lat": 40.4556076,
-                      "lon": -80.013255200000003,
-                      "stars": 4.5}]
-
-    var members = [{"USERNAME": "prakhar23",
-                  "FIRST_NAME": "Prakhar",
-                  "LAST_NAME": "Bhandari",
-                  "ADDRESS": "705 Blue Line Pittsburgh, PA 15212",
-                  "LAT": 40.450268,
-                  "LON": -80.010784,
-                  "is_logged_in": true,
-                  "transport": "walk"},
-                 {"USERNAME": "emmanuel12",
-                  "FIRST_NAME": "Emmanuel",
-                  "LAST_NAME": "Genene",
-                  "ADDRESS": "100 S Commons Pittsburgh, PA 15212",
-                  "LAT": 40.449942,
-                  "LON": -80.006557,
-                  "is_logged_in": false,
-                  "transport": "car"},
-                 {"USERNAME": "nate55",
-                  "FIRST_NAME": "Nathaniel",
-                  "LAST_NAME": "Chan",
-                  "ADDRESS": "Stage AE, 400 N Shore Dr Pittsburgh, PA 15212",
-                  "LAT": 40.446349,
-                  "LON": -80.013123,
-                  "is_logged_in": false,
-                  "transport": "bike"},
-                 {"USERNAME": "vincent34",
-                  "FIRST_NAME": "Vincent",
-                  "LAST_NAME": "Gubitosi",
-                  "ADDRESS": "1205 Loraine St Pittsburgh, PA 15212",
-                  "LAT": 40.456277,
-                  "LON": -80.005570,
-                  "is_logged_in": false,
-                  "transport": "walk"}]
 
     function taxicab_distance(firstLat, firstLong, secondLat, secondLong) {
       return Math.abs(firstLat - secondLat) + Math.abs(firstLong - secondLong);
@@ -154,8 +84,8 @@ Results
     }
 
     function get_relative_time(restaurant) {
-      var lat = restaurant['lat'];
-      var lon = restaurant['lon'];
+      var lat = restaurant['LAT'];
+      var lon = restaurant['LON'];
       var total = 0;
 
       for (var i = 0; i < members.length; i++) {
@@ -178,8 +108,8 @@ Results
     }
 
     function calculate_restaurants() {
-      var minStars = restaurants[0]['stars'];
-      var maxStars = restaurants[0]['stars'];
+      var minStars = restaurants[0]['STARS'];
+      var maxStars = restaurants[0]['STARS'];
       var minTime = Number.MAX_VALUE;
       var maxTime = 0;
       var newRestaurants = restaurants
@@ -192,11 +122,11 @@ Results
         if (time > maxTime) {
           maxTime = time;
         }
-        if (newRestaurants[i]['stars'] > maxStars) {
-          maxStars = newRestaurants[i]['stars'];
+        if (newRestaurants[i]['STARS'] > maxStars) {
+          maxStars = newRestaurants[i]['STARS'];
         }
-        if (newRestaurants[i]['stars'] < minStars) {
-          minStars = newRestaurants[i]['stars'];
+        if (newRestaurants[i]['STARS'] < minStars) {
+          minStars = newRestaurants[i]['STARS'];
         }
 
         newRestaurants[i]['time'] = time;
@@ -204,7 +134,7 @@ Results
 
       for (var i = 0; i < newRestaurants.length; i++) {
         var adjusted_time = (maxStars - minStars) * (newRestaurants[i]['time'] - minTime) / (maxTime - minTime);
-        newRestaurants[i]['score'] = -0.5 * newRestaurants[i]['stars'] + 0.5 * adjusted_time;
+        newRestaurants[i]['score'] = -0.5 * newRestaurants[i]['STARS'] + 0.5 * adjusted_time;
         newRestaurants[i]['ADDRESS'] = newRestaurants[i]['ADDRESS'].replace(/(\r\n|\n|\r)/gm," ")
       }
 
@@ -220,7 +150,7 @@ Results
       var newRestaurants = calculate_restaurants(restaurants);
       for (var i = 0; i < newRestaurants.length; i++) {
         console.log('<option value="' + newRestaurants[i]['ADDRESS'] + '">' + newRestaurants[i]['name'] + '</option>');
-        $( "#end" ).append( '<option value="' + newRestaurants[i]['ADDRESS'] + '">' + newRestaurants[i]['name'] + '</option>' );
+        $( "#end" ).append( '<option value="' + newRestaurants[i]['ADDRESS'] + '">' + newRestaurants[i]['NAME'] + '</option>' );
       }
       directionsDisplay = new google.maps.DirectionsRenderer();
       var mapOptions = {
@@ -253,22 +183,32 @@ Results
       });
     }
 
-
-
     google.maps.event.addDomListener(window, 'load', initialize);
-
     console.log(get_logged_in_user(members))
-  </script>
-
-  <script>
-
+    if (current_user['transport'] === 'walk') {
+      console.log("hello");
+      $( '#walk' ).attr('selected', 'selected');
+    } else if (current_user['transport'] === 'bike') {
+      console.log("hello world");
+      $( '#bike' ).attr('selected', 'selected');
+    } else if (current_user['transport'] === 'car') {
+      console.log("hi world");
+      $( '#car' ).attr('selected', 'selected');
+    }
 
 
     $(document).ready(function() {
+      $("#error").text("All Fields Must be filled.");
+      $("#error").css('color', 'red');
 
-          $("#error").text("All Fields Must be filled.");
-          $("#error").css('color', 'red');
+      // Upon click of the AJAX request...
+      $("#logout").click(function() {
+        $.get("/logout", function(data, status) {
 
+          location.href = "/login"
+
+          });
+      });
     });
 
   </script>
@@ -276,18 +216,24 @@ Results
 
 
 <body>
-  <span id="data"></span>
-  <br>
-  <span id="error"></span>
+  <% include navbar_logged_in %>
+  <div class="header alt vert">
+    <div class="container center-text">
+      <h1>Find Your Food</h1>
+      <p class="lead">A Yelp Webapp for Finding Food for Your Group!</p>
+      <div>&nbsp;</div>
+
+
+    </div>
   </div>
   <div id="control">
     <strong>Restaurant:</strong>
     <select id="end" onchange="calcRoute();">
     </select>
     <select id="mode" onchange="calcRoute();">
-      <option value="DRIVING">Driving</option>
-      <option value="WALKING">Walking</option>
-      <option value="BICYCLING">Bicycling</option>
+      <option id="walk" value="WALKING">Walking</option>
+      <option id="car" value="DRIVING">Driving</option>
+      <option id="bike" value="BICYCLING">Bicycling</option>
     </select>
   </div>
   <div id="directions-panel"></div>
