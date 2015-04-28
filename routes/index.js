@@ -22,7 +22,7 @@ exports.home = function(req, res){
     			var groupNames = [];
     			async.each(groupIDs, function(id, call) {
     				db.getGroupName(id, function(err, name) {
-    					groupNames.push(name);
+    					groupNames.push([name,id]);
     					call();
     				});
     			}, function() {
@@ -30,7 +30,6 @@ exports.home = function(req, res){
     				console.log(groupNames);
     				res.render('home.ejs', {
     					title: 'Homepage',
-    					groupIDs: groupIDs,
     					groupNames: groupNames
     				});
     			});
