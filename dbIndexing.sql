@@ -25,7 +25,7 @@ CREATE UNIQUE INDEX users_user_pass_index
 ON users (username, password);
 
 CREATE UNIQUE INDEX address_username_index
-ON address (username)
+ON address (username);
 
 CREATE INDEX address_latlon_index
 ON address (lat, lon);
